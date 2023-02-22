@@ -95,7 +95,7 @@ var (
 	// QueryPostgresqlDBCmd ...
 	QueryPostgresqlDBCmd = &cli.Command{
 		Name:    "queryPostgresqlDB",
-		Usage:   `adp-cli -p * queryPostgresqlDB -DbUser postgres -DbPassword * -DbConnectionURL jdbc:postgresql://dev1-db0.axcelerate.local:5432/db -SQLQuery "select ..."`,
+		Usage:   `adp-cli -p * queryPostgresqlDB -dbUser postgres -dbPassword * -dbConnectionURL jdbc:postgresql://dev1-db0.axcelerate.local:5432/db -sqlQuery "select ..."`,
 		Aliases: []string{"qp"},
 		Flags: []cli.Flag{
 			DbUser,
@@ -116,7 +116,7 @@ var (
 	}
 )
 
-func NewADPTask(c *cli.Context) task.Tasker {
+func NewTask(c *cli.Context) task.Tasker {
 	var adp task.Tasker
 
 	client := client.NewClient(
@@ -178,7 +178,7 @@ func NewADPTask(c *cli.Context) task.Tasker {
 }
 
 func executeTask(c *cli.Context) error {
-	adp := NewADPTask(c)
+	adp := NewTask(c)
 
 	s, err := adp.StringOutput()
 	if err != nil {
