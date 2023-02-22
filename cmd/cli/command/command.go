@@ -23,7 +23,7 @@ var (
 	*/
 	ListEntitiesCmd = &cli.Command{
 		Name:    "listEntities",
-		Usage:   `adp-cli -p ** listEntities --Type dataSource`,
+		Usage:   `adp-cli -p * listEntities --type dataSource`,
 		Aliases: []string{"le"},
 		Flags: []cli.Flag{
 			ID,
@@ -185,6 +185,11 @@ func executeTask(c *cli.Context) error {
 		return err
 	}
 
-	fmt.Println(task.Beautify(s))
+	if c.Bool("pretty") {
+		s = task.Beautify(s)
+	}
+
+	fmt.Println(s)
+
 	return nil
 }
