@@ -171,8 +171,8 @@ type TaxonomyStatisticTask struct {
 	Task
 }
 
-func NewTaxonomyStatisticTask(client *client.Client, opts ...func(*TaxonomyStatisticConfiguration)) *TaxonomyStatisticTask {
-	return &TaxonomyStatisticTask{
+func NewTaxonomyStatisticTask(client *client.Client, opts ...func(*TaxonomyStatisticConfiguration)) TaxonomyStatisticTask {
+	return TaxonomyStatisticTask{
 		Task{
 			client:       client,
 			req:          NewTaxonomyStatisticTaskRequest(opts...),
@@ -181,7 +181,7 @@ func NewTaxonomyStatisticTask(client *client.Client, opts ...func(*TaxonomyStati
 	}
 }
 
-func (t *TaxonomyStatisticTask) StringOutput() (string, error) {
+func (t TaxonomyStatisticTask) StringOutput() (string, error) {
 	taskResp, err := t.Execute()
 	if err != nil {
 		return "", err
@@ -198,7 +198,7 @@ func (t *TaxonomyStatisticTask) StringOutput() (string, error) {
 	return output, nil
 }
 
-func (t *TaxonomyStatisticTask) StructOutput() (TaxonomyStatisticResult, error) {
+func (t TaxonomyStatisticTask) StructOutput() (TaxonomyStatisticResult, error) {
 	var res TaxonomyStatisticResult
 
 	output, err := t.StringOutput()

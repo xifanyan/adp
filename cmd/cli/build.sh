@@ -1,0 +1,1 @@
+GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o adp-cli.exe main.go

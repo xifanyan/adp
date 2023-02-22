@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/golang/glog"
+	"github.com/rs/zerolog/log"
 	"opentext.com/axcelerate/adp/client"
 )
 
@@ -24,6 +24,7 @@ const (
 
 type Tasker interface {
 	Execute() (*Response, error)
+	StringOutput() (string, error)
 }
 
 type Task struct {
@@ -38,9 +39,6 @@ func (t Task) NewHttpRequest() (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	glog.Info("=========== PAYLOAD ===========")
-	glog.Infof("%s", payload)
 
 	req, err := http.NewRequest(http.MethodPut, t.endpoint(), bytes.NewBuffer(payload))
 
@@ -80,8 +78,7 @@ func (t Task) Execute() (*Response, error) {
 		return nil, err
 	}
 
-	glog.Info("====== RAW OUTPUT DATA ======")
-	glog.Infof("%s", data)
+	log.Debug().Msgf("payload: %s", data)
 
 	taskResp := &Response{}
 	if err = json.Unmarshal(data, taskResp); err != nil {
