@@ -32,18 +32,9 @@ type ComputeCountsConfiguration struct {
 	AdpComputeCountsMainQueryType         any                 `json:"adp_computeCounts_mainQueryType,omitempty"`
 }
 
-// EnableAdpLogging ...
-func (c *ComputeCountsConfiguration) EnableAdpLogging() {
-	c.AdpLoggingEnabled = true
-}
-
-// EnableAdpExecutionPersistent ...
-func (c *ComputeCountsConfiguration) EnableAdpExecutionPersistent() {
-	c.AdpExecutionPersistent = true
-}
-
 // NewComputeCountsTaskRequest ...
 func NewComputeCountsTaskRequest(opts ...func(*ComputeCountsConfiguration)) *Request {
+
 	cfg := &ComputeCountsConfiguration{
 		AdpLoggingEnabled:      false,
 		AdpExecutionPersistent: false,
@@ -58,6 +49,20 @@ func NewComputeCountsTaskRequest(opts ...func(*ComputeCountsConfiguration)) *Req
 		TaskDescription:   "Compute Counts.",
 		TaskConfiguration: cfg,
 		TaskDisplayName:   "Compute counts task",
+	}
+}
+
+// WithComputeCountsLoggingEnabled ...
+func WithComputeCountsLoggingEnabled(b bool) func(*ComputeCountsConfiguration) {
+	return func(c *ComputeCountsConfiguration) {
+		c.AdpLoggingEnabled = b
+	}
+}
+
+// WithComputeCountsExecutionPersistent ...
+func WithCommputeCountsExecutionPersistent(b bool) func(*ComputeCountsConfiguration) {
+	return func(c *ComputeCountsConfiguration) {
+		c.AdpExecutionPersistent = b
 	}
 }
 

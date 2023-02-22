@@ -100,18 +100,12 @@ func (t Task) endpoint() string {
 	return fmt.Sprintf("https://%s/%s", t.client.Host, EXECUTETASK)
 }
 
-// Configurator ...
-type Configurator interface {
-	EnableAdpLogging()
-	EnableAdpExecutionPersistent()
-}
-
 // Request ...
 type Request struct {
-	TaskType          string       `json:"taskType"`
-	TaskDescription   string       `json:"taskDescription"`
-	TaskDisplayName   string       `json:"taskDisplayName"`
-	TaskConfiguration Configurator `json:"taskConfiguration"`
+	TaskType          string `json:"taskType"`
+	TaskDescription   string `json:"taskDescription"`
+	TaskDisplayName   string `json:"taskDisplayName"`
+	TaskConfiguration any    `json:"taskConfiguration"`
 }
 
 // Type ...

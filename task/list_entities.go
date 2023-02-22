@@ -49,16 +49,6 @@ type ListEntitiesConfiguration struct {
 	AdpListEntitiesHTTPSAllowUntrustedHosts                string   `json:"adp_listEntities_httpsAllowUntrustedHosts,omitempty"`
 }
 
-// EnableAdpLogging ...
-func (c *ListEntitiesConfiguration) EnableAdpLogging() {
-	c.AdpLoggingEnabled = true
-}
-
-// EnableAdpExecutionPersistent ...
-func (c *ListEntitiesConfiguration) EnableAdpExecutionPersistent() {
-	c.AdpExecutionPersistent = true
-}
-
 // NewListEntitiesTaskRequest ...
 func NewListEntitiesTaskRequest(opts ...func(*ListEntitiesConfiguration)) *Request {
 
@@ -76,6 +66,20 @@ func NewListEntitiesTaskRequest(opts ...func(*ListEntitiesConfiguration)) *Reque
 		TaskDescription:   "List Entities (description)",
 		TaskConfiguration: cfg,
 		TaskDisplayName:   "List Entities (displayName)",
+	}
+}
+
+// WithListEntitiesLoggingEnabled ...
+func WithListEntitiesLoggingEnabled(b bool) func(*ListEntitiesConfiguration) {
+	return func(c *ListEntitiesConfiguration) {
+		c.AdpLoggingEnabled = b
+	}
+}
+
+// WithListEntitiesExecutionPersistent ...
+func WithListEntitiesExecutionPersistent(b bool) func(*ListEntitiesConfiguration) {
+	return func(c *ListEntitiesConfiguration) {
+		c.AdpExecutionPersistent = b
 	}
 }
 

@@ -38,16 +38,6 @@ type TaxonomyStatisticConfiguration struct {
 	AdpTaxonomyStatisticEngineName                        string                `json:"adp_taxonomyStatistic_engineName"`
 }
 
-// EnableAdpLogging ...
-func (c *TaxonomyStatisticConfiguration) EnableAdpLogging() {
-	c.AdpLoggingEnabled = true
-}
-
-// EnableAdpExecutionPersistent ...
-func (c *TaxonomyStatisticConfiguration) EnableAdpExecutionPersistent() {
-	c.AdpExecutionPersistent = true
-}
-
 // NewTaxonomyStatisticTaskRequest ...
 func NewTaxonomyStatisticTaskRequest(opts ...func(*TaxonomyStatisticConfiguration)) *Request {
 	cfg := &TaxonomyStatisticConfiguration{
@@ -64,6 +54,20 @@ func NewTaxonomyStatisticTaskRequest(opts ...func(*TaxonomyStatisticConfiguratio
 		TaskDescription:   "Retrieves category counts for a taxonomy",
 		TaskConfiguration: cfg,
 		TaskDisplayName:   "Taxonomy statistic",
+	}
+}
+
+// WithTaxonomyStatisticLoggingEnabled ...
+func WithTaxonomyStatisticLoggingEnabled(b bool) func(*TaxonomyStatisticConfiguration) {
+	return func(c *TaxonomyStatisticConfiguration) {
+		c.AdpLoggingEnabled = b
+	}
+}
+
+// WithTaxonmyStatisticExecutionPersistent ...
+func WithTaxonomyStatisticExecutionPersistent(b bool) func(*TaxonomyStatisticConfiguration) {
+	return func(c *TaxonomyStatisticConfiguration) {
+		c.AdpExecutionPersistent = b
 	}
 }
 

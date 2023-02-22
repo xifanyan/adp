@@ -46,16 +46,6 @@ type QueryEngineConfiguration struct {
 	AdpQueryEngineExitOnValueChanged       bool                      `json:"adp_queryEngine_exitOnValueChanged,omitempty"`
 }
 
-// EnableAdpLogging ...
-func (c *QueryEngineConfiguration) EnableAdpLogging() {
-	c.AdpLoggingEnabled = true
-}
-
-// EnableAdpExecutionPersistent ...
-func (c *QueryEngineConfiguration) EnableAdpExecutionPersistent() {
-	c.AdpExecutionPersistent = true
-}
-
 // NewQueryEngineTaskRequest ...
 func NewQueryEngineTaskRequest(opts ...func(*QueryEngineConfiguration)) *Request {
 	cfg := &QueryEngineConfiguration{
@@ -72,6 +62,20 @@ func NewQueryEngineTaskRequest(opts ...func(*QueryEngineConfiguration)) *Request
 		TaskDescription:   "Queries an engine",
 		TaskConfiguration: cfg,
 		TaskDisplayName:   "Query Engine",
+	}
+}
+
+// WithQueryEngineLoggingEnabled ...
+func WithQueryEngineLoggingEnabled(b bool) func(*QueryEngineConfiguration) {
+	return func(c *QueryEngineConfiguration) {
+		c.AdpLoggingEnabled = b
+	}
+}
+
+// WithQueryEngineExecutionPersistent ...
+func WithQueryEngineExecutionPersistent(b bool) func(*QueryEngineConfiguration) {
+	return func(c *QueryEngineConfiguration) {
+		c.AdpExecutionPersistent = b
 	}
 }
 
