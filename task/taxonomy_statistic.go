@@ -182,6 +182,8 @@ func NewTaxonomyStatisticTask(client *client.Client, opts ...func(*TaxonomyStati
 }
 
 func (t TaxonomyStatisticTask) StringOutput() (string, error) {
+	var err error
+
 	taskResp, err := t.Execute()
 	if err != nil {
 		return "", err
@@ -192,13 +194,24 @@ func (t TaxonomyStatisticTask) StringOutput() (string, error) {
 		return "", fmt.Errorf("parse TaxonomyStatisticExecutionMetaData %w", err)
 	}
 
-	output := string(meta.AdpTaxonomyStatisticsJSONOutput)
-	unquoteJSONOutput(&output)
+	raw := string(meta.AdpTaxonomyStatisticsJSONOutput)
+	unquoteJSONOutput(&raw)
 
-	return output, nil
+	jsout := &TaxonomyStatisticJSONOutput{}
+	if err := json.Unmarshal([]byte(raw), jsout); err != nil {
+		return "", fmt.Errorf("parse TaxonomyStatisticJSONOutput %w", err)
+	}
+
+	output, err := json.Marshal(jsout.Statistics.Taxonomy)
+	if err != nil {
+		return "", fmt.Errorf("marshal TaxonomyStatisticResult %w", err)
+	}
+
+	return string(output), nil
 }
 
 func (t TaxonomyStatisticTask) StructOutput() (TaxonomyStatisticResult, error) {
+	var err error
 	var res TaxonomyStatisticResult
 
 	output, err := t.StringOutput()
@@ -208,7 +221,7 @@ func (t TaxonomyStatisticTask) StructOutput() (TaxonomyStatisticResult, error) {
 	}
 
 	if err := json.Unmarshal([]byte(output), &res); err != nil {
-		return res, fmt.Errorf("parse TaxonomyStatisticJSONOutput %w", err)
+		return res, fmt.Errorf("parse TaxonomyStatisticResult %w", err)
 	}
 
 	return res, nil
