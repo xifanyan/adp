@@ -158,8 +158,8 @@ type ComputeCountsTask struct {
 	Task
 }
 
-func NewComputeCountsTask(client *client.Client, opts ...func(*ComputeCountsConfiguration)) ComputeCountsTask {
-	return ComputeCountsTask{
+func NewComputeCountsTask(client *client.Client, opts ...func(*ComputeCountsConfiguration)) *ComputeCountsTask {
+	return &ComputeCountsTask{
 		Task{
 			client:       client,
 			req:          NewComputeCountsTaskRequest(opts...),
@@ -168,7 +168,7 @@ func NewComputeCountsTask(client *client.Client, opts ...func(*ComputeCountsConf
 	}
 }
 
-func (t ComputeCountsTask) StringOutput() (string, error) {
+func (t *ComputeCountsTask) StringOutput() (string, error) {
 	taskResp, err := t.Execute()
 	if err != nil {
 		return "", err
@@ -185,7 +185,7 @@ func (t ComputeCountsTask) StringOutput() (string, error) {
 	return output, nil
 }
 
-func (t ComputeCountsTask) StructOutput() (ComputeCountsResult, error) {
+func (t *ComputeCountsTask) StructOutput() (ComputeCountsResult, error) {
 	var res ComputeCountsResult
 
 	output, err := t.StringOutput()

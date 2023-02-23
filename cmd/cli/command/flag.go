@@ -151,19 +151,19 @@ var (
 	// Identifiers ...
 	Identifiers = &cli.StringFlag{
 		Name:  "identifiers",
-		Usage: "List of Application or Engine Identifiers e.g., documentHold.APP001,singleMindServer.APP001",
+		Usage: "List of Application or Engine Identifiers e.g., documentHold.APP001;singleMindServer.APP001",
 	}
 
 	// ApplicationIdentifiers ...
 	ApplicationIdentifiers = &cli.StringFlag{
 		Name:  "applicationIdentifiers",
-		Usage: "List of Application Identifier e.g., documentHold.APP001,documentHold.APP001",
+		Usage: "List of Application Identifier e.g., documentHold.APP001;documentHold.APP001",
 	}
 
 	// EngineIdentifiers ...
 	EngineIdentifiers = &cli.StringFlag{
 		Name:  "engineIdentifiers",
-		Usage: "List of Engine Identifier e.g., singleMindServer.APP001,mergingMeta.APP001",
+		Usage: "List of Engine Identifier e.g., singleMindServer.APP001;mergingMeta.APP001",
 	}
 
 	// ApplicationURL ...
@@ -176,6 +176,6 @@ var (
 	// ProcessIdentifiers ...
 	ProcessIdentifiers = &cli.StringFlag{
 		Name:  "processIdentifiers",
-		Usage: "List of Identifiers e.g., documentHold.APP001,singleMindServer.APP002",
+		Usage: "List of Identifiers e.g., documentHold.APP001;singleMindServer.APP002",
 	}
 )

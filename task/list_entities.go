@@ -147,8 +147,8 @@ type ListEntitiesTask struct {
 	Task
 }
 
-func NewListEntitiesTask(client *client.Client, opts ...func(*ListEntitiesConfiguration)) ListEntitiesTask {
-	return ListEntitiesTask{
+func NewListEntitiesTask(client *client.Client, opts ...func(*ListEntitiesConfiguration)) *ListEntitiesTask {
+	return &ListEntitiesTask{
 		Task{
 			client:       client,
 			req:          NewListEntitiesTaskRequest(opts...),
@@ -157,7 +157,7 @@ func NewListEntitiesTask(client *client.Client, opts ...func(*ListEntitiesConfig
 	}
 }
 
-func (t ListEntitiesTask) StringOutput() (string, error) {
+func (t *ListEntitiesTask) StringOutput() (string, error) {
 	taskResp, err := t.Execute()
 	if err != nil {
 		return "", err
@@ -174,7 +174,7 @@ func (t ListEntitiesTask) StringOutput() (string, error) {
 	return output, nil
 }
 
-func (t ListEntitiesTask) StructOutput() (ListEntitiesResult, error) {
+func (t *ListEntitiesTask) StructOutput() (ListEntitiesResult, error) {
 	var res ListEntitiesResult
 
 	output, err := t.StringOutput()

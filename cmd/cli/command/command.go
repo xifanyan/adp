@@ -107,12 +107,24 @@ var (
 		Action: executeTask,
 	}
 
+	// StopProcessesCmd ...
+	StopProcessesCmd = &cli.Command{
+		Name:    "stopProcesses",
+		Usage:   `adp-cli -p * stopProcesses -processIdentifiers documentHold.APP001;axcelerate.APP001_Review"`,
+		Aliases: []string{"sp"},
+		Flags: []cli.Flag{
+			ProcessIdentifiers,
+		},
+		Action: executeTask,
+	}
+
 	Commands = []*cli.Command{
 		ListEntitiesCmd,
 		QueryEngineCmd,
 		TaxonomyStatisticCmd,
 		ComputeCountsCmd,
 		QueryPostgresqlDBCmd,
+		StopProcessesCmd,
 	}
 )
 
@@ -170,6 +182,11 @@ func NewTask(c *cli.Context) task.Tasker {
 			task.WithComputeCountsEngineUserPassword(c.String("engineUserPassword")),
 			task.WithComputeCountsQueryParts(c.String("queryParts")),
 		)
+	case "stopProcesses":
+		adp = task.NewStopProcessesTask(
+			client,
+			task.WithStopProcessProcessProcessIdentifiers(c.String("processIdentifiers")),
+		)
 	default:
 		log.Fatal().Msgf("invalid ADP task name: ", c.Command.Name)
 	}
@@ -186,7 +203,7 @@ func executeTask(c *cli.Context) error {
 	}
 
 	if c.Bool("pretty") {
-		s = task.Beautify(s)
+		s = task.Prettify(s)
 	}
 
 	fmt.Println(s)

@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strconv"
 
 	"github.com/rs/zerolog/log"
 	"opentext.com/axcelerate/adp/client"
@@ -23,7 +22,6 @@ const (
 )
 
 type Tasker interface {
-	Execute() (*Response, error)
 	StringOutput() (string, error)
 }
 
@@ -39,6 +37,8 @@ func (t Task) NewHttpRequest() (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	log.Debug().Msgf("payload: %s", Prettify(string(payload)))
 
 	req, err := http.NewRequest(http.MethodPut, t.endpoint(), bytes.NewBuffer(payload))
 
@@ -78,7 +78,7 @@ func (t Task) Execute() (*Response, error) {
 		return nil, err
 	}
 
-	log.Debug().Msgf("payload: %s", data)
+	log.Debug().Msgf("raw: %s", data)
 
 	taskResp := &Response{}
 	if err = json.Unmarshal(data, taskResp); err != nil {
@@ -146,17 +146,4 @@ type Response struct {
 	ProgressPercentage  float64         `json:"progressPercentage"`
 	TaskDisplayName     string          `json:"taskDisplayName"`
 	ExecutionMetaData   json.RawMessage `json:"executionMetaData"`
-}
-
-func unquoteJSONOutput(s *string) {
-	unescaped, err := strconv.Unquote(*s)
-	if err == nil {
-		*s = unescaped
-	}
-}
-
-func Beautify(s string) string {
-	buf := new(bytes.Buffer)
-	json.Indent(buf, []byte(s), "", "  ")
-	return buf.String()
 }

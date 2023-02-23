@@ -156,8 +156,8 @@ type QueryEngineTask struct {
 	Task
 }
 
-func NewQueryEngineTask(client *client.Client, opts ...func(*QueryEngineConfiguration)) QueryEngineTask {
-	return QueryEngineTask{
+func NewQueryEngineTask(client *client.Client, opts ...func(*QueryEngineConfiguration)) *QueryEngineTask {
+	return &QueryEngineTask{
 		Task{
 			client:       client,
 			req:          NewQueryEngineTaskRequest(opts...),
@@ -166,7 +166,7 @@ func NewQueryEngineTask(client *client.Client, opts ...func(*QueryEngineConfigur
 	}
 }
 
-func (t QueryEngineTask) StringOutput() (string, error) {
+func (t *QueryEngineTask) StringOutput() (string, error) {
 	taskResp, err := t.Execute()
 	if err != nil {
 		return "", err
@@ -176,7 +176,7 @@ func (t QueryEngineTask) StringOutput() (string, error) {
 	return output, nil
 }
 
-func (t QueryEngineTask) StructOutput() (QueryEngineResult, error) {
+func (t *QueryEngineTask) StructOutput() (QueryEngineResult, error) {
 	var res QueryEngineResult
 
 	output, err := t.StringOutput()
