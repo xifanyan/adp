@@ -116,19 +116,19 @@ func parseOutputTaxonomiesArg(s string) []OutputTaxonomiesArg {
 	return outputTaxonomiesArgs
 }
 
-// ProcessIdentifierArg ...
-type ProcessIdentifierArg struct {
+// StopProcessesProcessIdentifierArg ...
+type StopProcessesProcessIdentifierArg struct {
 	ProcessIdenifier string `json:"Process identifier"`
 	StopRecursive    bool   `json:"Stop recursive"`
 }
 
-func parseProcessIdentifiersArg(s string) []ProcessIdentifierArg {
-	var processIdentifierArgs []ProcessIdentifierArg
+func parseStopProcessesProcessIdentifiersArg(s string) []StopProcessesProcessIdentifierArg {
+	var processIdentifierArgs []StopProcessesProcessIdentifierArg
 	for _, proc := range strings.Split(s, ARGDELIMITER) {
 		proc = strings.TrimSpace(proc)
 		if len(proc) > 0 {
 			processIdentifierArgs = append(processIdentifierArgs,
-				ProcessIdentifierArg{
+				StopProcessesProcessIdentifierArg{
 					ProcessIdenifier: proc,
 					StopRecursive:    true, // always recursive
 				},
@@ -136,4 +136,28 @@ func parseProcessIdentifiersArg(s string) []ProcessIdentifierArg {
 		}
 	}
 	return processIdentifierArgs
+}
+
+// RemoveProcessesProcessIdentifierArg ...
+type RemoveProcessesProcessIdentifierArg struct {
+	ProcessIdentifier   string `json:"Process identifier"`
+	RemoveRecursive     bool   `json:"Remove recursive"`
+	PreserveFiles       bool   `json:"Preserve files"`
+	SourceFilesLocation string `json:"Source files location"`
+	TargetLocation      string `json:"Target location"`
+}
+
+func parseRemoveProcessesProcessIdentifierArgs(s string) []RemoveProcessesProcessIdentifierArg {
+	var removeProcessesProcessIdentifierArgs []RemoveProcessesProcessIdentifierArg
+	for _, proc := range strings.Split(s, ARGDELIMITER) {
+		removeProcessesProcessIdentifierArgs = append(removeProcessesProcessIdentifierArgs,
+			RemoveProcessesProcessIdentifierArg{
+				ProcessIdentifier:   proc,
+				RemoveRecursive:     true,
+				PreserveFiles:       false,
+				SourceFilesLocation: "",
+				TargetLocation:      "",
+			})
+	}
+	return removeProcessesProcessIdentifierArgs
 }

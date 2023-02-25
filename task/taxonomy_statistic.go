@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/rs/zerolog/log"
 	"opentext.com/axcelerate/adp/client"
 )
 
@@ -14,12 +15,12 @@ type TaxonomyStatisticConfiguration struct {
 	AdpTaxonomyStatisticApplicationIdentifier             string                `json:"adp_taxonomyStatistic_applicationIdentifier"`
 	AdpTaskActive                                         bool                  `json:"adp_taskActive,omitempty"`
 	AdpTaxonomyStatisticAdpTaxonomyStatisticMainQueryType any                   `json:"adp_taxonomyStatistic_adp_taxonomyStatistic_mainQueryType,omitempty"`
-	AdpExecutionPersistent                                bool                  `json:"adp_executionPersistent,omitempty"`
+	AdpExecutionPersistent                                bool                  `json:"adp_executionPersistent"`
 	AdpTaxonomyStatisticEngineUserName                    string                `json:"adp_taxonomyStatistic_engineUserName,omitempty"`
 	AdpAbortWfOnFailure                                   bool                  `json:"adp_abortWfOnFailure,omitempty"`
 	AdpTaxonomyStatisticApplicationType                   string                `json:"adp_taxonomyStatistic_applicationType,omitempty"`
 	AdpTaxonomyStatisticComputeCounts                     string                `json:"adp_taxonomyStatistic_computeCounts,omitempty"`
-	AdpLoggingEnabled                                     bool                  `json:"adp_loggingEnabled,omitempty"`
+	AdpLoggingEnabled                                     bool                  `json:"adp_loggingEnabled"`
 	AdpTaxonomyStatisticOutputJSONFilePath                string                `json:"adp_taxonomyStatistic_outputJsonFilePath,omitempty"`
 	AdpTaxonomyStatisticEngineTaxonomies                  []EngineTaxonomyArg   `json:"adp_taxonomyStatistic_engineTaxonomies"`
 	AdpTaxonomyStatisticEngineUserPassword                string                `json:"adp_taxonomyStatistic_engineUserPassword,omitempty"`
@@ -40,14 +41,13 @@ type TaxonomyStatisticConfiguration struct {
 
 // NewTaxonomyStatisticTaskRequest ...
 func NewTaxonomyStatisticTaskRequest(opts ...func(*TaxonomyStatisticConfiguration)) *Request {
-	cfg := &TaxonomyStatisticConfiguration{
-		AdpLoggingEnabled:      false,
-		AdpExecutionPersistent: false,
-	}
 
+	cfg := &TaxonomyStatisticConfiguration{}
 	for _, opt := range opts {
 		opt(cfg)
 	}
+
+	log.Debug().Msgf("cfg: %+v", cfg)
 
 	return &Request{
 		TaskType:          "Taxonomy Statistic",

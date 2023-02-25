@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/rs/zerolog/log"
 	"opentext.com/axcelerate/adp/client"
 )
 
@@ -21,11 +22,11 @@ type ListEntitiesConfiguration struct {
 	AdpTaskActive                                          bool     `json:"adp_taskActive,omitempty"`
 	AdpListEntitiesUserHasAccess                           string   `json:"adp_listEntities_userHasAccess,omitempty"`
 	AdpListEntitiesWhiteList                               string   `json:"adp_listEntities_whiteList,omitempty"`
-	AdpExecutionPersistent                                 bool     `json:"adp_executionPersistent,omitempty"`
+	AdpExecutionPersistent                                 bool     `json:"adp_executionPersistent"`
 	AdpAbortWfOnFailure                                    bool     `json:"adp_abortWfOnFailure,omitempty"`
 	AdpListEntitiesRelatedEntity                           string   `json:"adp_listEntities_relatedEntity,omitempty"`
 	AdpListEntitiesWorkspace                               string   `json:"adp_listEntities_workspace,omitempty"`
-	AdpLoggingEnabled                                      bool     `json:"adp_loggingEnabled,omitempty"`
+	AdpLoggingEnabled                                      bool     `json:"adp_loggingEnabled"`
 	AdpListEntitiesStatus                                  string   `json:"adp_listEntities_status,omitempty"`
 	AdpListEntitiesAxcServiceCoreAddress                   string   `json:"adp_listEntities_axcServiceCoreAddress,omitempty"`
 	AdpListEntitiesRelatedEntityType                       string   `json:"adp_listEntities_relatedEntityType,omitempty"`
@@ -52,14 +53,12 @@ type ListEntitiesConfiguration struct {
 // NewListEntitiesTaskRequest ...
 func NewListEntitiesTaskRequest(opts ...func(*ListEntitiesConfiguration)) *Request {
 
-	cfg := &ListEntitiesConfiguration{
-		AdpLoggingEnabled:      false,
-		AdpExecutionPersistent: false,
-	}
-
+	cfg := &ListEntitiesConfiguration{}
 	for _, opt := range opts {
 		opt(cfg)
 	}
+
+	log.Debug().Msgf("cfg: %+v", cfg)
 
 	return &Request{
 		TaskType:          "List Entities",

@@ -187,6 +187,13 @@ func NewTask(c *cli.Context) task.Tasker {
 			client,
 			task.WithStopProcessProcessProcessIdentifiers(c.String("processIdentifiers")),
 		)
+	case "removeProcesses":
+		adp = task.NewRemoveProcessesTask(
+			client,
+			task.WithRemoveProcessesProcessIdentifiers(c.String("processIdentifiers")),
+			task.WithRemoveProcessesRemoveAssociatedStorages(c.String("removeAssociatedStorage")),
+			task.WithRemoveProcessesTaskActive(true),
+		)
 	default:
 		log.Fatal().Msgf("invalid ADP task name: ", c.Command.Name)
 	}

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/rs/zerolog/log"
 	"opentext.com/axcelerate/adp/client"
 )
 
@@ -14,13 +15,13 @@ type ComputeCountsConfiguration struct {
 	AdpComputeCountsEngineUserPassword    string              `json:"adp_computeCounts_engineUserPassword,omitempty"`
 	AdpTaskActive                         bool                `json:"adp_taskActive,omitempty"`
 	AdpComputeCountsEngineGlobalSearch    string              `json:"adp_computeCounts_engineGlobalSearch,omitempty"`
-	AdpExecutionPersistent                bool                `json:"adp_executionPersistent,omitempty"`
+	AdpExecutionPersistent                bool                `json:"adp_executionPersistent"`
 	AdpComputeCountsEngineType            string              `json:"adp_computeCounts_engineType,omitempty"`
 	AdpComputeCountsEngineUserName        string              `json:"adp_computeCounts_engineUserName,omitempty"`
 	AdpAbortWfOnFailure                   bool                `json:"adp_abortWfOnFailure,omitempty"`
 	AdpCleanUpHistory                     bool                `json:"adp_cleanUpHistory,omitempty"`
 	AdpComputeCountsQueryParts            []string            `json:"adp_computeCounts_queryParts,omitempty"`
-	AdpLoggingEnabled                     bool                `json:"adp_loggingEnabled,omitempty"`
+	AdpLoggingEnabled                     bool                `json:"adp_loggingEnabled"`
 	AdpComputeCountsTypes                 string              `json:"adp_computeCounts_types,omitempty"`
 	AdpComputeCountsResultName            string              `json:"adp_computeCounts_resultName,omitempty"`
 	AdpComputeCountsEngineName            string              `json:"adp_computeCounts_engineName"`
@@ -35,14 +36,12 @@ type ComputeCountsConfiguration struct {
 // NewComputeCountsTaskRequest ...
 func NewComputeCountsTaskRequest(opts ...func(*ComputeCountsConfiguration)) *Request {
 
-	cfg := &ComputeCountsConfiguration{
-		AdpLoggingEnabled:      false,
-		AdpExecutionPersistent: false,
-	}
-
+	cfg := &ComputeCountsConfiguration{}
 	for _, opt := range opts {
 		opt(cfg)
 	}
+
+	log.Debug().Msgf("cfg: %+v", cfg)
 
 	return &Request{
 		TaskType:          "Compute Counts",

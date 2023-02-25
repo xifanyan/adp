@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/rs/zerolog/log"
 	"opentext.com/axcelerate/adp/client"
 )
 
@@ -13,10 +14,10 @@ type QueryEngineConfiguration struct {
 	AdpQueryEngineFieldName                string                    `json:"adp_queryEngine_fieldName,omitempty"`
 	AdpQueryEngineEngineName               string                    `json:"adp_queryEngine_engineName"`
 	AdpTaskActive                          bool                      `json:"adp_taskActive,omitempty"`
-	AdpExecutionPersistent                 bool                      `json:"adp_executionPersistent,omitempty"`
+	AdpExecutionPersistent                 bool                      `json:"adp_executionPersistent"`
 	AdpQueryEngineEngineUserPassword       string                    `json:"adp_queryEngine_engineUserPassword,omitempty"`
 	AdpAbortWfOnFailure                    bool                      `json:"adp_abortWfOnFailure,omitempty"`
-	AdpLoggingEnabled                      bool                      `json:"adp_loggingEnabled,omitempty"`
+	AdpLoggingEnabled                      bool                      `json:"adp_loggingEnabled"`
 	AdpQueryEngineEngineTaxonomies         []EngineTaxonomyArg       `json:"adp_queryEngine_engineTaxonomies,omitempty"`
 	AdpQueryEngineEngineUserName           string                    `json:"adp_queryEngine_engineUserName,omitempty"`
 	AdpQueryEngineEngineType               string                    `json:"adp_queryEngine_engineType,omitempty"`
@@ -48,14 +49,13 @@ type QueryEngineConfiguration struct {
 
 // NewQueryEngineTaskRequest ...
 func NewQueryEngineTaskRequest(opts ...func(*QueryEngineConfiguration)) *Request {
-	cfg := &QueryEngineConfiguration{
-		AdpLoggingEnabled:      false,
-		AdpExecutionPersistent: false,
-	}
 
+	cfg := &QueryEngineConfiguration{}
 	for _, opt := range opts {
 		opt(cfg)
 	}
+
+	log.Debug().Msgf("cfg: %+v", cfg)
 
 	return &Request{
 		TaskType:          "Query Engine",

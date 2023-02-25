@@ -75,7 +75,7 @@ var (
 	// EngineQuery ...
 	EngineQuery = &cli.StringFlag{
 		Name:  "engineQuery",
-		Usage: "Engine Query",
+		Usage: "Engine Query (default: *)",
 		Value: "*",
 	}
 
@@ -94,7 +94,7 @@ var (
 	// ListCategoryProperties ...
 	ListCategoryProperties = &cli.StringFlag{
 		Name:  "listCategoryProperties",
-		Usage: "List Category Properties",
+		Usage: "List Category Properties (default: \"false\")",
 		Value: "false",
 	}
 
@@ -120,7 +120,7 @@ var (
 	// DbUser ...
 	DbUser = &cli.StringFlag{
 		Name:  "dbUser",
-		Usage: "Database User",
+		Usage: "Database User (default: postgres)",
 		Value: "postgres",
 	}
 
@@ -177,5 +177,12 @@ var (
 	ProcessIdentifiers = &cli.StringFlag{
 		Name:  "processIdentifiers",
 		Usage: "List of Identifiers e.g., documentHold.APP001;singleMindServer.APP002",
+	}
+
+	// RemoveAssociatedStorage ...
+	RemoveAssociatedStorage = &cli.StringFlag{
+		Name:  "removeAssociatedStorage",
+		Usage: "RemoveAssociatedStorage (default: \"true\")",
+		Value: "true",
 	}
 )
