@@ -118,13 +118,38 @@ var (
 		Action: executeTask,
 	}
 
+	// StartApplicationCmd ...
+	StartApplicationCmd = &cli.Command{
+		Name:    "startApplication",
+		Usage:   `adp-cli -p * startApplication -applicationIdentifier documentHold.APP001"`,
+		Aliases: []string{"sa"},
+		Flags: []cli.Flag{
+			ApplicationIdentifier,
+			ApplicationURL,
+		},
+		Action: executeTask,
+	}
+
+	// RemoveProcessesCmd ...
+	RemoveProcessesCmd = &cli.Command{
+		Name:    "removeProcesses",
+		Usage:   `adp-cli -p * removeProcesses -processIdentifiers documentHold.APP001"`,
+		Aliases: []string{"rp"},
+		Flags: []cli.Flag{
+			ProcessIdentifiers,
+		},
+		Action: executeTask,
+	}
+
 	Commands = []*cli.Command{
+		ComputeCountsCmd,
 		ListEntitiesCmd,
 		QueryEngineCmd,
-		TaxonomyStatisticCmd,
-		ComputeCountsCmd,
 		QueryPostgresqlDBCmd,
+		RemoveProcessesCmd,
 		StopProcessesCmd,
+		StartApplicationCmd,
+		TaxonomyStatisticCmd,
 	}
 )
 
@@ -142,6 +167,8 @@ func NewTask(c *cli.Context) task.Tasker {
 	case "listEntities":
 		adp = task.NewListEntitiesTask(
 			client,
+			task.WithListEntitiesLoggingEnabled(false),
+			task.WithListEntitiesExecutionPersistent(false),
 			task.WithListEntitiesID(c.String("id")),
 			task.WithListEntitiesRelatedEntity(c.String("relatedEntity")),
 			task.WithListEntitiesType(c.String("type")),
@@ -152,6 +179,8 @@ func NewTask(c *cli.Context) task.Tasker {
 	case "queryEngine":
 		adp = task.NewQueryEngineTask(
 			client,
+			task.WithQueryEngineLoggingEnabled(false),
+			task.WithQueryEngineExecutionPersistent(false),
 			task.WithQueryEngineEngineTaxonomies(c.String("engineTaxonomies")),
 			task.WithQueryEngineAdvancedRestrictions(c.String("advancedRestrictions")),
 			task.WithQueryEngineEngineName(c.String("engineName")),
@@ -163,6 +192,8 @@ func NewTask(c *cli.Context) task.Tasker {
 	case "taxonomyStatistic":
 		adp = task.NewTaxonomyStatisticTask(
 			client,
+			task.WithTaxonomyStatisticLoggingEnabled(false),
+			task.WithTaxonomyStatisticExecutionPersistent(false),
 			task.WithTaxonomyStatisticEngineTaxonomies(c.String("engineTaxonomies")),
 			task.WithTaxonomyStatisticEngineName(c.String("engineName")),
 			task.WithTaxonomyStatisticOutputTaxonomies(c.String("targetTaxonomy")),
@@ -175,6 +206,8 @@ func NewTask(c *cli.Context) task.Tasker {
 	case "computeCounts":
 		adp = task.NewComputeCountsTask(
 			client,
+			task.WithComputeCountsLoggingEnabled(false),
+			task.WithCommputeCountsExecutionPersistent(false),
 			task.WithComputeCountsEngineTaxonomies(c.String("engineTaxonomies")),
 			task.WithComputeCountsEngineName(c.String("engineName")),
 			task.WithComputeCountsApplicationIdentifier(c.String("applicationIdentifier")),
@@ -185,14 +218,26 @@ func NewTask(c *cli.Context) task.Tasker {
 	case "stopProcesses":
 		adp = task.NewStopProcessesTask(
 			client,
+			task.WithStopProcessesLoggingEnabled(false),
+			task.WithStopProcessesExecutionPersistent(false),
 			task.WithStopProcessProcessProcessIdentifiers(c.String("processIdentifiers")),
 		)
 	case "removeProcesses":
 		adp = task.NewRemoveProcessesTask(
 			client,
+			task.WithRemoveProcessesLoggingEnabled(false),
+			task.WithRemoveProcessesExecutionPersistent(false),
 			task.WithRemoveProcessesProcessIdentifiers(c.String("processIdentifiers")),
 			task.WithRemoveProcessesRemoveAssociatedStorages(c.String("removeAssociatedStorage")),
 			task.WithRemoveProcessesTaskActive(true),
+		)
+	case "startApplication":
+		adp = task.NewStartApplicationTask(
+			client,
+			task.WithStartApplicationLoggingEnabled(false),
+			task.WithStartApplicationExecutionPersistent(false),
+			task.WithStartApplicationApplicationIdentifier(c.String("applicationIdentifier")),
+			task.WithStartApplicationApplicationURL(c.String("applicationURL")),
 		)
 	default:
 		log.Fatal().Msgf("invalid ADP task name: ", c.Command.Name)

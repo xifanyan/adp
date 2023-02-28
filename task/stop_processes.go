@@ -35,6 +35,20 @@ func NewStopProcessesTaskRequest(opts ...func(*StopProcessesConfiguration)) *Req
 	}
 }
 
+// WithStopProcessesLoggingEnabled ...
+func WithStopProcessesLoggingEnabled(b bool) func(*StopProcessesConfiguration) {
+	return func(c *StopProcessesConfiguration) {
+		c.AdpLoggingEnabled = b
+	}
+}
+
+// WithStopProcessesExecutionPersistent ...
+func WithStopProcessesExecutionPersistent(b bool) func(*StopProcessesConfiguration) {
+	return func(c *StopProcessesConfiguration) {
+		c.AdpExecutionPersistent = b
+	}
+}
+
 // WithStopProcessProcessProcessIdentifiers ...
 // @TaskModelParameter(name="adp_stopProcess_processIdentifiers", mandatory=true)
 // @TableDescriptor(columnNames="Process identifier|Stop recursive", columnTypes="String|Boolean", separator="|")
@@ -76,9 +90,5 @@ func (t *StopProcessesTask) StructOutput() (StopProcessResult, error) {
 
 	_, err := t.StringOutput()
 
-	if err != nil {
-		return res, err
-	}
-
-	return res, nil
+	return res, err
 }

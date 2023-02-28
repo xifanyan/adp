@@ -40,6 +40,20 @@ func NewRemoveProcessesTaskRequest(opts ...func(*RemoveProcessesConfiguration)) 
 	}
 }
 
+// WithRemoveProcessesLoggingEnabled ...
+func WithRemoveProcessesLoggingEnabled(b bool) func(*RemoveProcessesConfiguration) {
+	return func(c *RemoveProcessesConfiguration) {
+		c.AdpLoggingEnabled = b
+	}
+}
+
+// WithRemoveProcessesExecutionPersistent ...
+func WithRemoveProcessesExecutionPersistent(b bool) func(*RemoveProcessesConfiguration) {
+	return func(c *RemoveProcessesConfiguration) {
+		c.AdpExecutionPersistent = b
+	}
+}
+
 // WithRemoveProcessesTaskActive, need to be true to enable the operation
 func WithRemoveProcessesTaskActive(b bool) func(*RemoveProcessesConfiguration) {
 	return func(c *RemoveProcessesConfiguration) {
