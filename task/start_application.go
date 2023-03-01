@@ -95,6 +95,10 @@ func (t *StartApplicationTask) StringOutput() (string, error) {
 		return "", err
 	}
 
+	if t.asynchronous {
+		return PrettyStruct(taskResp), nil
+	}
+
 	output := string(taskResp.ExecutionMetaData)
 
 	return output, nil

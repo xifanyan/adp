@@ -70,7 +70,7 @@ func main() {
 		Before: func(c *cli.Context) error {
 			if c.Bool("debug") {
 				zerolog.SetGlobalLevel(zerolog.DebugLevel)
-				log.Logger = zerolog.New(os.Stderr).With().Timestamp().Caller().Logger()
+				log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 			}
 			return nil
 		},

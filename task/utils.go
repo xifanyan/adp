@@ -18,3 +18,8 @@ func Prettify(s string) string {
 	json.Indent(buf, []byte(s), "", "  ")
 	return buf.String()
 }
+
+func PrettyStruct(i interface{}) string {
+	s, _ := json.MarshalIndent(i, "", "  ")
+	return string(s)
+}

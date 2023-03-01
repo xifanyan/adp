@@ -86,7 +86,7 @@ func (t *Task) Execute() (*Response, error) {
 		return nil, err
 	}
 
-	if taskResp.ExecutionStatus != "success" {
+	if !t.asynchronous && taskResp.ExecutionStatus != "success" {
 		return nil, fmt.Errorf("ADP Task %s failure: %s", taskResp.TaskType, taskResp.ExecutionID)
 	}
 
