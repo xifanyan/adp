@@ -143,12 +143,12 @@ type Entity struct {
 }
 
 type ListEntitiesTask struct {
-	Task
+	*Task
 }
 
 func NewListEntitiesTask(client *client.Client, opts ...func(*ListEntitiesConfiguration)) *ListEntitiesTask {
 	return &ListEntitiesTask{
-		Task{
+		&Task{
 			client:       client,
 			req:          NewListEntitiesTaskRequest(opts...),
 			asynchronous: false,

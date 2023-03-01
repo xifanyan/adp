@@ -172,12 +172,12 @@ type TaxonomyStatisticJSONOutput struct {
 }
 
 type TaxonomyStatisticTask struct {
-	Task
+	*Task
 }
 
 func NewTaxonomyStatisticTask(client *client.Client, opts ...func(*TaxonomyStatisticConfiguration)) *TaxonomyStatisticTask {
 	return &TaxonomyStatisticTask{
-		Task{
+		&Task{
 			client:       client,
 			req:          NewTaxonomyStatisticTaskRequest(opts...),
 			asynchronous: false,

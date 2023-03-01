@@ -23,6 +23,7 @@ const (
 
 type Tasker interface {
 	StringOutput() (string, error)
+	SetAsync()
 }
 
 type Task struct {
@@ -31,7 +32,7 @@ type Task struct {
 	asynchronous bool
 }
 
-func (t Task) NewHttpRequest() (*http.Request, error) {
+func (t *Task) NewHttpRequest() (*http.Request, error) {
 
 	payload, err := json.Marshal(t.req)
 	if err != nil {
@@ -58,7 +59,7 @@ func (t Task) NewHttpRequest() (*http.Request, error) {
 	return req, nil
 }
 
-func (t Task) Execute() (*Response, error) {
+func (t *Task) Execute() (*Response, error) {
 	var req *http.Request
 	var resp *http.Response
 
@@ -78,7 +79,7 @@ func (t Task) Execute() (*Response, error) {
 		return nil, err
 	}
 
-	log.Debug().Msgf("raw: %s", data)
+	log.Debug().Msgf("raw: %s", Prettify(string(data)))
 
 	taskResp := &Response{}
 	if err = json.Unmarshal(data, taskResp); err != nil {
@@ -92,12 +93,16 @@ func (t Task) Execute() (*Response, error) {
 	return taskResp, err
 }
 
-func (t Task) endpoint() string {
+func (t *Task) endpoint() string {
 	if t.asynchronous {
 		return fmt.Sprintf("https://%s/%s", t.client.Host, EXECUTETASKASYNC)
 	}
 
 	return fmt.Sprintf("https://%s/%s", t.client.Host, EXECUTETASK)
+}
+
+func (t *Task) SetAsync() {
+	t.asynchronous = true
 }
 
 // Request ...

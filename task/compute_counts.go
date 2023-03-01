@@ -154,12 +154,12 @@ type ComputeCountsStandardOutput struct {
 type ComputeCountsResult map[string]ComputeCountsStandardOutput
 
 type ComputeCountsTask struct {
-	Task
+	*Task
 }
 
 func NewComputeCountsTask(client *client.Client, opts ...func(*ComputeCountsConfiguration)) *ComputeCountsTask {
 	return &ComputeCountsTask{
-		Task{
+		&Task{
 			client:       client,
 			req:          NewComputeCountsTaskRequest(opts...),
 			asynchronous: false,

@@ -8,12 +8,12 @@ import (
 // RemoveProcessesConfiguration ...
 type RemoveProcessesConfiguration struct {
 	AdpProgressTaskTimeout                   int                                   `json:"adp_progressTaskTimeout,omitempty"`
-	AdpLoggingEnabled                        bool                                  `json:"adp_loggingEnabled,omitempty"`
+	AdpLoggingEnabled                        bool                                  `json:"adp_loggingEnabled"`
 	AdpRemoveProcessRemoveAssociatedStorages string                                `json:"adp_removeProcess_removeAssociatedStorages"`
 	AdpRemoveProcessProcessIdentifiers       []RemoveProcessesProcessIdentifierArg `json:"adp_removeProcess_processIdentifiers"`
 	AdpTaskActive                            bool                                  `json:"adp_taskActive"`
 	AdpTaskTimeout                           int                                   `json:"adp_taskTimeout,omitempty"`
-	AdpExecutionPersistent                   bool                                  `json:"adp_executionPersistent,omitempty"`
+	AdpExecutionPersistent                   bool                                  `json:"adp_executionPersistent"`
 	AdpRemoveProcessStoragesRemoved          string                                `json:"adp_removeProcess_storagesRemoved,omitempty"`
 	AdpAbortWfOnFailure                      bool                                  `json:"adp_abortWfOnFailure,omitempty"`
 	AdpCleanUpHistory                        bool                                  `json:"adp_cleanUpHistory,omitempty"`
@@ -78,12 +78,12 @@ func WithRemoveProcessesProcessIdentifiers(s string) func(*RemoveProcessesConfig
 }
 
 type RemoveProcessesTask struct {
-	Task
+	*Task
 }
 
 func NewRemoveProcessesTask(client *client.Client, opts ...func(*RemoveProcessesConfiguration)) *RemoveProcessesTask {
 	return &RemoveProcessesTask{
-		Task{
+		&Task{
 			client:       client,
 			req:          NewRemoveProcessesTaskRequest(opts...),
 			asynchronous: false,

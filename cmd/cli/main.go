@@ -59,12 +59,18 @@ func main() {
 				Usage:   "Pretty Print",
 				Value:   false,
 			},
+			&cli.BoolFlag{
+				Name:    "async",
+				Aliases: []string{"a"},
+				Usage:   "Asynchronous",
+				Value:   false,
+			},
 		},
 		Commands: command.Commands,
 		Before: func(c *cli.Context) error {
 			if c.Bool("debug") {
 				zerolog.SetGlobalLevel(zerolog.DebugLevel)
-				log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+				log.Logger = zerolog.New(os.Stderr).With().Timestamp().Caller().Logger()
 			}
 			return nil
 		},

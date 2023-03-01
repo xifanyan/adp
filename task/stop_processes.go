@@ -49,22 +49,22 @@ func WithStopProcessesExecutionPersistent(b bool) func(*StopProcessesConfigurati
 	}
 }
 
-// WithStopProcessProcessProcessIdentifiers ...
+// WithStopProcessesProcessIdentifiers ...
 // @TaskModelParameter(name="adp_stopProcess_processIdentifiers", mandatory=true)
 // @TableDescriptor(columnNames="Process identifier|Stop recursive", columnTypes="String|Boolean", separator="|")
-func WithStopProcessProcessProcessIdentifiers(s string) func(*StopProcessesConfiguration) {
+func WithStopProcessesProcessIdentifiers(s string) func(*StopProcessesConfiguration) {
 	return func(c *StopProcessesConfiguration) {
 		c.AdpStopProcessProcessIdentifiers = parseStopProcessesProcessIdentifiersArg(s)
 	}
 }
 
 type StopProcessesTask struct {
-	Task
+	*Task
 }
 
 func NewStopProcessesTask(client *client.Client, opts ...func(*StopProcessesConfiguration)) *StopProcessesTask {
 	return &StopProcessesTask{
-		Task{
+		&Task{
 			client:       client,
 			req:          NewStopProcessesTaskRequest(opts...),
 			asynchronous: false,

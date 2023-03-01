@@ -76,12 +76,12 @@ func (meta *StartApplicationExecutionMetaData) Output(raw json.RawMessage) (stri
 }
 
 type StartApplicationTask struct {
-	Task
+	*Task
 }
 
 func NewStartApplicationTask(client *client.Client, opts ...func(*StartApplicationConfiguration)) *StartApplicationTask {
 	return &StartApplicationTask{
-		Task{
+		&Task{
 			client:       client,
 			req:          NewStartApplicationTaskRequest(opts...),
 			asynchronous: false,

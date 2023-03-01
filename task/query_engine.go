@@ -153,12 +153,12 @@ type QueryEngineResult struct {
 }
 
 type QueryEngineTask struct {
-	Task
+	*Task
 }
 
 func NewQueryEngineTask(client *client.Client, opts ...func(*QueryEngineConfiguration)) *QueryEngineTask {
 	return &QueryEngineTask{
-		Task{
+		&Task{
 			client:       client,
 			req:          NewQueryEngineTaskRequest(opts...),
 			asynchronous: false,

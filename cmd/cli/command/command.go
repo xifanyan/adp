@@ -216,28 +216,54 @@ func NewTask(c *cli.Context) task.Tasker {
 			task.WithComputeCountsQueryParts(c.String("queryParts")),
 		)
 	case "stopProcesses":
+		var opts []func(*task.StopProcessesConfiguration)
+		if c.Bool("async") {
+			opts = append(opts,
+				task.WithStopProcessesLoggingEnabled(true),
+				task.WithStopProcessesExecutionPersistent(true),
+			)
+		}
+		opts = append(opts, task.WithStopProcessesProcessIdentifiers(c.String("processIdentifiers")))
+
 		adp = task.NewStopProcessesTask(
 			client,
-			task.WithStopProcessesLoggingEnabled(false),
-			task.WithStopProcessesExecutionPersistent(false),
-			task.WithStopProcessProcessProcessIdentifiers(c.String("processIdentifiers")),
+			opts...,
 		)
 	case "removeProcesses":
-		adp = task.NewRemoveProcessesTask(
-			client,
-			task.WithRemoveProcessesLoggingEnabled(false),
-			task.WithRemoveProcessesExecutionPersistent(false),
+		var opts []func(*task.RemoveProcessesConfiguration)
+
+		if c.Bool("async") {
+			opts = append(opts,
+				task.WithRemoveProcessesLoggingEnabled(true),
+				task.WithRemoveProcessesExecutionPersistent(true))
+		}
+
+		opts = append(opts,
 			task.WithRemoveProcessesProcessIdentifiers(c.String("processIdentifiers")),
 			task.WithRemoveProcessesRemoveAssociatedStorages(c.String("removeAssociatedStorage")),
 			task.WithRemoveProcessesTaskActive(true),
 		)
+
+		adp = task.NewRemoveProcessesTask(
+			client,
+			opts...,
+		)
 	case "startApplication":
+		var opts []func(*task.StartApplicationConfiguration)
+
+		if c.Bool("async") {
+			opts = append(opts,
+				task.WithStartApplicationLoggingEnabled(true),
+				task.WithStartApplicationExecutionPersistent(true),
+			)
+		}
+		opts = append(opts,
+			task.WithStartApplicationApplicationIdentifier(c.String("applicationIdentifier")),
+		)
+
 		adp = task.NewStartApplicationTask(
 			client,
-			task.WithStartApplicationLoggingEnabled(false),
-			task.WithStartApplicationExecutionPersistent(false),
-			task.WithStartApplicationApplicationIdentifier(c.String("applicationIdentifier")),
-			task.WithStartApplicationApplicationURL(c.String("applicationURL")),
+			opts...,
 		)
 	default:
 		log.Fatal().Msgf("invalid ADP task name: ", c.Command.Name)
@@ -248,6 +274,10 @@ func NewTask(c *cli.Context) task.Tasker {
 
 func executeTask(c *cli.Context) error {
 	adp := NewTask(c)
+
+	if c.Bool("async") {
+		adp.SetAsync()
+	}
 
 	s, err := adp.StringOutput()
 	if err != nil {
