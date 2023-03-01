@@ -146,12 +146,12 @@ type ListEntitiesTask struct {
 	*Task
 }
 
-func NewListEntitiesTask(client *client.Client, opts ...func(*ListEntitiesConfiguration)) *ListEntitiesTask {
+func NewListEntitiesTask(client *client.Client, async bool, opts ...func(*ListEntitiesConfiguration)) *ListEntitiesTask {
 	return &ListEntitiesTask{
 		&Task{
 			client:       client,
 			req:          NewListEntitiesTaskRequest(opts...),
-			asynchronous: false,
+			asynchronous: async,
 		},
 	}
 }

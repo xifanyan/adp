@@ -62,12 +62,12 @@ type StopProcessesTask struct {
 	*Task
 }
 
-func NewStopProcessesTask(client *client.Client, opts ...func(*StopProcessesConfiguration)) *StopProcessesTask {
+func NewStopProcessesTask(client *client.Client, async bool, opts ...func(*StopProcessesConfiguration)) *StopProcessesTask {
 	return &StopProcessesTask{
 		&Task{
 			client:       client,
 			req:          NewStopProcessesTaskRequest(opts...),
-			asynchronous: false,
+			asynchronous: async,
 		},
 	}
 }

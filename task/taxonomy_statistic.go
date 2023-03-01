@@ -175,12 +175,12 @@ type TaxonomyStatisticTask struct {
 	*Task
 }
 
-func NewTaxonomyStatisticTask(client *client.Client, opts ...func(*TaxonomyStatisticConfiguration)) *TaxonomyStatisticTask {
+func NewTaxonomyStatisticTask(client *client.Client, async bool, opts ...func(*TaxonomyStatisticConfiguration)) *TaxonomyStatisticTask {
 	return &TaxonomyStatisticTask{
 		&Task{
 			client:       client,
 			req:          NewTaxonomyStatisticTaskRequest(opts...),
-			asynchronous: false,
+			asynchronous: async,
 		},
 	}
 }

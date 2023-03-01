@@ -156,12 +156,12 @@ type QueryEngineTask struct {
 	*Task
 }
 
-func NewQueryEngineTask(client *client.Client, opts ...func(*QueryEngineConfiguration)) *QueryEngineTask {
+func NewQueryEngineTask(client *client.Client, async bool, opts ...func(*QueryEngineConfiguration)) *QueryEngineTask {
 	return &QueryEngineTask{
 		&Task{
 			client:       client,
 			req:          NewQueryEngineTaskRequest(opts...),
-			asynchronous: false,
+			asynchronous: async,
 		},
 	}
 }

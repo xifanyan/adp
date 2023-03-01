@@ -81,12 +81,12 @@ type RemoveProcessesTask struct {
 	*Task
 }
 
-func NewRemoveProcessesTask(client *client.Client, opts ...func(*RemoveProcessesConfiguration)) *RemoveProcessesTask {
+func NewRemoveProcessesTask(client *client.Client, async bool, opts ...func(*RemoveProcessesConfiguration)) *RemoveProcessesTask {
 	return &RemoveProcessesTask{
 		&Task{
 			client:       client,
 			req:          NewRemoveProcessesTaskRequest(opts...),
-			asynchronous: false,
+			asynchronous: async,
 		},
 	}
 }

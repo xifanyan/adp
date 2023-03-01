@@ -79,12 +79,12 @@ type StartApplicationTask struct {
 	*Task
 }
 
-func NewStartApplicationTask(client *client.Client, opts ...func(*StartApplicationConfiguration)) *StartApplicationTask {
+func NewStartApplicationTask(client *client.Client, async bool, opts ...func(*StartApplicationConfiguration)) *StartApplicationTask {
 	return &StartApplicationTask{
 		&Task{
 			client:       client,
 			req:          NewStartApplicationTaskRequest(opts...),
-			asynchronous: false,
+			asynchronous: async,
 		},
 	}
 }

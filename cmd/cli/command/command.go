@@ -165,8 +165,8 @@ func NewTask(c *cli.Context) task.Tasker {
 
 	switch c.Command.Name {
 	case "listEntities":
-		adp = task.NewListEntitiesTask(
-			client,
+		var opts []func(*task.ListEntitiesConfiguration)
+		opts = append(opts,
 			task.WithListEntitiesLoggingEnabled(false),
 			task.WithListEntitiesExecutionPersistent(false),
 			task.WithListEntitiesID(c.String("id")),
@@ -176,9 +176,15 @@ func NewTask(c *cli.Context) task.Tasker {
 			task.WithListEntitiesStatus(c.String("status")),
 			task.WithListEntitiesWorkspace(c.String("workspace")),
 		)
-	case "queryEngine":
-		adp = task.NewQueryEngineTask(
+
+		adp = task.NewListEntitiesTask(
 			client,
+			c.Bool("async"),
+			opts...,
+		)
+	case "queryEngine":
+		var opts []func(*task.QueryEngineConfiguration)
+		opts = append(opts,
 			task.WithQueryEngineLoggingEnabled(false),
 			task.WithQueryEngineExecutionPersistent(false),
 			task.WithQueryEngineEngineTaxonomies(c.String("engineTaxonomies")),
@@ -189,9 +195,15 @@ func NewTask(c *cli.Context) task.Tasker {
 			task.WithQueryEngineEngineUserPassword(c.String("engineUserPassword")),
 			task.WithQueryEngineApplicationIdentifier(c.String("applicationIdentifier")),
 		)
-	case "taxonomyStatistic":
-		adp = task.NewTaxonomyStatisticTask(
+
+		adp = task.NewQueryEngineTask(
 			client,
+			c.Bool("async"),
+			opts...,
+		)
+	case "taxonomyStatistic":
+		var opts []func(*task.TaxonomyStatisticConfiguration)
+		opts = append(opts,
 			task.WithTaxonomyStatisticLoggingEnabled(false),
 			task.WithTaxonomyStatisticExecutionPersistent(false),
 			task.WithTaxonomyStatisticEngineTaxonomies(c.String("engineTaxonomies")),
@@ -203,9 +215,15 @@ func NewTask(c *cli.Context) task.Tasker {
 			task.WithTaxonomyStatisticEngineUserName(c.String("engineUserName")),
 			task.WithTaxonomyStatisticEngineUserPassword(c.String("engineUserPassword")),
 		)
-	case "computeCounts":
-		adp = task.NewComputeCountsTask(
+
+		adp = task.NewTaxonomyStatisticTask(
 			client,
+			c.Bool("async"),
+			opts...,
+		)
+	case "computeCounts":
+		var opts []func(*task.ComputeCountsConfiguration)
+		opts = append(opts,
 			task.WithComputeCountsLoggingEnabled(false),
 			task.WithCommputeCountsExecutionPersistent(false),
 			task.WithComputeCountsEngineTaxonomies(c.String("engineTaxonomies")),
@@ -214,6 +232,12 @@ func NewTask(c *cli.Context) task.Tasker {
 			task.WithComputeCountsEngineUserName(c.String("engineUserName")),
 			task.WithComputeCountsEngineUserPassword(c.String("engineUserPassword")),
 			task.WithComputeCountsQueryParts(c.String("queryParts")),
+		)
+
+		adp = task.NewComputeCountsTask(
+			client,
+			c.Bool("async"),
+			opts...,
 		)
 	case "stopProcesses":
 		var opts []func(*task.StopProcessesConfiguration)
@@ -227,6 +251,7 @@ func NewTask(c *cli.Context) task.Tasker {
 
 		adp = task.NewStopProcessesTask(
 			client,
+			c.Bool("async"),
 			opts...,
 		)
 	case "removeProcesses":
@@ -246,6 +271,7 @@ func NewTask(c *cli.Context) task.Tasker {
 
 		adp = task.NewRemoveProcessesTask(
 			client,
+			c.Bool("async"),
 			opts...,
 		)
 	case "startApplication":
@@ -263,6 +289,7 @@ func NewTask(c *cli.Context) task.Tasker {
 
 		adp = task.NewStartApplicationTask(
 			client,
+			c.Bool("async"),
 			opts...,
 		)
 	default:

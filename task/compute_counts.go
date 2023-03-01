@@ -157,12 +157,12 @@ type ComputeCountsTask struct {
 	*Task
 }
 
-func NewComputeCountsTask(client *client.Client, opts ...func(*ComputeCountsConfiguration)) *ComputeCountsTask {
+func NewComputeCountsTask(client *client.Client, async bool, opts ...func(*ComputeCountsConfiguration)) *ComputeCountsTask {
 	return &ComputeCountsTask{
 		&Task{
 			client:       client,
 			req:          NewComputeCountsTaskRequest(opts...),
-			asynchronous: false,
+			asynchronous: async,
 		},
 	}
 }
