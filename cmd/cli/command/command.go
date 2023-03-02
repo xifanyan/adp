@@ -141,6 +141,16 @@ var (
 		Action: executeTask,
 	}
 
+	StatusAndProgressCmd = &cli.Command{
+		Name:    "statusAndProgress",
+		Usage:   `go-adp -p * statusAndProgress --executionID ***`,
+		Aliases: []string{"sp"},
+		Flags: []cli.Flag{
+			ExecutionID,
+		},
+		Action: executeTask,
+	}
+
 	Commands = []*cli.Command{
 		ComputeCountsCmd,
 		ListEntitiesCmd,
@@ -149,6 +159,7 @@ var (
 		RemoveProcessesCmd,
 		StopProcessesCmd,
 		StartApplicationCmd,
+		StatusAndProgressCmd,
 		TaxonomyStatisticCmd,
 	}
 )
@@ -292,6 +303,8 @@ func NewTask(c *cli.Context) task.Tasker {
 			c.Bool("async"),
 			opts...,
 		)
+	case "statusAndProgress":
+		adp = task.NewStatusAndProgressTask(client, c.String("executionID"))
 	default:
 		log.Fatal().Msgf("invalid ADP task name: ", c.Command.Name)
 	}
