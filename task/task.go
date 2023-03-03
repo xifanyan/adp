@@ -9,7 +9,7 @@ import (
 	"net/http"
 
 	"github.com/rs/zerolog/log"
-	"opentext.com/axcelerate/adp/client"
+	"github.com/xifanyan/adp/client"
 )
 
 const (

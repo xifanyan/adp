@@ -5,8 +5,8 @@ import (
 
 	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
-	"opentext.com/axcelerate/adp/client"
-	"opentext.com/axcelerate/adp/task"
+	"github.com/xifanyan/adp/client"
+	"github.com/xifanyan/adp/task"
 )
 
 var (

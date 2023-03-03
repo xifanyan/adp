@@ -6,7 +6,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
-	"opentext.com/axcelerate/adp/cmd/cli/command"
+	"github.com/xifanyan/adp/cmd/cli/command"
 )
 
 const (

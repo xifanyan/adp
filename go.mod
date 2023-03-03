@@ -1,4 +1,4 @@
-module opentext.com/axcelerate/adp
+module github.com/xifanyan/adp
 
 go 1.19
 
