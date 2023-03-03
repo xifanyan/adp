@@ -157,7 +157,7 @@ type TaxonomyStatisticResult []struct {
 	Category []struct {
 		ID          string           `json:"id"`
 		DisplayName string           `json:"displayName"`
-		Count       int              `json:"count,omitempty"`
+		Count       int              `json:"count"`
 		Properties  map[string][]any `json:"properties,omitempty"`
 	} `json:"category"`
 }
