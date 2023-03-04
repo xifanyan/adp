@@ -117,6 +117,24 @@ var (
 		Usage: "Execution ID",
 	}
 
+	ClientCertPath = &cli.StringFlag{
+		Name:  "clientCertPath",
+		Usage: "Client Cert Path",
+		Value: "S:/Projects/ProcessControl/security/postgres/client.billing.crt",
+	}
+
+	ClientKeyPath = &cli.StringFlag{
+		Name:  "clientKeyPath",
+		Usage: "Client Key Path",
+		Value: "S:/Projects/ProcessControl/security/postgres/client.billing.key",
+	}
+
+	RootCertPath = &cli.StringFlag{
+		Name:  "rootCertPath",
+		Usage: "Root Cert Path",
+		Value: "S:/Projects/ProcessControl/security/postgres/root.billing.crt",
+	}
+
 	// DbUser ...
 	DbUser = &cli.StringFlag{
 		Name:  "dbUser",

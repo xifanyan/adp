@@ -167,7 +167,7 @@ func NewComputeCountsTask(client *client.Client, async bool, opts ...func(*Compu
 	}
 }
 
-func (t *ComputeCountsTask) StringOutput() (string, error) {
+func (t *ComputeCountsTask) OutputToString() (string, error) {
 	taskResp, err := t.Execute()
 	if err != nil {
 		return "", err
@@ -187,7 +187,7 @@ func (t *ComputeCountsTask) StringOutput() (string, error) {
 func (t *ComputeCountsTask) StructOutput() (ComputeCountsResult, error) {
 	var res ComputeCountsResult
 
-	output, err := t.StringOutput()
+	output, err := t.OutputToString()
 
 	if err != nil {
 		return res, err

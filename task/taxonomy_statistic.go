@@ -185,7 +185,7 @@ func NewTaxonomyStatisticTask(client *client.Client, async bool, opts ...func(*T
 	}
 }
 
-func (t *TaxonomyStatisticTask) StringOutput() (string, error) {
+func (t *TaxonomyStatisticTask) OutputToString() (string, error) {
 	var err error
 
 	taskResp, err := t.Execute()
@@ -218,7 +218,7 @@ func (t *TaxonomyStatisticTask) StructOutput() (TaxonomyStatisticResult, error) 
 	var err error
 	var res TaxonomyStatisticResult
 
-	output, err := t.StringOutput()
+	output, err := t.OutputToString()
 
 	if err != nil {
 		return res, err

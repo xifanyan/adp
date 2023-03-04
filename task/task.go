@@ -22,7 +22,7 @@ const (
 )
 
 type Tasker interface {
-	StringOutput() (string, error)
+	OutputToString() (string, error)
 	SetAsync()
 }
 

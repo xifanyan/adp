@@ -156,7 +156,7 @@ func NewListEntitiesTask(client *client.Client, async bool, opts ...func(*ListEn
 	}
 }
 
-func (t *ListEntitiesTask) StringOutput() (string, error) {
+func (t *ListEntitiesTask) OutputToString() (string, error) {
 	taskResp, err := t.Execute()
 	if err != nil {
 		return "", err
@@ -176,7 +176,7 @@ func (t *ListEntitiesTask) StringOutput() (string, error) {
 func (t *ListEntitiesTask) StructOutput() (ListEntitiesResult, error) {
 	var res ListEntitiesResult
 
-	output, err := t.StringOutput()
+	output, err := t.OutputToString()
 
 	if err != nil {
 		return res, err

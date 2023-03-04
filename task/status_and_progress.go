@@ -35,7 +35,7 @@ func (t *StatusAndProgressTask) NewStatusAndProgressRequest() *http.Request {
 	return req
 }
 
-func (t *StatusAndProgressTask) StringOutput() (string, error) {
+func (t *StatusAndProgressTask) OutputToString() (string, error) {
 	var err error
 
 	var req *http.Request

@@ -19,7 +19,7 @@ func Prettify(s string) string {
 	return buf.String()
 }
 
-func PrettyStruct(i interface{}) string {
-	s, _ := json.MarshalIndent(i, "", "  ")
+func StructToString(i interface{}) string {
+	s, _ := json.Marshal(i)
 	return string(s)
 }

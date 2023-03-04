@@ -166,7 +166,7 @@ func NewQueryEngineTask(client *client.Client, async bool, opts ...func(*QueryEn
 	}
 }
 
-func (t *QueryEngineTask) StringOutput() (string, error) {
+func (t *QueryEngineTask) OutputToString() (string, error) {
 	taskResp, err := t.Execute()
 	if err != nil {
 		return "", err
@@ -179,7 +179,7 @@ func (t *QueryEngineTask) StringOutput() (string, error) {
 func (t *QueryEngineTask) StructOutput() (QueryEngineResult, error) {
 	var res QueryEngineResult
 
-	output, err := t.StringOutput()
+	output, err := t.OutputToString()
 
 	if err != nil {
 		return res, err

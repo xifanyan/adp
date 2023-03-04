@@ -72,14 +72,14 @@ func NewStopProcessesTask(client *client.Client, async bool, opts ...func(*StopP
 	}
 }
 
-func (t *StopProcessesTask) StringOutput() (string, error) {
+func (t *StopProcessesTask) OutputToString() (string, error) {
 	taskResp, err := t.Execute()
 	if err != nil {
 		return "", err
 	}
 
 	if t.asynchronous {
-		return PrettyStruct(taskResp), nil
+		return StructToString(taskResp), nil
 	}
 
 	output := string(taskResp.ExecutionMetaData)
@@ -92,7 +92,7 @@ type StopProcessResult struct{}
 func (t *StopProcessesTask) StructOutput() (StopProcessResult, error) {
 	var res StopProcessResult
 
-	_, err := t.StringOutput()
+	_, err := t.OutputToString()
 
 	return res, err
 }

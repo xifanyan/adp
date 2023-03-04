@@ -89,14 +89,14 @@ func NewStartApplicationTask(client *client.Client, async bool, opts ...func(*St
 	}
 }
 
-func (t *StartApplicationTask) StringOutput() (string, error) {
+func (t *StartApplicationTask) OutputToString() (string, error) {
 	taskResp, err := t.Execute()
 	if err != nil {
 		return "", err
 	}
 
 	if t.asynchronous {
-		return PrettyStruct(taskResp), nil
+		return StructToString(taskResp), nil
 	}
 
 	output := string(taskResp.ExecutionMetaData)
@@ -109,7 +109,7 @@ type StartApplicationResult struct{}
 func (t *StartApplicationTask) StructOutput() (StartApplicationResult, error) {
 	var res StartApplicationResult
 
-	_, err := t.StringOutput()
+	_, err := t.OutputToString()
 
 	return res, err
 }

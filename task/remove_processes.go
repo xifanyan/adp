@@ -92,14 +92,14 @@ func NewRemoveProcessesTask(client *client.Client, async bool, opts ...func(*Rem
 }
 
 // StringOutput ...
-func (t *RemoveProcessesTask) StringOutput() (string, error) {
+func (t *RemoveProcessesTask) OutputToString() (string, error) {
 	taskResp, err := t.Execute()
 	if err != nil {
 		return "", err
 	}
 
 	if t.asynchronous {
-		return PrettyStruct(taskResp), nil
+		return StructToString(taskResp), nil
 	}
 
 	output := string(taskResp.ExecutionMetaData)
@@ -113,7 +113,7 @@ type RemoveProcessResult struct{}
 func (t *RemoveProcessesTask) StructOutput() (RemoveProcessResult, error) {
 	var res RemoveProcessResult
 
-	_, err := t.StringOutput()
+	_, err := t.OutputToString()
 
 	if err != nil {
 		return res, err

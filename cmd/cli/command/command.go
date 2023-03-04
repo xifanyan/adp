@@ -303,6 +303,31 @@ func NewTask(c *cli.Context) task.Tasker {
 			c.Bool("async"),
 			opts...,
 		)
+	case "queryPostgresqlDB":
+		var opts []func(*task.QueryPostgresqlDBConfiguration)
+
+		if c.Bool("async") {
+			opts = append(opts,
+				task.WithQueryPostgresqlDBLoggingEnabled(false),
+				task.WithQueryPostgresqlDBExecutionPersistent(false),
+			)
+		}
+		opts = append(opts,
+			task.WithQueryPostgresqlDBConnectionPoolClientCertPath(c.String("clientCertPath")),
+			task.WithQueryPostgresqlDBConnectionPoolClientKeyPath(c.String("clientKeyPath")),
+			task.WithQueryPostgresqlDBConnectionPoolRootCertPath(c.String("rootCertPath")),
+			task.WithQueryPostgresqlDBDbUser(c.String("dbUser")),
+			task.WithQueryPostgresqlDBDbPassword(c.String("dbPassword")),
+			task.WithQueryPostgresqlDBDbConnectionURL(c.String("dbConnectionURL")),
+			task.WithQueryPostgresqlDBSQLQuery(c.String("sqlQuery")),
+			task.WithQueryPostgresqlDBJSONResultSizeLimitMB(c.String("sizeLimitMB")),
+		)
+
+		adp = task.NewQueryPostgresqlDBTask(
+			client,
+			c.Bool("async"),
+			opts...,
+		)
 	case "statusAndProgress":
 		adp = task.NewStatusAndProgressTask(client, c.String("executionID"))
 	default:
@@ -319,7 +344,7 @@ func executeTask(c *cli.Context) error {
 		adp.SetAsync()
 	}
 
-	s, err := adp.StringOutput()
+	s, err := adp.OutputToString()
 	if err != nil {
 		return err
 	}
