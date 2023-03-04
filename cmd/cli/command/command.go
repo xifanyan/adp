@@ -110,7 +110,7 @@ var (
 	// StopProcessesCmd ...
 	StopProcessesCmd = &cli.Command{
 		Name:    "stopProcesses",
-		Usage:   `adp-cli -p * stopProcesses -processIdentifiers documentHold.APP001;axcelerate.APP001_Review"`,
+		Usage:   `adp-cli -p * stopProcesses -processIdentifiers documentHold.APP001;axcelerate.APP001_Review`,
 		Aliases: []string{"sp"},
 		Flags: []cli.Flag{
 			ProcessIdentifiers,
@@ -121,7 +121,7 @@ var (
 	// StartApplicationCmd ...
 	StartApplicationCmd = &cli.Command{
 		Name:    "startApplication",
-		Usage:   `adp-cli -p * startApplication -applicationIdentifier documentHold.APP001"`,
+		Usage:   `adp-cli -p * startApplication -applicationIdentifier documentHold.APP001`,
 		Aliases: []string{"sa"},
 		Flags: []cli.Flag{
 			ApplicationIdentifier,
@@ -133,7 +133,7 @@ var (
 	// RemoveProcessesCmd ...
 	RemoveProcessesCmd = &cli.Command{
 		Name:    "removeProcesses",
-		Usage:   `adp-cli -p * removeProcesses -processIdentifiers documentHold.APP001"`,
+		Usage:   `adp-cli -p * removeProcesses -processIdentifiers documentHold.APP001`,
 		Aliases: []string{"rp"},
 		Flags: []cli.Flag{
 			ProcessIdentifiers,
