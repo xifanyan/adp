@@ -98,6 +98,9 @@ var (
 		Usage:   `adp-cli -p * queryPostgresqlDB -dbUser postgres -dbPassword * -dbConnectionURL jdbc:postgresql://dev1-db0.axcelerate.local:5432/db -sqlQuery "select ..."`,
 		Aliases: []string{"qp"},
 		Flags: []cli.Flag{
+			ClientKeyPath,
+			ClientCertPath,
+			RootCertPath,
 			DbUser,
 			DbPassword,
 			DbConnectionURL,
