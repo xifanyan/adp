@@ -38,6 +38,10 @@ type QueryPostgresqlDBConfiguration struct {
 	AdpQpgdbJSONResultSizeLimitMB          string `json:"adp_qpgdb_jsonResultSizeLimitMB,omitempty"`
 }
 
+func (cfg *QueryPostgresqlDBConfiguration) enforcePersistentExecution() {
+	cfg.AdpExecutionPersistent = true
+}
+
 // NewQueryPostgresqlDBTaskRequest ...
 func NewQueryPostgresqlDBTaskRequest(opts ...func(*QueryPostgresqlDBConfiguration)) *Request {
 

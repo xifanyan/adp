@@ -3,10 +3,10 @@ package adp
 import "encoding/json"
 
 type Request struct {
-	TaskType          string `json:"taskType"`
-	TaskDescription   string `json:"taskDescription"`
-	TaskDisplayName   string `json:"taskDisplayName"`
-	TaskConfiguration any    `json:"taskConfiguration"`
+	TaskType          string       `json:"taskType"`
+	TaskDescription   string       `json:"taskDescription"`
+	TaskDisplayName   string       `json:"taskDisplayName"`
+	TaskConfiguration configurator `json:"taskConfiguration"`
 }
 
 // JSON generates a JSON representation of the Request object.

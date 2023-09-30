@@ -45,6 +45,10 @@ type QueryEngineConfiguration struct {
 	AdpQueryEngineExitOnValueChanged       bool                      `json:"adp_queryEngine_exitOnValueChanged,omitempty"`
 }
 
+func (cfg *QueryEngineConfiguration) enforcePersistentExecution() {
+	cfg.AdpExecutionPersistent = true
+}
+
 // NewQueryEngineRequest creates a new Query Engine request with the given options.
 //
 // The function takes one or more function options as arguments, which can be used to configure the Query Engine.

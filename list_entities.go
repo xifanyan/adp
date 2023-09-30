@@ -47,6 +47,10 @@ type ListEntitiesConfiguration struct {
 	AdpListEntitiesHTTPSAllowUntrustedHosts                string   `json:"adp_listEntities_httpsAllowUntrustedHosts,omitempty"`
 }
 
+func (cfg *ListEntitiesConfiguration) enforcePersistentExecution() {
+	cfg.AdpExecutionPersistent = true
+}
+
 // NewListEntitiesTaskRequest creates a new Request object for task listing entities.
 // It accepts optional configuration functions and returns the created Request object.
 func NewListEntitiesRequest(opts ...func(*ListEntitiesConfiguration)) *Request {

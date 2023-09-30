@@ -23,6 +23,10 @@ const (
 	ASYNCHRONOUS
 )
 
+type configurator interface {
+	enforcePersistentExecution()
+}
+
 type Tasker interface {
 	GetResultAsString() (string, error)
 }
@@ -66,6 +70,12 @@ func (t *Task) WithRequest(req *Request) *Task {
 // Returns: The Task with the updated executionMode.
 func (t *Task) WithExecutionMode(executionMode ExecutionMode) *Task {
 	t.executionMode = executionMode
+
+	// Persistent Execution required for ASYNCHRONOUS mode
+	if executionMode == ASYNCHRONOUS {
+		t.req.TaskConfiguration.enforcePersistentExecution()
+	}
+
 	return t
 }
 

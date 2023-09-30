@@ -18,6 +18,10 @@ type StartApplicationConfiguration struct {
 	AdpStartApplicationApplicationIdentifier string `json:"adp_startApplication_applicationIdentifier"`
 }
 
+func (cfg *StartApplicationConfiguration) enforcePersistentExecution() {
+	cfg.AdpExecutionPersistent = true
+}
+
 func NewStartApplicationTaskRequest(opts ...func(*StartApplicationConfiguration)) *Request {
 
 	cfg := &StartApplicationConfiguration{

@@ -37,6 +37,10 @@ type TaxonomyStatisticConfiguration struct {
 	AdpTaxonomyStatisticEngineName                        string                `json:"adp_taxonomyStatistic_engineName"`
 }
 
+func (cfg *TaxonomyStatisticConfiguration) enforcePersistentExecution() {
+	cfg.AdpExecutionPersistent = true
+}
+
 func NewTaxonomyStatisticRequest(opts ...func(*TaxonomyStatisticConfiguration)) *Request {
 
 	cfg := &TaxonomyStatisticConfiguration{

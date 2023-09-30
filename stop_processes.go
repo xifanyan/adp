@@ -15,6 +15,10 @@ type StopProcessesConfiguration struct {
 	AdpCleanUpHistory                bool                                `json:"adp_cleanUpHistory,omitempty"`
 }
 
+func (cfg *StopProcessesConfiguration) enforcePersistentExecution() {
+	cfg.AdpExecutionPersistent = true
+}
+
 func NewStopProcessesTaskRequest(opts ...func(*StopProcessesConfiguration)) *Request {
 
 	cfg := &StopProcessesConfiguration{

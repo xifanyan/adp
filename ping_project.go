@@ -20,6 +20,10 @@ type PingProjectConfiguration struct {
 	AdpPingProjectIdentifiers    string `json:"adp_pingProject_Identifiers,omitempty"`
 }
 
+func (cfg *PingProjectConfiguration) enforcePersistentExecution() {
+	cfg.AdpExecutionPersistent = true
+}
+
 func WithPingProjectLoggingEnabled(enabled bool) func(*PingProjectConfiguration) {
 	return func(c *PingProjectConfiguration) {
 		c.AdpLoggingEnabled = enabled

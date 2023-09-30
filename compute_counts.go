@@ -32,6 +32,10 @@ type ComputeCountsConfiguration struct {
 	AdpComputeCountsMainQueryType         any                 `json:"adp_computeCounts_mainQueryType,omitempty"`
 }
 
+func (cfg *ComputeCountsConfiguration) enforcePersistentExecution() {
+	cfg.AdpExecutionPersistent = true
+}
+
 // NewComputeCountsTaskRequest creates a new Request object for the ComputeCountsTask.
 func NewComputeCountsTaskRequest(opts ...func(*ComputeCountsConfiguration)) *Request {
 
