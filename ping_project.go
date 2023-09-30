@@ -2,7 +2,6 @@ package adp
 
 import (
 	"encoding/json"
-	"strconv"
 )
 
 // PingProjectConfiguration ...
@@ -51,26 +50,41 @@ func NewPingProjectTaskRequest(opts ...func(*PingProjectConfiguration)) *Request
 	}
 }
 
-// WithPingProjectIdentifiers ...
-func WithPingProjectIdentifiers(s string) func(*PingProjectConfiguration) {
+func WithPingProjectIdentifiers(identifiers string) func(*PingProjectConfiguration) {
 	return func(c *PingProjectConfiguration) {
-		// mIdentifiers.split("\\s*\\,\\s*")), spliting IDs handled during execution.
-		c.AdpPingProjectIdentifiers = s
+		// internally it will be split by mIdentifiers.split("\\s*\\,\\s*")), so we do not have to handle it.
+		c.AdpPingProjectIdentifiers = identifiers
 	}
 }
 
-// PingProjectExecutionMetaData ...
 type PingProjectExecutionMetaData struct {
 	PingProjectResult json.RawMessage `json:"ping_project_result"`
 }
 
-// Output ...
-func (meta *PingProjectExecutionMetaData) Output(raw json.RawMessage) (string, error) {
-	err := json.Unmarshal(raw, meta)
+type PingProjectTask struct {
+	*Task
+}
+
+func NewPingProjectTask(client *Client, req *Request, executionMode ExecutionMode) *PingProjectTask {
+	return &PingProjectTask{
+		Task: NewTask().WithClient(client).WithRequest(req).WithExecutionMode(executionMode),
+	}
+}
+
+func (t *PingProjectTask) GetResultAsString() (string, error) {
+	taskResp, err := t.Run()
 	if err != nil {
 		return "", err
 	}
 
-	unescaped, err := strconv.Unquote(string(meta.PingProjectResult))
-	return unescaped, err
+	meta := PingProjectExecutionMetaData{}
+	err = json.Unmarshal(taskResp.ExecutionMetaData, &meta)
+	if err != nil {
+		return "", err
+	}
+
+	res := string(meta.PingProjectResult)
+	unquoteJSONOutput(&res)
+
+	return res, err
 }
