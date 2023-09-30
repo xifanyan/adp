@@ -41,7 +41,11 @@ type QueryPostgresqlDBConfiguration struct {
 // NewQueryPostgresqlDBTaskRequest ...
 func NewQueryPostgresqlDBTaskRequest(opts ...func(*QueryPostgresqlDBConfiguration)) *Request {
 
-	cfg := &QueryPostgresqlDBConfiguration{}
+	cfg := &QueryPostgresqlDBConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+
 	for _, opt := range opts {
 		opt(cfg)
 	}

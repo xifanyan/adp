@@ -53,7 +53,11 @@ type QueryEngineConfiguration struct {
 // Returns a pointer to the newly created Request.
 func NewQueryEngineRequest(opts ...func(*QueryEngineConfiguration)) *Request {
 
-	cfg := &QueryEngineConfiguration{}
+	cfg := &QueryEngineConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+
 	for _, opt := range opts {
 		opt(cfg)
 	}

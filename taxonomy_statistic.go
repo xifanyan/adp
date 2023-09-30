@@ -39,7 +39,11 @@ type TaxonomyStatisticConfiguration struct {
 
 func NewTaxonomyStatisticRequest(opts ...func(*TaxonomyStatisticConfiguration)) *Request {
 
-	cfg := &TaxonomyStatisticConfiguration{}
+	cfg := &TaxonomyStatisticConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+
 	for _, opt := range opts {
 		opt(cfg)
 	}

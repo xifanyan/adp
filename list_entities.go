@@ -51,6 +51,8 @@ type ListEntitiesConfiguration struct {
 // It accepts optional configuration functions and returns the created Request object.
 func NewListEntitiesRequest(opts ...func(*ListEntitiesConfiguration)) *Request {
 	cfg := &ListEntitiesConfiguration{
+		AdpLoggingEnabled:        false,
+		AdpExecutionPersistent:   false,
 		AdpListEntitiesWhiteList: DefaultListEntitiesWhitelist,
 	}
 

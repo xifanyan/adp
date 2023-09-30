@@ -20,7 +20,11 @@ type StartApplicationConfiguration struct {
 
 func NewStartApplicationTaskRequest(opts ...func(*StartApplicationConfiguration)) *Request {
 
-	cfg := &StartApplicationConfiguration{}
+	cfg := &StartApplicationConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+
 	for _, opt := range opts {
 		opt(cfg)
 	}

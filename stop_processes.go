@@ -17,7 +17,11 @@ type StopProcessesConfiguration struct {
 
 func NewStopProcessesTaskRequest(opts ...func(*StopProcessesConfiguration)) *Request {
 
-	cfg := &StopProcessesConfiguration{}
+	cfg := &StopProcessesConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+
 	for _, opt := range opts {
 		opt(cfg)
 	}
