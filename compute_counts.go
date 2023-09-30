@@ -35,7 +35,11 @@ type ComputeCountsConfiguration struct {
 // NewComputeCountsTaskRequest creates a new Request object for the ComputeCountsTask.
 func NewComputeCountsTaskRequest(opts ...func(*ComputeCountsConfiguration)) *Request {
 
-	cfg := &ComputeCountsConfiguration{}
+	cfg := &ComputeCountsConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+
 	for _, opt := range opts {
 		opt(cfg)
 	}
