@@ -22,7 +22,7 @@ func (cfg *StartApplicationConfiguration) enforcePersistentExecution() {
 	cfg.AdpExecutionPersistent = true
 }
 
-func NewStartApplicationTaskRequest(opts ...func(*StartApplicationConfiguration)) *Request {
+func NewStartApplicationRequest(opts ...func(*StartApplicationConfiguration)) *Request {
 
 	cfg := &StartApplicationConfiguration{
 		AdpLoggingEnabled:      false,
@@ -81,10 +81,6 @@ func (t *StartApplicationTask) GetResultAsString() (string, error) {
 	taskResp, err := t.Run()
 	if err != nil {
 		return "", err
-	}
-
-	if t.executionMode == ASYNCHRONOUS {
-		return StructToString(taskResp)
 	}
 
 	output := string(taskResp.ExecutionMetaData)

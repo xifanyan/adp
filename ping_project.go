@@ -24,19 +24,7 @@ func (cfg *PingProjectConfiguration) enforcePersistentExecution() {
 	cfg.AdpExecutionPersistent = true
 }
 
-func WithPingProjectLoggingEnabled(enabled bool) func(*PingProjectConfiguration) {
-	return func(c *PingProjectConfiguration) {
-		c.AdpLoggingEnabled = enabled
-	}
-}
-
-func WithPingProjectExecutionPersistent(enabled bool) func(*PingProjectConfiguration) {
-	return func(c *PingProjectConfiguration) {
-		c.AdpExecutionPersistent = enabled
-	}
-}
-
-func NewPingProjectTaskRequest(opts ...func(*PingProjectConfiguration)) *Request {
+func NewPingProjectRequest(opts ...func(*PingProjectConfiguration)) *Request {
 	cfg := &PingProjectConfiguration{
 		AdpLoggingEnabled:      false,
 		AdpExecutionPersistent: false,
@@ -51,6 +39,18 @@ func NewPingProjectTaskRequest(opts ...func(*PingProjectConfiguration)) *Request
 		TaskDescription:   "Ping Project (description)",
 		TaskConfiguration: cfg,
 		TaskDisplayName:   "Ping Project (displayName)",
+	}
+}
+
+func WithPingProjectLoggingEnabled(enabled bool) func(*PingProjectConfiguration) {
+	return func(c *PingProjectConfiguration) {
+		c.AdpLoggingEnabled = enabled
+	}
+}
+
+func WithPingProjectExecutionPersistent(enabled bool) func(*PingProjectConfiguration) {
+	return func(c *PingProjectConfiguration) {
+		c.AdpExecutionPersistent = enabled
 	}
 }
 

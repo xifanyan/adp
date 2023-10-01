@@ -37,7 +37,7 @@ func (cfg *ComputeCountsConfiguration) enforcePersistentExecution() {
 }
 
 // NewComputeCountsTaskRequest creates a new Request object for the ComputeCountsTask.
-func NewComputeCountsTaskRequest(opts ...func(*ComputeCountsConfiguration)) *Request {
+func NewComputeCountsRequest(opts ...func(*ComputeCountsConfiguration)) *Request {
 
 	cfg := &ComputeCountsConfiguration{
 		AdpLoggingEnabled:      false,

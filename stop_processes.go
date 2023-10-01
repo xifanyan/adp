@@ -19,7 +19,7 @@ func (cfg *StopProcessesConfiguration) enforcePersistentExecution() {
 	cfg.AdpExecutionPersistent = true
 }
 
-func NewStopProcessesTaskRequest(opts ...func(*StopProcessesConfiguration)) *Request {
+func NewStopProcessesRequest(opts ...func(*StopProcessesConfiguration)) *Request {
 
 	cfg := &StopProcessesConfiguration{
 		AdpLoggingEnabled:      false,
