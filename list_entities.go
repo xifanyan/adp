@@ -180,7 +180,7 @@ func (t *ListEntitiesTask) GetResultAsString() (string, error) {
 // GetResponseAsData returns the ListEntitiesResult and an error.
 //
 // It makes a rest call to ADP service and get the response as string, then unmarshal it to ListEntitiesResult.
-func (t *ListEntitiesTask) GetResultAsData() (ListEntitiesResult, error) {
+func (t *ListEntitiesTask) GetResult() (ListEntitiesResult, error) {
 	var res ListEntitiesResult
 
 	output, err := t.GetResultAsString()
