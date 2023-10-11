@@ -188,7 +188,7 @@ func (t *QueryEngineTask) GetResultAsString() (string, error) {
 	return output, nil
 }
 
-func (t *QueryEngineTask) GetRessult() (QueryEngineResult, error) {
+func (t *QueryEngineTask) GetResult() (QueryEngineResult, error) {
 	var res QueryEngineResult
 
 	output, err := t.GetResultAsString()
