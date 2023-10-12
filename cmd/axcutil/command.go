@@ -8,18 +8,15 @@ import (
 // commands
 var (
 	EngineDistributionCmd = &cli.Command{
-		Name:    "engineDistribution",
-		Usage:   `axcutil -p * engineDistribution --applicationIdentifier APPID --engineTaxonomies rm_loadbatch=Google;csv_guts_datatype!=docs`,
-		Aliases: []string{"ed"},
+		Name:    "documentDistribution",
+		Usage:   `axcutil -p * documentDistribution --applicationIdentifier documentHold.APP01 --engineTaxonomies rm_saved_search=Review.Test`,
+		Aliases: []string{"dd"},
 		Flags: []cli.Flag{
 			ApplicationIdentifier,
-			EngineName,
 			EngineTaxonomies,
 			EngineQuery,
-			EngineUserName,
-			EngineUserPassword,
 		},
-		Action: engineDistribution,
+		Action: documentDistribution,
 	}
 
 	ExportTaxonomyCmd = &cli.Command{
