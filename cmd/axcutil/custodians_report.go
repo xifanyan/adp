@@ -18,7 +18,7 @@ func ensureEnginesAreRunning(engines adp.ListEntitiesResult) bool {
 	return true
 }
 
-func custodians(ctx *cli.Context) error {
+func custodiansReport(ctx *cli.Context) error {
 
 	c := newClient(ctx).Assemble()
 	engines, err := getEnginesByApplicationID(ctx, c)
@@ -30,8 +30,68 @@ func custodians(ctx *cli.Context) error {
 		return fmt.Errorf("not all engines are running")
 	}
 
-	engine := engines[0]
-	log.Debug().Msgf("engine %s running on %s\n", engine.ID, engine.HostID)
+	appID := ctx.String("applicationIdentifier")
+
+	matters, err := getMatters(c, appID)
+	if err != nil {
+		return err
+	}
+
+	for _, matter := range matters {
+		for _, category := range matter.Category {
+			matterName := category.DisplayName
+			custodians, err := getCustodiansByMatterID(c, appID, category.ID)
+			if err != nil {
+				return err
+			}
+			for _, custodian := range custodians {
+				for _, c := range custodian.Category {
+					custodianName := c.DisplayName
+					if c.Count > 0 {
+						fmt.Printf("%s\t%s\t%d\n", matterName, custodianName, c.Count)
+					}
+				}
+			}
+		}
+	}
 
 	return nil
+}
+
+func getMatters(c *adp.Client, appID string) (adp.TaxonomyStatisticResult, error) {
+	req := adp.NewTaxonomyStatisticRequest(
+		adp.WithTaxonomyStatisticApplicationIdentifier(appID),
+		adp.WithTaxonomyStatisticOutputTaxonomies("rm_document_hold"),
+	)
+
+	log.Debug().Msgf("req: %+v", req)
+
+	task := &adp.TaxonomyStatisticTask{
+		Task: adp.NewTask().WithClient(c).WithRequest(req),
+	}
+
+	result, err := task.GetResult()
+	// log.Debug().Msgf("result: %+v", result)
+
+	return result, err
+}
+
+func getCustodiansByMatterID(c *adp.Client, appID string, matterID string) (adp.TaxonomyStatisticResult, error) {
+	s := fmt.Sprintf("rm_document_hold=%s", matterID)
+	req := adp.NewTaxonomyStatisticRequest(
+		adp.WithTaxonomyStatisticApplicationIdentifier(appID),
+		adp.WithTaxonomyStatisticEngineTaxonomies(s),
+		adp.WithTaxonomyStatisticOutputTaxonomies("rm_custodian"),
+	)
+
+	log.Debug().Msgf("req: %+v", req)
+
+	task := &adp.TaxonomyStatisticTask{
+		Task: adp.NewTask().WithClient(c).WithRequest(req),
+	}
+
+	result, err := task.GetResult()
+	// log.Debug().Msgf("result: %+v", result)
+
+	return result, err
 }

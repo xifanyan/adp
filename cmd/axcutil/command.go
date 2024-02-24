@@ -43,7 +43,7 @@ var (
 		Flags: []cli.Flag{
 			ApplicationIdentifier,
 		},
-		Action: exportTaxonomy,
+		Action: custodiansReport,
 	}
 
 	Commands = []*cli.Command{
