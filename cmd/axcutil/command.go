@@ -36,9 +36,20 @@ var (
 		Action: exportTaxonomy,
 	}
 
+	CustodiansReportCmd = &cli.Command{
+		Name:    "reportCustodians",
+		Usage:   `axcutil -p * custodiansReport --applicationIdentifier documentHold.APP01`,
+		Aliases: []string{"cr"},
+		Flags: []cli.Flag{
+			ApplicationIdentifier,
+		},
+		Action: exportTaxonomy,
+	}
+
 	Commands = []*cli.Command{
 		EngineDistributionCmd,
 		ExportTaxonomyCmd,
+		CustodiansReportCmd,
 	}
 )
 

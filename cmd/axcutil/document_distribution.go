@@ -46,7 +46,7 @@ func documentDistribution(ctx *cli.Context) error {
 		log.Debug().Msgf("%s: doc count %d\n", engine.ID, count)
 
 		if count > 0 {
-			fmt.Printf("%s\t%s\t%d\n", engine.ID, engine.HostID, count)
+			fmt.Printf("%s|%s|%d\n", engine.ID, engine.HostID, count)
 		}
 	}
 
