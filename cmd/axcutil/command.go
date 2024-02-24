@@ -56,8 +56,8 @@ var (
 // newClient creates a new ADP client with the provided context.
 func newClient(ctx *cli.Context) *adp.Client {
 	// Default values for client are defined when setting up the context with cli package.
-	client := adp.NewClient().
-		WithHost(ctx.String("host")).
+	client := adp.NewClientBuilder().
+		WithDomain(ctx.String("domain")).
 		WithPort(ctx.Int("port")).
 		WithUser(ctx.String("user")).
 		WithPassword(ctx.String("password"))
@@ -66,5 +66,5 @@ func newClient(ctx *cli.Context) *adp.Client {
 		client = client.WithTaskAccessKey(ctx.String("taskAccessKey"))
 	}
 
-	return client
+	return client.Build()
 }

@@ -7,8 +7,19 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
+const (
+	DEFAULT_DOMAIN = "localhost"
+	DEFAULT_PORT   = 443
+
+	DEFAULT_USER = "adpuser"
+)
+
+type ClientBuilder struct {
+	*Client
+}
+
 type Client struct {
-	Host          string
+	Domain        string
 	Port          int
 	User          string
 	Password      string
@@ -16,86 +27,59 @@ type Client struct {
 	RestyClient   *resty.Client
 }
 
-// NewClient creates a new instance of the Client struct.
-//
-// Returns a pointer to the newly created Client.
-func NewClient() *Client {
-
-	return &Client{
-		Host:          "localhost",
-		Port:          443,
-		User:          "adpuser",
-		Password:      "",
-		TaskAccessKey: "",
+func NewClientBuilder() *ClientBuilder {
+	return &ClientBuilder{
+		&Client{
+			Domain:        DEFAULT_DOMAIN,
+			Port:          DEFAULT_PORT,
+			User:          DEFAULT_USER,
+			Password:      "",
+			TaskAccessKey: "",
+		},
 	}
 }
 
-// WithHost sets the host for the client.
-//
-// host: the host address to set.
-// Returns the updated client with the new host.
-func (client *Client) WithHost(host string) *Client {
-	client.Host = host
-	return client
+func (b *ClientBuilder) WithDomain(domain string) *ClientBuilder {
+	b.Domain = domain
+	return b
 }
 
-// WithPort sets the port of the client.
-//
-// port: The port number to be set.
-// Returns the updated client with the new port.
-func (client *Client) WithPort(port int) *Client {
-	client.Port = port
-	return client
+func (b *ClientBuilder) WithPort(port int) *ClientBuilder {
+	b.Port = port
+	return b
 }
 
-// WithUser sets the user for the Client.
-//
-// user: The username to set for the Client.
-// Returns the updated client with new user.
-func (client *Client) WithUser(user string) *Client {
-	client.User = user
-	return client
+func (b *ClientBuilder) WithUser(user string) *ClientBuilder {
+	b.User = user
+	return b
 }
 
-// WithPassword sets the password for the client.
-//
-// password: The password to be set.
-// Returns the updated client with new user password.
-func (client *Client) WithPassword(password string) *Client {
-	client.Password = password
-	return client
+func (b *ClientBuilder) WithPassword(password string) *ClientBuilder {
+	b.Password = password
+	return b
 }
 
-// WithTaskAccessKey sets the access key for the client.
-//
-// accessKey: The access key to be set.
-// Returns the updated client with the new access key.
-func (client *Client) WithTaskAccessKey(accessKey string) *Client {
-	client.TaskAccessKey = accessKey
-	return client
+func (b *ClientBuilder) WithTaskAccessKey(accessKey string) *ClientBuilder {
+	b.TaskAccessKey = accessKey
+	return b
 }
 
-// Assemble assembles the client with the necessary configuration.
-//
-// This function sets up the REST client with the base URL, TLS configuration,
-// and headers. It also sets the Task-Access-Key header if provided.
-// The function returns the assembled client.
-func (client *Client) Assemble() *Client {
+func (b *ClientBuilder) Build() *Client {
 
 	r := resty.New().
-		SetBaseURL(fmt.Sprintf("https://%s:%d", client.Host, client.Port)).
+		SetBaseURL(fmt.Sprintf("https://%s:%d", b.Domain, b.Port)).
 		SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
 		SetHeaders(map[string]string{
 			"Content-Type":  "application/json",
-			"Auth-Username": client.User,
-			"Auth-Password": client.Password,
+			"Auth-Username": b.User,
+			"Auth-Password": b.Password,
 		})
 
-	if len(client.TaskAccessKey) > 0 {
-		r.SetHeader("Task-Access-Key", client.TaskAccessKey)
+	if len(b.TaskAccessKey) > 0 {
+		r.SetHeader("Task-Access-Key", b.TaskAccessKey)
 	}
 
-	client.RestyClient = r
+	b.RestyClient = r
 
-	return client
+	return b.Client
 }

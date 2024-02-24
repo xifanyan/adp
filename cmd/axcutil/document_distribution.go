@@ -16,7 +16,7 @@ import (
 // Returns: an error if there was an issue retrieving engines or querying the engine.
 func documentDistribution(ctx *cli.Context) error {
 
-	c := newClient(ctx).Assemble()
+	c := newClient(ctx)
 	engines, err := getEnginesByApplicationID(ctx, c)
 	if err != nil {
 		return err

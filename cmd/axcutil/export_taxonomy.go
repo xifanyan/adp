@@ -10,7 +10,7 @@ import (
 
 func exportTaxonomy(ctx *cli.Context) error {
 
-	c := newClient(ctx).Assemble()
+	c := newClient(ctx)
 
 	req := adp.NewTaxonomyStatisticRequest(
 		adp.WithTaxonomyStatisticEngineName(ctx.String("engineName")),

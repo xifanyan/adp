@@ -9,9 +9,9 @@ import (
 )
 
 const (
-	DEFAULT_HOST = "localhost"
-	DEFAULT_PORT = 443
-	DEFAULT_USER = "adpuser"
+	DEFAULT_DOMAIN = "localhost"
+	DEFAULT_PORT   = 443
+	DEFAULT_USER   = "adpuser"
 )
 
 func main() {
@@ -22,10 +22,10 @@ func main() {
 		Usage:   "Command Line Interface to access ADP rest service",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:    "host",
+				Name:    "domain",
 				Aliases: []string{"t"},
-				Usage:   "hostname which runs ADP service",
-				Value:   DEFAULT_HOST,
+				Usage:   "domain name that runs ADP service",
+				Value:   DEFAULT_DOMAIN,
 			},
 			&cli.IntFlag{
 				Name:    "port",
