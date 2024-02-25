@@ -5,7 +5,7 @@ import (
 
 	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
-	adp "github.com/xifanyan/adp"
+	"github.com/xifanyan/adp/pkg/adp"
 )
 
 func exportTaxonomy(ctx *cli.Context) error {

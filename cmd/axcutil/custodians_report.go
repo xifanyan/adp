@@ -6,7 +6,7 @@ import (
 	"github.com/rs/zerolog/log"
 
 	"github.com/urfave/cli/v2"
-	adp "github.com/xifanyan/adp"
+	"github.com/xifanyan/adp/pkg/adp"
 )
 
 func ensureEnginesAreRunning(engines adp.ListEntitiesResult) bool {
@@ -20,7 +20,13 @@ func ensureEnginesAreRunning(engines adp.ListEntitiesResult) bool {
 
 func custodiansReport(ctx *cli.Context) error {
 
-	c := newClient(ctx)
+	c := adp.NewClientBuilder().
+		WithDomain("localhost").
+		WithPort(443).
+		WithUser("adpuser").
+		WithPassword("adpus3r").
+		Build()
+
 	engines, err := getEnginesByApplicationID(ctx, c)
 	if err != nil {
 		return err

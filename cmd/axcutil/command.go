@@ -1,8 +1,9 @@
 package main
 
 import (
+	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
-	adp "github.com/xifanyan/adp"
+	"github.com/xifanyan/adp/pkg/adp"
 )
 
 // commands
@@ -66,5 +67,6 @@ func newClient(ctx *cli.Context) *adp.Client {
 		client = client.WithTaskAccessKey(ctx.String("taskAccessKey"))
 	}
 
+	log.Debug().Msgf("client: %v", client)
 	return client.Build()
 }

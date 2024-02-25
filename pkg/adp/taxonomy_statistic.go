@@ -146,13 +146,15 @@ type TaxonomyStatisticExecutionMetaData struct {
 }
 
 type TaxonomyStatistic struct {
-	ID       string `json:"id"`
-	Category []struct {
-		ID          string           `json:"id"`
-		DisplayName string           `json:"displayName"`
-		Count       int              `json:"count"`
-		Properties  map[string][]any `json:"properties,omitempty"`
-	} `json:"category"`
+	ID       string     `json:"id"`
+	Category []Category `json:"category"`
+}
+
+type Category struct {
+	ID          string           `json:"id"`
+	DisplayName string           `json:"displayName"`
+	Count       int              `json:"count"`
+	Properties  map[string][]any `json:"properties,omitempty"`
 }
 
 type TaxonomyStatisticResult []TaxonomyStatistic

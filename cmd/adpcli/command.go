@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli/v2"
-	adp "github.com/xifanyan/adp"
+	"github.com/xifanyan/adp/pkg/adp"
 )
 
 var (

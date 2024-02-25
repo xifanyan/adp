@@ -1,10 +1,7 @@
 package adp
 
 import (
-	"encoding/json"
 	"fmt"
-
-	"github.com/rs/zerolog/log"
 )
 
 const (
@@ -91,17 +88,12 @@ func (t *Task) Run() (*Response, error) {
 	}
 	endpoint := fmt.Sprintf("/%s", mode)
 
-	resp, err := t.client.RestyClient.R().
-		SetBody(t.req).
-		Put(endpoint)
-	if err != nil {
-		return nil, err
-	}
-
-	log.Debug().Msgf("resp: %+v", resp)
-
 	taskResp := &Response{}
-	err = json.Unmarshal(resp.Body(), taskResp)
+	_, err := t.client.RestyClient.R().
+		SetBody(t.req).
+		SetResult(taskResp).
+		Put(endpoint)
+
 	if err != nil {
 		return nil, err
 	}

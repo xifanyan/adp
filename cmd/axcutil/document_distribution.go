@@ -7,7 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 
 	"github.com/urfave/cli/v2"
-	adp "github.com/xifanyan/adp"
+	"github.com/xifanyan/adp/pkg/adp"
 )
 
 // documentDistribution displays document distrubution among engines based on search criteria.
