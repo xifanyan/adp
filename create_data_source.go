@@ -44,6 +44,12 @@ func WithCreateDatasourceLoggingEnabled(enabled bool) func(*CreateDataSourceConf
 	}
 }
 
+func WithCreateDatasourceApplicationIdentifier(id string) func(*CreateDataSourceConfiguration) {
+	return func(c *CreateDataSourceConfiguration) {
+		c.AdpCreateDataSourceApplicationIdentifier = id
+	}
+}
+
 func WithCreateDatasourceDatasourceIdentifier(id string) func(*CreateDataSourceConfiguration) {
 	return func(c *CreateDataSourceConfiguration) {
 		c.AdpCreateDataSourceDataSourceIdentifier = id
