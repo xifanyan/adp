@@ -97,3 +97,9 @@ func WithExportDocumentsQuery(query string) func(*ExportDocumentsConfiguration) 
 		c.AdpExportDocumentsQuery = query
 	}
 }
+
+func WithExportDocumentsNativesField(field string) func(*ExportDocumentsConfiguration) {
+	return func(c *ExportDocumentsConfiguration) {
+		c.AdpExportDocumentsNativesField = field
+	}
+}
