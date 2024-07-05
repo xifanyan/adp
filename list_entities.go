@@ -107,6 +107,12 @@ func WithListEntitiesWorkspace(workspace string) func(*ListEntitiesConfiguration
 	}
 }
 
+func WithListEntitiesUserHasAccess(userHasAccess string) func(*ListEntitiesConfiguration) {
+	return func(c *ListEntitiesConfiguration) {
+		c.AdpListEntitiesUserHasAccess = userHasAccess
+	}
+}
+
 type ListEntitiesExecutionMetaData struct {
 	AdpEntitiesOutputFileName string          `json:"adp_entities_output_file_name"`
 	AdpEntitiesJSONOutput     json.RawMessage `json:"adp_entities_json_output"`
