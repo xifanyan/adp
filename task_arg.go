@@ -161,6 +161,24 @@ type FieldMappingArg struct {
 	ValueDelimiter string `json:"Value Delimiter"`
 }
 
+// example #1: s = "dataModel.G00000;export_base_directory,printing.storageDirectory"
+// example #2: s = "dataModel.G00000;ax_coded_qc_change,ax_coded_pl_do_not_log;x"
+//
+// {
+//   ConfigurationID : "dataModel.G00000"
+//   DynamicComponentNames : "export_base_directory,printing.storageDirectory"
+//   FieldList : "name,value,path,host"
+//   NameValueList : "ax_coded_qc_change,ax_coded_pl_do_not_log"
+// }
+type ConfigurationArg struct {
+	ConfigurationID       string `json:"Configuration ID"`
+	DynamicComponentNames string `json:"Dynamic Component Names"`
+	FieldList             string `json:"Field list"`
+	NameValueList         string `json:"Name value list"`
+	ApplicationType       string `json:"Application type"`
+	EntityType            string `json:"Entity type"`
+}
+
 /*
 type RemoveProcessesProcessIdentifierArg struct {
 	ProcessIdentifier   string `json:"Process identifier"`

@@ -255,3 +255,11 @@ func (req *Request) CreateDataSource(opts ...func(*CreateDataSourceConfiguration
 	}
 	return newTaskRequest("Create Data Source", defaults, opts...)
 }
+
+func (req *Request) ReadConfiguration(opts ...func(*ReadConfigurationConfiguration)) *Request {
+	defaults := &ReadConfigurationConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+	return newTaskRequest("Read Configuration", defaults, opts...)
+}
