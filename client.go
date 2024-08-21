@@ -108,7 +108,7 @@ Send sends a request and returns a response along with any errors.
 func (c *Client) Send(req *Request) (*Response, error) {
 	var err error
 
-	log.Debug().Msgf("REQUEST: %+v", req)
+	log.Trace().Msgf("REQUEST: %+v", req)
 
 	resp, err := c.restyClient.R().SetBody(req).SetResult(&Response{}).Put(EXECUTETASK)
 	if err != nil {
