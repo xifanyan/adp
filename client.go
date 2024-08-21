@@ -116,12 +116,12 @@ func (c *Client) Send(req *Request) (*Response, error) {
 	}
 
 	taskResp := resp.Result().(*Response)
-	log.Debug().Msgf("RESPONSE: %+v", taskResp)
+	log.Trace().Msgf("RESPONSE: %+v", taskResp)
 
 	if taskResp.ExecutionStatus != "success" {
 		return nil, fmt.Errorf("ADP Task %s failure: %s", taskResp.TaskType, taskResp.ExecutionID)
 	}
-	log.Debug().Msgf("ExecutionMetaData: %s", string(taskResp.ExecutionMetaData))
+	log.Trace().Msgf("ExecutionMetaData: %s", string(taskResp.ExecutionMetaData))
 
 	return taskResp, err
 }
@@ -140,7 +140,7 @@ func (c *Client) SendAsync(req *Request) (string, error) {
 	// ensure persistent execution mode is enabled
 	req.TaskConfiguration.enforcePersistentExecution()
 
-	log.Debug().Msgf("[async] REQUEST: %+v", req)
+	log.Trace().Msgf("[async] REQUEST: %+v", req)
 
 	resp, err := c.restyClient.R().SetBody(req).SetResult(&Response{}).Put(EXECUTETASKASYNC)
 	if err != nil {
@@ -148,7 +148,7 @@ func (c *Client) SendAsync(req *Request) (string, error) {
 	}
 
 	taskResp := resp.Result().(*Response)
-	log.Debug().Msgf("[async] RESPONSE: %+v", taskResp)
+	log.Trace().Msgf("[async] RESPONSE: %+v", taskResp)
 
 	return taskResp.ExecutionID, err
 }
