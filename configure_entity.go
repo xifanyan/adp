@@ -73,6 +73,12 @@ func WithAdpConfigureEntityMetaDataMappingToDynamicComponentsSimpleConfigParams(
 	}
 }
 
+func WithAdpConfigureEntityMetaDataMappingToDynamicComponentsConfigTables(dynamicComponentsConfigTables []DynamicComponentsConfigTableArg) func(*ConfigureEntityConfiguration) {
+	return func(c *ConfigureEntityConfiguration) {
+		c.AdpConfigureEntityMetaDataMappingToDynamicComponentsConfigTables = dynamicComponentsConfigTables
+	}
+}
+
 func WithAdpConfigureEntityMetaDataMappingToDynamicComponentsConfigStringLists(dynamicComponentsConfigStringLists []DynamicComponentsConfigStringListArg) func(*ConfigureEntityConfiguration) {
 	return func(c *ConfigureEntityConfiguration) {
 		c.AdpConfigureEntityMetaDataMappingToDynamicComponentsConfigStringLists = dynamicComponentsConfigStringLists
