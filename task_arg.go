@@ -179,6 +179,63 @@ type ConfigurationArg struct {
 	EntityType            string `json:"Entity type"`
 }
 
+// Configure Entity Args
+type SimpleConfigParamArg struct {
+	Value        string `json:"Value"`
+	Substitution string `json:"Substitution"`
+	Parameter    string `json:"Parameter"`
+}
+
+type SimpleConfigParamArgs []SimpleConfigParamArg
+
+type ConfigTableArg struct {
+	Action       string `json:"Action"`
+	Column       string `json:"Column"`
+	Row          int    `json:"Row"`
+	Substitution string `json:"Substitution"`
+	TableName    string `json:"Table name"`
+	Value        string `json:"Value"`
+}
+type ConfigTableArgs []ConfigTableArg
+
+type ConfigStringListArg struct {
+	Value        string `json:"Value"`
+	Substitution string `json:"Substitution"`
+	ListName     string `json:"List name"`
+	Row          int    `json:"Row"`
+	Action       string `json:"Action"`
+}
+type ConfigStringListArgs []ConfigStringListArg
+
+type DynamicComponentsArg struct {
+	Type       string `json:"Type"`
+	Identifier string `json:"Identifier"`
+	Position   int    `json:"Position"`
+	Action     string `json:"Action"`
+}
+type DynamicComponentsArgs []DynamicComponentsArg
+
+type DynamicComponentsSimpleConfigParamArg struct {
+	Type       string `json:"Type"`
+	Identifier string `json:"Identifier"`
+	SimpleConfigParamArg
+}
+type DynamicComponentsSimpleConfigParamArgs []DynamicComponentsSimpleConfigParamArg
+
+type DynamicComponentsConfigTableArg struct {
+	Type       string `json:"Type"`
+	Identifier string `json:"Identifier"`
+	ConfigTableArg
+}
+type DynamicComponentsConfigTableArgs []DynamicComponentsConfigTableArg
+
+type DynamicComponentsConfigStringListArg struct {
+	Type       string `json:"Type"`
+	Identifier string `json:"Identifier"`
+	ConfigStringListArg
+}
+type DynamicComponentsConfigStringListArgs []DynamicComponentsConfigStringListArg
+
 /*
 type RemoveProcessesProcessIdentifierArg struct {
 	ProcessIdentifier   string `json:"Process identifier"`
