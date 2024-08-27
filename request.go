@@ -256,10 +256,26 @@ func (req *Request) CreateDataSource(opts ...func(*CreateDataSourceConfiguration
 	return newTaskRequest("Create Data Source", defaults, opts...)
 }
 
+func (req *Request) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfiguration)) *Request {
+	defaults := &ManageUsersAndGruopsConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+	return newTaskRequest("Manage Users and Groups", defaults, opts...)
+}
+
 func (req *Request) ReadConfiguration(opts ...func(*ReadConfigurationConfiguration)) *Request {
 	defaults := &ReadConfigurationConfiguration{
 		AdpLoggingEnabled:      false,
 		AdpExecutionPersistent: false,
 	}
 	return newTaskRequest("Read Configuration", defaults, opts...)
+}
+
+func (req *Request) ConfigureEntity(opts ...func(*ConfigureEntityConfiguration)) *Request {
+	defaults := &ConfigureEntityConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+	return newTaskRequest("Configure Entity", defaults, opts...)
 }
