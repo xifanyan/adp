@@ -279,3 +279,11 @@ func (req *Request) ConfigureEntity(opts ...func(*ConfigureEntityConfiguration))
 	}
 	return newTaskRequest("Configure Entity", defaults, opts...)
 }
+
+func (req *Request) AddSubengine(opts ...func(*AddSubengineConfiguration)) *Request {
+	defaults := &AddSubengineConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+	return newTaskRequest("Add Subengine", defaults, opts...)
+}
