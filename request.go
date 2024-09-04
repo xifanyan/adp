@@ -287,3 +287,11 @@ func (req *Request) AddSubengine(opts ...func(*AddSubengineConfiguration)) *Requ
 	}
 	return newTaskRequest("Add Subengine", defaults, opts...)
 }
+
+func (req *Request) EngineJobMonitoring(opts ...func(*EngineJobMonitoringConfiguration)) *Request {
+	defaults := &EngineJobMonitoringConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+	return newTaskRequest("Engine Job Monitoring", defaults, opts...)
+}
