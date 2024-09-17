@@ -316,3 +316,29 @@ func (req *Request) CsvDetection(opts ...func(*CsvDetectionConfiguration)) *Requ
 
 	return newTaskRequest("CSV Detection", defaults, opts...)
 }
+
+func (req *Request) AddFields(opts ...func(*AddFieldsConfiguration)) *Request {
+	defaults := &AddFieldsConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+		AdpAddFieldsCloneTemplates: []FieldCloneTemplate{
+			{
+				Type:  "Smart Filter",
+				Field: "meta_bcc",
+			},
+			{
+				Type:  "Text field",
+				Field: "attachment",
+			},
+			{
+				Type:  "Unique Dates",
+				Field: "meta_docdate",
+			},
+			{
+				Type:  "Grouped Dates",
+				Field: "meta_bcc",
+			},
+		},
+	}
+	return newTaskRequest("Add Fields", defaults, opts...)
+}
