@@ -295,3 +295,24 @@ func (req *Request) EngineJobMonitoring(opts ...func(*EngineJobMonitoringConfigu
 	}
 	return newTaskRequest("Engine Job Monitoring", defaults, opts...)
 }
+
+func (req *Request) CsvDetection(opts ...func(*CsvDetectionConfiguration)) *Request {
+	defaults := &CsvDetectionConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+		AdpCsvDetectionValueDelimiter: []UnicodeCharacter{
+			{UnicodeCharacter: "u+0022"},
+			{UnicodeCharacter: "u+00FE"},
+			{UnicodeCharacter: "u+005E"},
+		},
+		AdpCsvDetectionFieldSeparator: []UnicodeCharacter{
+			{UnicodeCharacter: "u+002C"},
+			{UnicodeCharacter: "u+0014"},
+			{UnicodeCharacter: "u+007C"},
+			{UnicodeCharacter: "u+003B"},
+			{UnicodeCharacter: "u+0009"},
+		},
+	}
+
+	return newTaskRequest("CSV Detection", defaults, opts...)
+}
