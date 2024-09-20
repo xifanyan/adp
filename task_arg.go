@@ -236,6 +236,13 @@ type DynamicComponentsConfigStringListArg struct {
 }
 type DynamicComponentsConfigStringListArgs []DynamicComponentsConfigStringListArg
 
+// ActionOnEntityArg:  Task "Configure Service Properties"
+type ActionOnEntityArg struct {
+	Identifier string `json:"Identifier"`
+	Action     string `json:"Action"`
+	Value      string `json:"Value"`
+}
+
 /*
 type RemoveProcessesProcessIdentifierArg struct {
 	ProcessIdentifier   string `json:"Process identifier"`

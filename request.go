@@ -342,3 +342,11 @@ func (req *Request) AddFields(opts ...func(*AddFieldsConfiguration)) *Request {
 	}
 	return newTaskRequest("Add Fields", defaults, opts...)
 }
+
+func (req *Request) ConfigureServiceProperties(opts ...func(*ConfigureServicePropertiesConfiguration)) *Request {
+	defaults := &ConfigureServicePropertiesConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+	return newTaskRequest("Configure Service Properties", defaults, opts...)
+}
