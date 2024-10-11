@@ -43,13 +43,13 @@ func WithAdpConfigureEntityJavaHeapSize(javaHeapSize string) func(*ConfigureEnti
 	}
 }
 
-func WithAdpConfigurateEntityMetaDataMappingToSimpleConfigParams(simpleConfigParams []SimpleConfigParamArg) func(*ConfigureEntityConfiguration) {
+func WithAdpConfigureEntityMetaDataMappingToSimpleConfigParams(simpleConfigParams []SimpleConfigParamArg) func(*ConfigureEntityConfiguration) {
 	return func(c *ConfigureEntityConfiguration) {
 		c.AdpConfigureEntityMetaDataMappingToSimpleConfigParams = simpleConfigParams
 	}
 }
 
-func WithAdpConfigurateEntityMetaDataMappingToConfigTables(configTables []ConfigTableArg) func(*ConfigureEntityConfiguration) {
+func WithAdpConfigureEntityMetaDataMappingToConfigTables(configTables []ConfigTableArg) func(*ConfigureEntityConfiguration) {
 	return func(c *ConfigureEntityConfiguration) {
 		c.AdpConfigureEntityMetaDataMappingToConfigTables = configTables
 	}
