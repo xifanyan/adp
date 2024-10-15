@@ -79,3 +79,24 @@ func WithManageUsersAndGroupsAssignmentUserToGroup(userToGroup []UserToGroup) fu
 type ManageUsersAndGroupsExecutionMetaData struct {
 	AdpManageUsersAndGroupsJSONOutput json.RawMessage `json:"adp_manageUsersAndGroups_json_output,omitempty"`
 }
+
+type UsersAndGroups struct {
+	Groups map[string]Group `json:"groups"`
+	Users  map[string]User  `json:"users"`
+}
+
+type Group struct {
+	DisplayName string `json:"displayName"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Existent    bool   `json:"existent"`
+}
+
+type User struct {
+	External     bool   `json:"external"`
+	EmailAddress string `json:"emailAddress"`
+	DisplayName  string `json:"displayName"`
+	Name         string `json:"name"`
+	Description  string `json:"description"`
+	Existent     bool   `json:"existent"`
+}
