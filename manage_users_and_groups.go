@@ -73,3 +73,7 @@ func WithManageUsersAndGroupsAssignmentUserToGroup(userToGroup []UserToGroup) fu
 		cfg.AdpManageUsersAndGroupsAssignmentUserToGroup = userToGroup
 	}
 }
+
+type ManageUsersAndGroupsExecutionMetaData struct {
+	AdpManageUsersAndGroupsJSONOutput json.RawMessage `json:"adp_manageUsersAndGroups_json_output,omitempty"`
+}
