@@ -1,5 +1,7 @@
 package adp
 
+import "encoding/json"
+
 type UserDefinition struct {
 	Enabled      bool   `json:"Enabled,omitempty"`
 	ExternalUser bool   `json:"External user,omitempty"`
