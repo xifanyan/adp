@@ -137,3 +137,10 @@ func (svc *Service) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfi
 
 	return usersAndGroups, err
 }
+
+func (svc *Service) ConfigureEntity(opts ...func(*ConfigureEntityConfiguration)) error {
+	req := NewRequest().ConfigureEntity(opts...)
+
+	_, err := svc.ADPClient.Send(req)
+	return err
+}
