@@ -24,23 +24,23 @@ type UserToGroup struct {
 }
 
 type ManageUsersAndGruopsConfiguration struct {
-	AdpProgressTaskTimeout                          int               `json:"adp_progressTaskTimeout,omitempty"`
-	AdpManageUsersAndGroupsUserDefinition           []UserDefinition  `json:"adp_manageUsersAndGroups_userDefinition,omitempty"`
-	AdpTaskActive                                   bool              `json:"adp_taskActive,omitempty"`
-	AdpManageUsersAndGroupsGroupUserIdsToFilterFor  string            `json:"adp_manageUsersAndGroups_GroupUserIdsToFilterFor,omitempty"`
-	AdpManageUsersAndGroupsGroupDefinition          []GroupDefinition `json:"adp_manageUsersAndGroups_groupDefinition,omitempty"`
-	AdpManageUsersAndGroupsAppIdsToFilterFor        string            `json:"adp_manageUsersAndGroups_AppIdsToFilterFor,omitempty"`
-	AdpExecutionPersistent                          bool              `json:"adp_executionPersistent,omitempty"`
-	AdpManageUsersAndGroupsAssignmentUserToGroup    []UserToGroup     `json:"adp_manageUsersAndGroups_assignmentUserToGroup,omitempty"`
-	AdpManageUsersAndGroupsAddApplicationRoles      []any             `json:"adp_manageUsersAndGroups_addApplicationRoles,omitempty"`
-	AdpAbortWfOnFailure                             bool              `json:"adp_abortWfOnFailure,omitempty"`
-	AdpCleanUpHistory                               bool              `json:"adp_cleanUpHistory,omitempty"`
-	AdpManageUsersAndGroupsFile                     string            `json:"adp_manageUsersAndGroups_file,omitempty"`
-	AdpLoggingEnabled                               bool              `json:"adp_loggingEnabled,omitempty"`
-	AdpManageUsersAndGroupsOutputFilename           string            `json:"adp_manageUsersAndGroups_outputFilename,omitempty"`
-	AdpManageUsersAndGroupsOutputJSON               string            `json:"adp_manageUsersAndGroups_outputJson,omitempty"`
-	AdpTaskTimeout                                  int               `json:"adp_taskTimeout,omitempty"`
-	AdpManageUsersAndGroupsReturnAllUsersUnderGroup string            `json:"adp_manageUsersAndGroups_ReturnAllUsersUnderGroup,omitempty"`
+	AdpProgressTaskTimeout                          int                `json:"adp_progressTaskTimeout,omitempty"`
+	AdpManageUsersAndGroupsUserDefinition           []UserDefinition   `json:"adp_manageUsersAndGroups_userDefinition,omitempty"`
+	AdpTaskActive                                   bool               `json:"adp_taskActive,omitempty"`
+	AdpManageUsersAndGroupsGroupUserIdsToFilterFor  string             `json:"adp_manageUsersAndGroups_GroupUserIdsToFilterFor,omitempty"`
+	AdpManageUsersAndGroupsGroupDefinition          []GroupDefinition  `json:"adp_manageUsersAndGroups_groupDefinition,omitempty"`
+	AdpManageUsersAndGroupsAppIdsToFilterFor        string             `json:"adp_manageUsersAndGroups_AppIdsToFilterFor,omitempty"`
+	AdpExecutionPersistent                          bool               `json:"adp_executionPersistent,omitempty"`
+	AdpManageUsersAndGroupsAssignmentUserToGroup    []UserToGroup      `json:"adp_manageUsersAndGroups_assignmentUserToGroup,omitempty"`
+	AdpManageUsersAndGroupsAddApplicationRoles      []ApplicationRoles `json:"adp_manageUsersAndGroups_addApplicationRoles,omitempty"`
+	AdpAbortWfOnFailure                             bool               `json:"adp_abortWfOnFailure,omitempty"`
+	AdpCleanUpHistory                               bool               `json:"adp_cleanUpHistory,omitempty"`
+	AdpManageUsersAndGroupsFile                     string             `json:"adp_manageUsersAndGroups_file,omitempty"`
+	AdpLoggingEnabled                               bool               `json:"adp_loggingEnabled,omitempty"`
+	AdpManageUsersAndGroupsOutputFilename           string             `json:"adp_manageUsersAndGroups_outputFilename,omitempty"`
+	AdpManageUsersAndGroupsOutputJSON               string             `json:"adp_manageUsersAndGroups_outputJson,omitempty"`
+	AdpTaskTimeout                                  int                `json:"adp_taskTimeout,omitempty"`
+	AdpManageUsersAndGroupsReturnAllUsersUnderGroup string             `json:"adp_manageUsersAndGroups_ReturnAllUsersUnderGroup,omitempty"`
 }
 
 func (cfg *ManageUsersAndGruopsConfiguration) enforcePersistentExecution() {
@@ -76,6 +76,12 @@ func WithManageUsersAndGroupsAssignmentUserToGroup(userToGroup []UserToGroup) fu
 	}
 }
 
+func WithManageUsersAndGroupsAddApplicationRoles(applicationRoles []ApplicationRoles) func(*ManageUsersAndGruopsConfiguration) {
+	return func(cfg *ManageUsersAndGruopsConfiguration) {
+		cfg.AdpManageUsersAndGroupsAddApplicationRoles = applicationRoles
+	}
+}
+
 type ManageUsersAndGroupsExecutionMetaData struct {
 	AdpManageUsersAndGroupsJSONOutput json.RawMessage `json:"adp_manageUsersAndGroups_json_output,omitempty"`
 }
@@ -99,4 +105,11 @@ type User struct {
 	Name         string `json:"name"`
 	Description  string `json:"description"`
 	Existent     bool   `json:"existent"`
+}
+
+type ApplicationRoles struct {
+	GroupOrUserName       string `json:"Group-/User- name"`
+	Enabled               bool   `json:"Enabled"`
+	ApplicationIdentifier string `json:"Application identifier"`
+	Roles                 string `json:"Role(s)"`
 }
