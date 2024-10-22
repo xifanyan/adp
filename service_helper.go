@@ -8,6 +8,34 @@ func (svc *Service) ListAxcelerates() ([]Entity, error) {
 	return svc.ListEntities(WithListEntitiesType("axcelerate"))
 }
 
+func (svc *Service) ListDocumentHoldsByUser(user string) ([]Entity, error) {
+	return svc.ListEntities(
+		WithListEntitiesType("documentHold"),
+		WithListEntitiesUserHasAccess(user),
+	)
+}
+
+func (svc *Service) ListAxceleratesByUser(user string) ([]Entity, error) {
+	return svc.ListEntities(
+		WithListEntitiesType("axcelerate"),
+		WithListEntitiesUserHasAccess(user),
+	)
+}
+
+func (svc *Service) ListApplicationsByUser(user string) ([]Entity, error) {
+	documentHolds, err := svc.ListDocumentHoldsByUser(user)
+	if err != nil {
+		return nil, err
+	}
+
+	axcelerates, err := svc.ListAxceleratesByUser(user)
+	if err != nil {
+		return nil, err
+	}
+
+	return append(documentHolds, axcelerates...), nil
+}
+
 func (svc *Service) ListHosts() ([]Entity, error) {
 	return svc.ListEntities(WithListEntitiesType("host"))
 }
