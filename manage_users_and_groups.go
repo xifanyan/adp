@@ -82,6 +82,12 @@ func WithManageUsersAndGroupsAddApplicationRoles(applicationRoles []ApplicationR
 	}
 }
 
+func WithManageUsersAndGroupsReturnAllUsersUnderGroup(returnAllUsersUnderGroup string) func(*ManageUsersAndGruopsConfiguration) {
+	return func(c *ManageUsersAndGruopsConfiguration) {
+		c.AdpManageUsersAndGroupsReturnAllUsersUnderGroup = returnAllUsersUnderGroup
+	}
+}
+
 type ManageUsersAndGroupsExecutionMetaData struct {
 	AdpManageUsersAndGroupsJSONOutput json.RawMessage `json:"adp_manageUsersAndGroups_json_output,omitempty"`
 }
