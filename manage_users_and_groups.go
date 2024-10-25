@@ -88,6 +88,18 @@ func WithManageUsersAndGroupsReturnAllUsersUnderGroup(returnAllUsersUnderGroup s
 	}
 }
 
+func WtihManageUsersAndGroupsReturnAllUsersUnderGroup(returnAllUsersUnderGroup string) func(*ManageUsersAndGruopsConfiguration) {
+	return func(cfg *ManageUsersAndGruopsConfiguration) {
+		cfg.AdpManageUsersAndGroupsReturnAllUsersUnderGroup = returnAllUsersUnderGroup
+	}
+}
+
+func WithManageUsersAndGroupsGroupUserIdsToFilterFor(groupUserIds string) func(*ManageUsersAndGruopsConfiguration) {
+	return func(c *ManageUsersAndGruopsConfiguration) {
+		c.AdpManageUsersAndGroupsGroupUserIdsToFilterFor = groupUserIds
+	}
+}
+
 type ManageUsersAndGroupsExecutionMetaData struct {
 	AdpManageUsersAndGroupsJSONOutput json.RawMessage `json:"adp_manageUsersAndGroups_json_output,omitempty"`
 }
@@ -97,20 +109,21 @@ type UsersAndGroups struct {
 	Users  map[string]User  `json:"users"`
 }
 
-type Group struct {
+type UserGroupCommon struct {
 	DisplayName string `json:"displayName"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Existent    bool   `json:"existent"`
 }
 
+type Group struct {
+	UserGroupCommon
+}
+
 type User struct {
+	UserGroupCommon
 	External     bool   `json:"external"`
 	EmailAddress string `json:"emailAddress"`
-	DisplayName  string `json:"displayName"`
-	Name         string `json:"name"`
-	Description  string `json:"description"`
-	Existent     bool   `json:"existent"`
 }
 
 type ApplicationRoles struct {
