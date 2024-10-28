@@ -350,3 +350,11 @@ func (req *Request) ConfigureServiceProperties(opts ...func(*ConfigureServicePro
 	}
 	return newTaskRequest("Configure Service Properties", defaults, opts...)
 }
+
+func (req *Request) GlobalSearches(opts ...func(*GlobalSearchesConfiguration)) *Request {
+	defaults := &GlobalSearchesConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+	return newTaskRequest("Global Searches", defaults, opts...)
+}

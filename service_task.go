@@ -144,3 +144,29 @@ func (svc *Service) ConfigureEntity(opts ...func(*ConfigureEntityConfiguration))
 	_, err := svc.ADPClient.Send(req)
 	return err
 }
+
+func (svc *Service) GlobalSearches(opts ...func(*GlobalSearchesConfiguration)) ([]GlobalSearch, error) {
+	var err error
+	var resp *Response
+	var res []GlobalSearch = []GlobalSearch{}
+
+	req := NewRequest().GlobalSearches(opts...)
+	if resp, err = svc.ADPClient.Send(req); err != nil {
+		return res, err
+	}
+
+	var meta GlobalSearchesExecutionMetaData
+
+	if err = json.Unmarshal(resp.ExecutionMetaData, &meta); err != nil {
+		return nil, err
+	}
+
+	js := string(meta.AdpGlobalSearchesJSONOutput)
+	UnquoteJSONOutput(&js)
+
+	if err = json.Unmarshal([]byte(js), &res); err != nil {
+		return nil, err
+	}
+
+	return res, err
+}
