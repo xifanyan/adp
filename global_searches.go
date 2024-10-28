@@ -48,10 +48,7 @@ type GlobalSearch struct {
 		DisabledQueryParts  []interface{} `json:"disabledQueryParts,omitempty"`
 		AdvancedSearchIndex interface{}   `json:"advancedSearchIndex,omitempty"`
 	} `json:"queryBundle,omitempty"`
-	Workspace        string `json:"workspace,omitempty"`
-	SearchParameters struct {
-		RmMain               []string `json:"rm_main,omitempty"`
-		RmTaxonomyRmMimetype []string `json:"rm_taxonomy_rm_mimetype,omitempty"`
-	} `json:"searchParameters,omitempty"`
-	Description string `json:"description,omitempty"`
+	Workspace        string              `json:"workspace,omitempty"`
+	SearchParameters map[string][]string `json:"searchParameters,omitempty"`
+	Description      string              `json:"description,omitempty"`
 }
