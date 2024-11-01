@@ -88,12 +88,6 @@ func WithManageUsersAndGroupsReturnAllUsersUnderGroup(returnAllUsersUnderGroup s
 	}
 }
 
-func WtihManageUsersAndGroupsReturnAllUsersUnderGroup(returnAllUsersUnderGroup string) func(*ManageUsersAndGruopsConfiguration) {
-	return func(cfg *ManageUsersAndGruopsConfiguration) {
-		cfg.AdpManageUsersAndGroupsReturnAllUsersUnderGroup = returnAllUsersUnderGroup
-	}
-}
-
 func WithManageUsersAndGroupsGroupUserIdsToFilterFor(groupUserIds string) func(*ManageUsersAndGruopsConfiguration) {
 	return func(c *ManageUsersAndGruopsConfiguration) {
 		c.AdpManageUsersAndGroupsGroupUserIdsToFilterFor = groupUserIds
@@ -102,11 +96,6 @@ func WithManageUsersAndGroupsGroupUserIdsToFilterFor(groupUserIds string) func(*
 
 type ManageUsersAndGroupsExecutionMetaData struct {
 	AdpManageUsersAndGroupsJSONOutput json.RawMessage `json:"adp_manageUsersAndGroups_json_output,omitempty"`
-}
-
-type UsersAndGroups struct {
-	Groups map[string]Group `json:"groups"`
-	Users  map[string]User  `json:"users"`
 }
 
 type UserGroupCommon struct {
@@ -126,9 +115,21 @@ type User struct {
 	EmailAddress string `json:"emailAddress"`
 }
 
+type UsersAndGroups struct {
+	Groups map[string]Group `json:"groups"`
+	Users  map[string]User  `json:"users"`
+}
+
 type ApplicationRoles struct {
 	GroupOrUserName       string `json:"Group-/User- name"`
 	Enabled               bool   `json:"Enabled"`
 	ApplicationIdentifier string `json:"Application identifier"`
 	Roles                 string `json:"Role(s)"`
+}
+
+type ManageUsersAndGroupsResult struct {
+	UsersAndGroups
+	Applications map[string]struct {
+		UsersAndGroups
+	} `json:"applications"`
 }

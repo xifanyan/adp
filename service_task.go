@@ -113,29 +113,29 @@ func (svc *Service) StartDataSource(opts ...func(*StartDataSourceConfiguration))
 	return err
 }
 
-func (svc *Service) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfiguration)) (UsersAndGroups, error) {
+func (svc *Service) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfiguration)) (ManageUsersAndGroupsResult, error) {
 	var err error
-	var resp *Response
-
-	var usersAndGroups UsersAndGroups
+	var res ManageUsersAndGroupsResult
 
 	req := NewRequest().ManageUsersAndGroups(opts...)
-	if resp, err = svc.ADPClient.Send(req); err != nil {
-		return usersAndGroups, err
+	resp, err := svc.ADPClient.Send(req)
+	if err != nil {
+		return res, err
 	}
 
 	var meta ManageUsersAndGroupsExecutionMetaData
-
 	if err = json.Unmarshal(resp.ExecutionMetaData, &meta); err != nil {
-		return usersAndGroups, err
+		return res, err
 	}
 
 	js := string(meta.AdpManageUsersAndGroupsJSONOutput)
 	UnquoteJSONOutput(&js)
 
-	err = json.Unmarshal([]byte(js), &usersAndGroups)
+	if err = json.Unmarshal([]byte(js), &res); err != nil {
+		return res, err
+	}
 
-	return usersAndGroups, err
+	return res, err
 }
 
 func (svc *Service) ConfigureEntity(opts ...func(*ConfigureEntityConfiguration)) error {
