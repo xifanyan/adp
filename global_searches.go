@@ -23,9 +23,27 @@ func (c *GlobalSearchesConfiguration) enforcePersistentExecution() {
 	c.AdpExecutionPersistent = true
 }
 
-func (c *GlobalSearchesConfiguration) WithAdpGlobalSearchesLoggingEnabled() func(*GlobalSearchesConfiguration) {
+func WithGlobalSearchesLoggingEnabled() func(*GlobalSearchesConfiguration) {
 	return func(c *GlobalSearchesConfiguration) {
 		c.AdpLoggingEnabled = true
+	}
+}
+
+func WithGlobalSearchesRegex(regex string) func(*GlobalSearchesConfiguration) {
+	return func(c *GlobalSearchesConfiguration) {
+		c.AdpGlobalSearchesRegex = regex
+	}
+}
+
+func WithGlobalSearchesCreateUpdateGlobalSearches(gs string) func(*GlobalSearchesConfiguration) {
+	return func(c *GlobalSearchesConfiguration) {
+		c.AdpGlobalSearchesCreateUpdateGlobalSearches = gs
+	}
+}
+
+func WithGlobalSearchesGlobalSearchesToDelete(gs string) func(*GlobalSearchesConfiguration) {
+	return func(c *GlobalSearchesConfiguration) {
+		c.AdpGlobalSearchesGlobalSearchesToDelete = gs
 	}
 }
 
@@ -34,20 +52,24 @@ type GlobalSearchesExecutionMetaData struct {
 	AdpGlobalSearchesJSONOutput     json.RawMessage `json:"adp_globalSearches_json_output"`
 }
 
+type ActiveQueryPart struct {
+	Type  string `json:"type,omitempty"`
+	Query string `json:"query,omitempty"`
+	Valid bool   `json:"valid,omitempty"`
+	Term  string `json:"term,omitempty"`
+}
+
+type QueryBundle struct {
+	SearchTypeName      string            `json:"searchTypeName,omitempty"`
+	ActiveQueryParts    []ActiveQueryPart `json:"activeQueryParts,omitempty"`
+	DisabledQueryParts  []interface{}     `json:"disabledQueryParts,omitempty"`
+	AdvancedSearchIndex interface{}       `json:"advancedSearchIndex,omitempty"`
+}
+
 type GlobalSearch struct {
-	ID          string `json:"id"`
-	DisplayName string `json:"displayName,omitempty"`
-	QueryBundle struct {
-		SearchTypeName   string `json:"searchTypeName,omitempty"`
-		ActiveQueryParts []struct {
-			Type  string `json:"type,omitempty"`
-			Query string `json:"query,omitempty"`
-			Valid bool   `json:"valid,omitempty"`
-			Term  string `json:"term,omitempty"`
-		} `json:"activeQueryParts,omitempty"`
-		DisabledQueryParts  []interface{} `json:"disabledQueryParts,omitempty"`
-		AdvancedSearchIndex interface{}   `json:"advancedSearchIndex,omitempty"`
-	} `json:"queryBundle,omitempty"`
+	ID               string `json:"id"`
+	DisplayName      string `json:"displayName,omitempty"`
+	QueryBundle      `json:"queryBundle,omitempty"`
 	Workspace        string              `json:"workspace,omitempty"`
 	SearchParameters map[string][]string `json:"searchParameters,omitempty"`
 	Description      string              `json:"description,omitempty"`
