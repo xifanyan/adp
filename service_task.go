@@ -170,3 +170,20 @@ func (svc *Service) GlobalSearches(opts ...func(*GlobalSearchesConfiguration)) (
 
 	return res, err
 }
+
+func (svc *Service) ManageTaggers(opts ...func(*ManageTaggersConfiguration)) (GlobalSearch, error) {
+	var err error
+	var resp *Response
+	var res GlobalSearch
+
+	req := NewRequest().ManageTaggers(opts...)
+	if resp, err = svc.ADPClient.Send(req); err != nil {
+		return res, err
+	}
+
+	if err = json.Unmarshal(resp.ExecutionMetaData, &res); err != nil {
+		return res, err
+	}
+
+	return res, nil
+}

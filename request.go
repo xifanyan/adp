@@ -358,3 +358,11 @@ func (req *Request) GlobalSearches(opts ...func(*GlobalSearchesConfiguration)) *
 	}
 	return newTaskRequest("Global Searches", defaults, opts...)
 }
+
+func (req *Request) ManageTaggers(opts ...func(*ManageTaggersConfiguration)) *Request {
+	defaults := &ManageTaggersConfiguration{
+		AdpLoggingEnabled:      false,
+		AdpExecutionPersistent: false,
+	}
+	return newTaskRequest("Manage Taggers", defaults, opts...)
+}
