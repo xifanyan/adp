@@ -15,13 +15,13 @@ func (svc *Service) ListEntities(opts ...func(*ListEntitiesConfiguration)) ([]En
 	var resp *Response
 
 	req := NewRequest().ListEntities(opts...)
-
 	if resp, err = svc.ADPClient.Send(req); err != nil {
 		return nil, err
 	}
 
-	var meta ListEntitiesExecutionMetaData
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
 
+	var meta ListEntitiesExecutionMetaData
 	if err = json.Unmarshal(resp.ExecutionMetaData, &meta); err != nil {
 		return nil, err
 	}
@@ -48,8 +48,9 @@ func (svc *Service) QueryEngine(opts ...func(*QueryEngineConfiguration)) (QueryE
 		return QueryEngineResult{}, err
 	}
 
-	var res QueryEngineResult
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
 
+	var res QueryEngineResult
 	if err = json.Unmarshal(resp.ExecutionMetaData, &res); err != nil {
 		log.Error().Err(err).Msgf("failed to unmarshal ExecutionMetaData %s", resp.ExecutionMetaData)
 		return QueryEngineResult{}, err
@@ -67,8 +68,9 @@ func (svc *Service) TaxonomyStatistic(opts ...func(*TaxonomyStatisticConfigurati
 		return TaxonomyStatisticResult{}, err
 	}
 
-	var meta TaxonomyStatisticExecutionMetaData
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
 
+	var meta TaxonomyStatisticExecutionMetaData
 	if err = json.Unmarshal(resp.ExecutionMetaData, &meta); err != nil {
 		return nil, err
 	}
@@ -87,29 +89,35 @@ func (svc *Service) TaxonomyStatistic(opts ...func(*TaxonomyStatisticConfigurati
 
 func (svc *Service) CreateCustodian(opts ...func(*CreateCustodianConfiguration)) error {
 	req := NewRequest().CreateCustodian(opts...)
+	resp, err := svc.ADPClient.Send(req)
 
-	_, err := svc.ADPClient.Send(req)
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
+
 	return err
 }
 
 func (svc *Service) CreateDataSource(opts ...func(*CreateDataSourceConfiguration)) error {
 	req := NewRequest().CreateDataSource(opts...)
+	resp, err := svc.ADPClient.Send(req)
 
-	_, err := svc.ADPClient.Send(req)
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
+
 	return err
 }
 
 func (svc *Service) ConfigureDataSource(opts ...func(*ConfigureDataSourceConfiguration)) error {
 	req := NewRequest().ConfigureDataSource(opts...)
+	resp, err := svc.ADPClient.Send(req)
 
-	_, err := svc.ADPClient.Send(req)
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
+
 	return err
 }
 
 func (svc *Service) StartDataSource(opts ...func(*StartDataSourceConfiguration)) error {
 	req := NewRequest().StartDataSource(opts...)
-
 	_, err := svc.ADPClient.SendAsync(req)
+
 	return err
 }
 
@@ -122,6 +130,8 @@ func (svc *Service) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfi
 	if err != nil {
 		return res, err
 	}
+
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
 
 	var meta ManageUsersAndGroupsExecutionMetaData
 	if err = json.Unmarshal(resp.ExecutionMetaData, &meta); err != nil {
@@ -140,8 +150,10 @@ func (svc *Service) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfi
 
 func (svc *Service) ConfigureEntity(opts ...func(*ConfigureEntityConfiguration)) error {
 	req := NewRequest().ConfigureEntity(opts...)
+	resp, err := svc.ADPClient.Send(req)
 
-	_, err := svc.ADPClient.Send(req)
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
+
 	return err
 }
 
@@ -155,8 +167,9 @@ func (svc *Service) GlobalSearches(opts ...func(*GlobalSearchesConfiguration)) (
 		return res, err
 	}
 
-	var meta GlobalSearchesExecutionMetaData
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
 
+	var meta GlobalSearchesExecutionMetaData
 	if err = json.Unmarshal(resp.ExecutionMetaData, &meta); err != nil {
 		return nil, err
 	}
@@ -183,4 +196,27 @@ func (svc *Service) ManageTaggers(opts ...func(*ManageTaggersConfiguration)) err
 	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
 
 	return nil
+}
+
+func (svc *Service) ReadConfiguration(opts ...func(*ReadConfigurationConfiguration)) (ReadConfigurationResult, error) {
+	var err error
+	var res ReadConfigurationResult
+
+	req := NewRequest().ReadConfiguration(opts...)
+	resp, err := svc.ADPClient.Send(req)
+	if err != nil {
+		return res, err
+	}
+
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
+
+	var meta ReadConfigurationExecutionMetaData
+	if err = json.Unmarshal(resp.ExecutionMetaData, &meta); err != nil {
+		return res, err
+	}
+
+	s := string(meta.AdpEntitiesJSONOutput)
+	UnquoteJSONOutput(&s)
+
+	return res, err
 }

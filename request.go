@@ -353,8 +353,9 @@ func (req *Request) ConfigureServiceProperties(opts ...func(*ConfigureServicePro
 
 func (req *Request) GlobalSearches(opts ...func(*GlobalSearchesConfiguration)) *Request {
 	defaults := &GlobalSearchesConfiguration{
-		AdpLoggingEnabled:      false,
-		AdpExecutionPersistent: false,
+		AdpLoggingEnabled:                              false,
+		AdpExecutionPersistent:                         false,
+		AdpGlobalSearchesUpdateCollisionResolutionMode: "error",
 	}
 	return newTaskRequest("Global Searches", defaults, opts...)
 }

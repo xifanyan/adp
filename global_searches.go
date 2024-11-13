@@ -47,6 +47,13 @@ func WithGlobalSearchesGlobalSearchesToDelete(gs string) func(*GlobalSearchesCon
 	}
 }
 
+// Mode: "error", "skip", "override"
+func WithGlobalSearchesUpdateCollisionResolutionMode(mode string) func(*GlobalSearchesConfiguration) {
+	return func(c *GlobalSearchesConfiguration) {
+		c.AdpGlobalSearchesUpdateCollisionResolutionMode = mode
+	}
+}
+
 type GlobalSearchesExecutionMetaData struct {
 	AdpGlobalSearchesOutputFileName string          `json:"adp_globalSearches_output_file_name,omitempty"`
 	AdpGlobalSearchesJSONOutput     json.RawMessage `json:"adp_globalSearches_json_output"`

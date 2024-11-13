@@ -56,3 +56,21 @@ type ReadConfigurationExecutionMetaData struct {
 	AdpEntitiesOutputFileName string          `json:"adp_entities_output_file_name"`
 	AdpEntitiesJSONOutput     json.RawMessage `json:"adp_entities_json_output"`
 }
+
+type ReadConfigurationResult map[string]ConfigInfo
+
+type ConfigInfo struct {
+	DynamicComponents map[string]interface{} `json:"DynamicComponents"`
+	Global            struct {
+		Static struct {
+			Parameters []struct {
+				Cells [][]struct {
+					Value interface{} `json:"value"`
+					Name  string      `json:"name"`
+				} `json:"cells"`
+				Name  string      `json:"name"`
+				Value interface{} `json:"value"`
+			} `json:"Parameters"`
+		} `json:"Static"`
+	} `json:"Global"`
+}
