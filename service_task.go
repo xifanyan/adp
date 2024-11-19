@@ -215,8 +215,12 @@ func (svc *Service) ReadConfiguration(opts ...func(*ReadConfigurationConfigurati
 		return res, err
 	}
 
-	s := string(meta.AdpEntitiesJSONOutput)
-	UnquoteJSONOutput(&s)
+	js := string(meta.AdpEntitiesJSONOutput)
+	UnquoteJSONOutput(&js)
+
+	if err = json.Unmarshal([]byte(js), &res); err != nil {
+		return nil, err
+	}
 
 	return res, err
 }

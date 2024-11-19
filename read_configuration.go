@@ -57,9 +57,9 @@ type ReadConfigurationExecutionMetaData struct {
 	AdpEntitiesJSONOutput     json.RawMessage `json:"adp_entities_json_output"`
 }
 
-type ReadConfigurationResult map[string]ConfigInfo
+type ReadConfigurationResult map[string]ConfigurationInfo
 
-type ConfigInfo struct {
+type ConfigurationInfo struct {
 	DynamicComponents map[string]interface{} `json:"DynamicComponents"`
 	Global            struct {
 		Static struct {

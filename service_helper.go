@@ -139,3 +139,65 @@ func (svc *Service) DropTemplate(identifier string) error {
 	_, err := svc.ADPClient.Send(req)
 	return err
 }
+
+type FieldProperty struct {
+	Active            bool
+	TextType          string
+	DisplayName       string
+	ShortDisplayName  string
+	Storage           string
+	Style             string
+	Simple            bool
+	Extended          bool
+	Table             string
+	StaticTextIfEmpty bool
+	FullView          bool
+	Link              bool
+	Associated        bool
+	GroupName         string
+	HighLight         bool
+	Summarize         bool
+	Size              float64
+}
+
+func (svc *Service) GetFieldProperties(identifier string) (map[string]FieldProperty, error) {
+	fieldProperties := make(map[string]FieldProperty)
+
+	cfg := ConfigurationArg{
+		ConfigurationID: identifier,        // ID of the configuration
+		NameValueList:   "fieldProperties", // Name ofthe components to be retrieved
+	}
+
+	res, err := svc.ReadConfiguration(
+		WithReadConfigurationConfigsToRead([]ConfigurationArg{cfg}),
+	)
+	if err != nil {
+		return fieldProperties, err
+	}
+
+	cells := res[identifier].Global.Static.Parameters[0].Cells
+	for _, cell := range cells {
+		key := cell[1].Value.(string)
+		fieldProperties[key] = FieldProperty{
+			Active:            cell[0].Value.(bool),
+			TextType:          key,
+			DisplayName:       cell[2].Value.(string),
+			ShortDisplayName:  cell[3].Value.(string),
+			Storage:           cell[4].Value.(string),
+			Style:             cell[5].Value.(string),
+			Simple:            cell[6].Value.(bool),
+			Extended:          cell[7].Value.(bool),
+			Table:             cell[8].Value.(string),
+			StaticTextIfEmpty: cell[9].Value.(bool),
+			FullView:          cell[10].Value.(bool),
+			Link:              cell[11].Value.(bool),
+			Associated:        cell[12].Value.(bool),
+			GroupName:         cell[13].Value.(string),
+			HighLight:         cell[14].Value.(bool),
+			Summarize:         cell[15].Value.(bool),
+			Size:              cell[16].Value.(float64),
+		}
+	}
+
+	return fieldProperties, err
+}
