@@ -224,3 +224,31 @@ func (svc *Service) ReadConfiguration(opts ...func(*ReadConfigurationConfigurati
 
 	return res, err
 }
+
+func (svc *Service) ManageTaxonomy(opts ...func(*ManageTaxonomyConfiguration)) (ManageTaxonomyResult, error) {
+	var err error
+	var res ManageTaxonomyResult
+
+	req := NewRequest().ManageTaxonomy(opts...)
+
+	resp, err := svc.ADPClient.Send(req)
+	if err != nil {
+		return res, err
+	}
+
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
+
+	var meta ManageTaxonomyExecutionMetaData
+	if err = json.Unmarshal(resp.ExecutionMetaData, &meta); err != nil {
+		return res, err
+	}
+
+	jsOutput := string(meta.AdpManageTaxonomyJSONOutput)
+	UnquoteJSONOutput(&jsOutput)
+
+	if err = json.Unmarshal([]byte(jsOutput), &res); err != nil {
+		return res, err
+	}
+
+	return res, nil
+}

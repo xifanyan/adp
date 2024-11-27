@@ -1,5 +1,7 @@
 package adp
 
+import "encoding/json"
+
 type ManageTaxonomyConfiguration struct {
 	AdpProgressTaskTimeout           int    `json:"adp_progressTaskTimeout,omitempty"`
 	AdpManageTaxonomyEnginePassword  string `json:"adp_manageTaxonomy_enginePassword,omitempty"`
@@ -37,4 +39,40 @@ func WithManageTaxonomyTaxonomiesJSON(json string) func(*ManageTaxonomyConfigura
 	return func(c *ManageTaxonomyConfiguration) {
 		c.AdpManageTaxonomyTaxonomiesJSON = json
 	}
+}
+
+type ManageTaxonomyTaxonomyInput struct {
+	TaxonomyName string                        `json:"taxonomyName,omitempty"`
+	Categories   []ManageTaxonomyCategoryInput `json:"categories"`
+}
+
+type ManageTaxonomyCategoryInput struct {
+	ID         string            `json:"id"`
+	Mode       string            `json:"mode,omitempty"`
+	Name       string            `json:"name,omitempty"`
+	Properties map[string]string `json:"properties,omitempty"`
+}
+
+type ManageTaxonomyExecutionMetaData struct {
+	AdpManageTaxonomyJSONOutput json.RawMessage `json:"adp_manage_taxonomy_json_output"`
+}
+
+type ManageTaxonomyResult []ManageTaxonomyTaxonomyItem
+
+type ManageTaxonomyTaxonomyItem struct {
+	ErrorMessage       string                     `json:"errorMessage"`
+	ExecutionPerEngine map[string]EngineExecution `json:"executionPerEngine"`
+	TaxonomyID         string                     `json:"taxonomyId"`
+	ExecutionStatus    string                     `json:"executionStatus"`
+	Action             ManageTaxonomyAction       `json:"action"`
+}
+
+type EngineExecution struct {
+	ErrorMessage    string `json:"errorMessage"`
+	ExecutionStatus string `json:"executionStatus"`
+}
+
+type ManageTaxonomyAction struct {
+	ActionType string `json:"actionType"`
+	ManageTaxonomyCategoryInput
 }
