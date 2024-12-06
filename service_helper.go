@@ -201,3 +201,16 @@ func (svc *Service) GetFieldProperties(identifier string) (map[string]FieldPrope
 
 	return fieldProperties, err
 }
+
+func (svc *Service) GetCategories(application string, taxonomy string) ([]Taxonomy, error) {
+	return svc.TaxonomyStatistic(
+		WithTaxonomyStatisticApplicationIdentifier(application),
+		WithTaxonomyStatisticOutputTaxonomies([]OutputTaxonomiesArg{
+			{
+				Taxonomy:                  taxonomy,
+				Mode:                      "Category counts",
+				MaximumNumberOfCategories: MAX_NUMBER_OF_CATEGORIES,
+			},
+		}),
+	)
+}
