@@ -1,5 +1,9 @@
 package adp
 
+import (
+	"encoding/json"
+)
+
 func (svc *Service) ListDocumentHolds() ([]Entity, error) {
 	return svc.ListEntities(WithListEntitiesType("documentHold"))
 }
@@ -213,4 +217,34 @@ func (svc *Service) GetCategories(application string, taxonomy string) ([]Taxono
 			},
 		}),
 	)
+}
+
+func (svc *Service) CreateOrUpdateCategory(application string, taxonomyName string, categoryID string, categoryName string) (ManageTaxonomyResult, error) {
+	var res ManageTaxonomyResult
+	var err error
+
+	input := []ManageTaxonomyTaxonomyInput{
+		{
+			TaxonomyName: taxonomyName,
+			Categories: []ManageTaxonomyCategoryInput{
+				{
+					ID:   categoryID,
+					Mode: "createOrUpdate",
+					Name: categoryName,
+				},
+			},
+		},
+	}
+
+	js, err := json.Marshal(input)
+	if err != nil {
+		return res, err
+	}
+
+	res, err = svc.ManageTaxonomy(
+		WithManageTaxonomyApplicationName(application),
+		WithManageTaxonomyTaxonomiesJSON(string(js)),
+	)
+
+	return res, err
 }
