@@ -40,6 +40,17 @@ func (svc *Service) ListApplicationsByUser(user string) ([]Entity, error) {
 	return append(documentHolds, axcelerates...), nil
 }
 
+func (svc *Service) ListDatasources() ([]Entity, error) {
+	return svc.ListEntities(WithListEntitiesType("dataSource"))
+}
+
+func (svc *Service) ListDatasourcesByUser(user string) ([]Entity, error) {
+	return svc.ListEntities(
+		WithListEntitiesType("dataSource"),
+		WithListEntitiesUserHasAccess(user),
+	)
+}
+
 func (svc *Service) ListHosts() ([]Entity, error) {
 	return svc.ListEntities(WithListEntitiesType("host"))
 }
