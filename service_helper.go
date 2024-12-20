@@ -217,6 +217,43 @@ func (svc *Service) GetFieldProperties(identifier string) (map[string]FieldPrope
 	return fieldProperties, err
 }
 
+type IndexConfigurationTable struct {
+	TextType           string
+	Type               string
+	StructuredView     bool
+	CategoryDelimiters string
+}
+
+func (svc *Service) GetIndexConfigurationTable(identifier string) (map[string]IndexConfigurationTable, error) {
+	indexConfigurationTable := make(map[string]IndexConfigurationTable)
+
+	cfg := ConfigurationArg{
+		ConfigurationID: identifier,                // ID of the configuration
+		NameValueList:   "indexConfigurationTable", // Name ofthe components to be retrieved
+	}
+
+	res, err := svc.ReadConfiguration(
+		WithReadConfigurationConfigsToRead([]ConfigurationArg{cfg}),
+	)
+
+	if err != nil {
+		return indexConfigurationTable, err
+	}
+
+	cells := res[identifier].Global.Static.Parameters[0].Cells
+	for _, cell := range cells {
+		key := cell[0].Value.(string)
+		indexConfigurationTable[key] = IndexConfigurationTable{
+			TextType:           key,
+			Type:               cell[2].Value.(string),
+			StructuredView:     cell[12].Value.(bool),
+			CategoryDelimiters: cell[13].Value.(string),
+		}
+	}
+
+	return indexConfigurationTable, err
+}
+
 func (svc *Service) GetCategories(application string, taxonomy string) ([]Taxonomy, error) {
 	return svc.TaxonomyStatistic(
 		WithTaxonomyStatisticApplicationIdentifier(application),
