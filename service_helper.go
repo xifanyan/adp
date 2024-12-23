@@ -4,6 +4,17 @@ import (
 	"encoding/json"
 )
 
+func (svc *Service) ListWorkspaces() ([]Entity, error) {
+	return svc.ListEntities(WithListEntitiesType("workspace"))
+}
+
+func (svc *Service) ListWorkspacesByUser(user string) ([]Entity, error) {
+	return svc.ListEntities(
+		WithListEntitiesType("workspace"),
+		WithListEntitiesUserHasAccess(user),
+	)
+}
+
 func (svc *Service) ListDocumentHolds() ([]Entity, error) {
 	return svc.ListEntities(WithListEntitiesType("documentHold"))
 }
