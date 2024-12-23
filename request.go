@@ -200,18 +200,18 @@ func (req *Request) StartApplication(opts ...func(*StartApplicationConfiguration
 	return newTaskRequest("Start Application", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // StopProcesses initializes a new Request with a specified task type and configuration
 // for stopping a list of processes.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the configuration object of
-//         type *StopProcessesConfiguration.
+//
+//	opts: A variadic list of functions that modify the configuration object of
+//	      type *StopProcessesConfiguration.
 //
 // Returns:
-//   *Request: A pointer to the newly created Request object configured with the
-//             specified task type and updated configuration.
-/******  744ffa90-8eb4-420e-b5bf-7ed721b2df4c  *******/
+//
+//	*Request: A pointer to the newly created Request object configured with the
+//	          specified task type and updated configuration.
 func (req *Request) StopProcesses(opts ...func(*StopProcessesConfiguration)) *Request {
 	defaults := &StopProcessesConfiguration{
 		AdpLoggingEnabled:      false,
@@ -221,18 +221,18 @@ func (req *Request) StopProcesses(opts ...func(*StopProcessesConfiguration)) *Re
 	return newTaskRequest("Stop Processes", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // QueryPostgresqlDB initializes a new Request with a specified task type and configuration
 // for querying a Postgresql database.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the configuration object of
-//         type *QueryPostgresqlDBConfiguration.
+//
+//	opts: A variadic list of functions that modify the configuration object of
+//	      type *QueryPostgresqlDBConfiguration.
 //
 // Returns:
-//   *Request: A pointer to the newly created Request object configured with the
-//             specified task type and updated configuration.
-/******  d161183c-39d1-495e-a28f-75738e28e0ed  *******/
+//
+//	*Request: A pointer to the newly created Request object configured with the
+//	          specified task type and updated configuration.
 func (req *Request) QueryPostgresqlDB(opts ...func(*QueryPostgresqlDBConfiguration)) *Request {
 	defaults := &QueryPostgresqlDBConfiguration{
 		AdpLoggingEnabled:      false,
@@ -242,18 +242,18 @@ func (req *Request) QueryPostgresqlDB(opts ...func(*QueryPostgresqlDBConfigurati
 	return newTaskRequest("Query Postgresql DB", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // ManageTaxonomy initializes a new Request with a specified task type and configuration
 // for managing taxonomy.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the configuration object of
-//         type *ManageTaxonomyConfiguration.
+//
+//	opts: A variadic list of functions that modify the configuration object of
+//	      type *ManageTaxonomyConfiguration.
 //
 // Returns:
-//   *Request: A pointer to the newly created Request object configured with the
-//             specified task type and updated configuration.
-/******  ed9b820c-9fef-40ee-8581-fa7d21abee79  *******/
+//
+//	*Request: A pointer to the newly created Request object configured with the
+//	          specified task type and updated configuration.
 func (req *Request) ManageTaxonomy(opts ...func(*ManageTaxonomyConfiguration)) *Request {
 	defaults := &ManageTaxonomyConfiguration{
 		AdpLoggingEnabled:      false,
@@ -374,16 +374,16 @@ func (req *Request) CreateCustodian(opts ...func(*CreateCustodianConfiguration))
 	return newTaskRequest("Create Custodian", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // CSVMerge initializes a request to merge CSV files with the specified configurations.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the CSVMergeConfiguration.
-//         These can be used to customize the behavior of the CSV merge process.
+//
+//	opts: A variadic list of functions that modify the CSVMergeConfiguration.
+//	      These can be used to customize the behavior of the CSV merge process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to merge CSV files.
-/******  80aed027-5f11-4d39-b7be-271902962b1e  *******/
+//
+//	*Request: A pointer to the Request object configured to merge CSV files.
 func (req *Request) CSVMerge(opts ...func(*CSVMergeConfiguration)) *Request {
 	defaults := &CSVMergeConfiguration{
 		AdpLoggingEnabled:      false,
@@ -392,17 +392,16 @@ func (req *Request) CSVMerge(opts ...func(*CSVMergeConfiguration)) *Request {
 	return newTaskRequest("CSV Merge", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // CreateDataSource initializes a request to create a data source with the specified configurations.
 //
 // Parameters:
 //
-//	opts: A variadic list of functions that modify the CreateDataSourceConfiguration.
-//         These can be used to customize the behavior of the create data source process.
+//		opts: A variadic list of functions that modify the CreateDataSourceConfiguration.
+//	        These can be used to customize the behavior of the create data source process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to create a data source.
-/******  1b121b0a-03bc-440c-84b8-08b20b9388c3  *******/
+//
+//	*Request: A pointer to the Request object configured to create a data source.
 func (req *Request) CreateDataSource(opts ...func(*CreateDataSourceConfiguration)) *Request {
 	defaults := &CreateDataSourceConfiguration{
 		AdpLoggingEnabled:      false,
@@ -411,16 +410,16 @@ func (req *Request) CreateDataSource(opts ...func(*CreateDataSourceConfiguration
 	return newTaskRequest("Create Data Source", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // ManageUsersAndGroups initializes a request to manage users and groups with the specified configurations.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the ManageUsersAndGruopsConfiguration.
-//         These can be used to customize the behavior of the manage users and groups process.
+//
+//	opts: A variadic list of functions that modify the ManageUsersAndGruopsConfiguration.
+//	      These can be used to customize the behavior of the manage users and groups process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to manage users and groups.
-/******  9cf745ab-f315-4fb9-a717-2689cc2f9a26  *******/
+//
+//	*Request: A pointer to the Request object configured to manage users and groups.
 func (req *Request) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfiguration)) *Request {
 	defaults := &ManageUsersAndGruopsConfiguration{
 		AdpLoggingEnabled:      false,
@@ -429,17 +428,16 @@ func (req *Request) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfi
 	return newTaskRequest("Manage Users and Groups", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // ReadConfiguration initializes a request to read configuration data with the specified options.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the ReadConfigurationConfiguration.
-//         These can be used to customize the behavior of the read configuration process.
+//
+//	opts: A variadic list of functions that modify the ReadConfigurationConfiguration.
+//	      These can be used to customize the behavior of the read configuration process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to read configuration data.
-
-/******  0c508ea1-5010-4faa-ad17-d6790abf1c7b  *******/
+//
+//	*Request: A pointer to the Request object configured to read configuration data.
 func (req *Request) ReadConfiguration(opts ...func(*ReadConfigurationConfiguration)) *Request {
 	defaults := &ReadConfigurationConfiguration{
 		AdpLoggingEnabled:      false,
@@ -448,16 +446,16 @@ func (req *Request) ReadConfiguration(opts ...func(*ReadConfigurationConfigurati
 	return newTaskRequest("Read Configuration", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // ConfigureEntity initializes a request to configure an entity with the specified configurations.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the ConfigureEntityConfiguration.
-//         These can be used to customize the behavior of the configure entity process.
+//
+//	opts: A variadic list of functions that modify the ConfigureEntityConfiguration.
+//	      These can be used to customize the behavior of the configure entity process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to configure an entity.
-/******  bfa99828-530b-4687-8f3a-074feb88401a  *******/
+//
+//	*Request: A pointer to the Request object configured to configure an entity.
 func (req *Request) ConfigureEntity(opts ...func(*ConfigureEntityConfiguration)) *Request {
 	defaults := &ConfigureEntityConfiguration{
 		AdpLoggingEnabled:      false,
@@ -466,17 +464,16 @@ func (req *Request) ConfigureEntity(opts ...func(*ConfigureEntityConfiguration))
 	return newTaskRequest("Configure Entity", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // AddSubengine initializes a request to add a subengine with the specified configurations.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the AddSubengineConfiguration.
-//         These can be used to customize the behavior of the add subengine process.
+//
+//	opts: A variadic list of functions that modify the AddSubengineConfiguration.
+//	      These can be used to customize the behavior of the add subengine process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to add a subengine.
-
-/******  61580160-fc5c-4ca5-9201-434107d3c5ea  *******/
+//
+//	*Request: A pointer to the Request object configured to add a subengine.
 func (req *Request) AddSubengine(opts ...func(*AddSubengineConfiguration)) *Request {
 	defaults := &AddSubengineConfiguration{
 		AdpLoggingEnabled:      false,
@@ -485,16 +482,16 @@ func (req *Request) AddSubengine(opts ...func(*AddSubengineConfiguration)) *Requ
 	return newTaskRequest("Add Subengine", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // EngineJobMonitoring initializes a request to monitor/list engine jobs with the specified configurations.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the EngineJobMonitoringConfiguration.
-//         These can be used to customize the behavior of the engine job monitoring process.
+//
+//	opts: A variadic list of functions that modify the EngineJobMonitoringConfiguration.
+//	      These can be used to customize the behavior of the engine job monitoring process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to monitor/list engine jobs.
-/******  caa5addb-eed4-4714-a47e-ba85d0240809  *******/
+//
+//	*Request: A pointer to the Request object configured to monitor/list engine jobs.
 func (req *Request) EngineJobMonitoring(opts ...func(*EngineJobMonitoringConfiguration)) *Request {
 	defaults := &EngineJobMonitoringConfiguration{
 		AdpLoggingEnabled:      false,
@@ -503,18 +500,18 @@ func (req *Request) EngineJobMonitoring(opts ...func(*EngineJobMonitoringConfigu
 	return newTaskRequest("Engine Job Monitoring", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // CsvDetection initializes a request to detect a CSV file's delimiter and quote
 // character with the specified configurations.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the CsvDetectionConfiguration.
-//         These can be used to customize the behavior of the CSV detection process.
+//
+//	opts: A variadic list of functions that modify the CsvDetectionConfiguration.
+//	      These can be used to customize the behavior of the CSV detection process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to detect a CSV file's
-//             delimiter and quote character.
-/******  b0489d7a-f571-4565-ba06-fd27d059c4d6  *******/
+//
+//	*Request: A pointer to the Request object configured to detect a CSV file's
+//	          delimiter and quote character.
 func (req *Request) CsvDetection(opts ...func(*CsvDetectionConfiguration)) *Request {
 	defaults := &CsvDetectionConfiguration{
 		AdpLoggingEnabled:      false,
@@ -536,17 +533,17 @@ func (req *Request) CsvDetection(opts ...func(*CsvDetectionConfiguration)) *Requ
 	return newTaskRequest("CSV Detection", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // AddFields initializes a request to add fields to an engine with the specified
 // configurations.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the AddFieldsConfiguration.
-//         These can be used to customize the behavior of the add fields process.
+//
+//	opts: A variadic list of functions that modify the AddFieldsConfiguration.
+//	      These can be used to customize the behavior of the add fields process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to add fields to an engine.
-/******  4e4220ea-a165-4e5a-b492-72202dd8c279  *******/
+//
+//	*Request: A pointer to the Request object configured to add fields to an engine.
 func (req *Request) AddFields(opts ...func(*AddFieldsConfiguration)) *Request {
 	defaults := &AddFieldsConfiguration{
 		AdpLoggingEnabled:      false,
@@ -573,19 +570,19 @@ func (req *Request) AddFields(opts ...func(*AddFieldsConfiguration)) *Request {
 	return newTaskRequest("Add Fields", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // ConfigureServiceProperties configures service properties using the given
 // configuration options.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the
-//         ConfigureServicePropertiesConfiguration. These can be used to
-//         customize the behavior of the configure service properties process.
+//
+//	opts: A variadic list of functions that modify the
+//	      ConfigureServicePropertiesConfiguration. These can be used to
+//	      customize the behavior of the configure service properties process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to configure service
-//             properties.
-/******  507f1e9b-9579-4ce0-946d-48ed687bbd4b  *******/
+//
+//	*Request: A pointer to the Request object configured to configure service
+//	          properties.
 func (req *Request) ConfigureServiceProperties(opts ...func(*ConfigureServicePropertiesConfiguration)) *Request {
 	defaults := &ConfigureServicePropertiesConfiguration{
 		AdpLoggingEnabled:      false,
@@ -616,19 +613,19 @@ func (req *Request) GlobalSearches(opts ...func(*GlobalSearchesConfiguration)) *
 	return newTaskRequest("Global Searches", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // ManageTaggers configures taggers for an application using the given
 // configurations.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the ManageTaggersConfiguration.
-//         These can be used to customize the behavior of the manage taggers
-//         process.
+//
+//	opts: A variadic list of functions that modify the ManageTaggersConfiguration.
+//	      These can be used to customize the behavior of the manage taggers
+//	      process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to configure taggers
-//             for an application.
-/******  e716a517-2989-47d1-b7e7-09907ba168e9  *******/
+//
+//	*Request: A pointer to the Request object configured to configure taggers
+//	          for an application.
 func (req *Request) ManageTaggers(opts ...func(*ManageTaggersConfiguration)) *Request {
 	defaults := &ManageTaggersConfiguration{
 		AdpLoggingEnabled:      false,
@@ -637,17 +634,17 @@ func (req *Request) ManageTaggers(opts ...func(*ManageTaggersConfiguration)) *Re
 	return newTaskRequest("Manage Taggers", defaults, opts...)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
 // CreateApplication initializes a request to create an application with the specified
 // configurations.
 //
 // Parameters:
-//   opts: A variadic list of functions that modify the CreateApplicationConfiguration.
-//         These can be used to customize the behavior of the create application process.
+//
+//	opts: A variadic list of functions that modify the CreateApplicationConfiguration.
+//	      These can be used to customize the behavior of the create application process.
 //
 // Returns:
-//   *Request: A pointer to the Request object configured to create an application.
-/******  8bdfbd08-ef33-4063-bfac-c181b96ce643  *******/
+//
+//	*Request: A pointer to the Request object configured to create an application.
 func (req *Request) CreateApplication(opts ...func(*CreateApplicationConfiguration)) *Request {
 	defaults := &CreateApplicationConfiguration{
 		AdpLoggingEnabled:      false,
