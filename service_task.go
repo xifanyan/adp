@@ -252,3 +252,22 @@ func (svc *Service) ManageTaxonomy(opts ...func(*ManageTaxonomyConfiguration)) (
 
 	return res, nil
 }
+
+func (svc *Service) CreateApplication(opts ...func(*CreateApplicationConfiguration)) (CreateApplicationResult, error) {
+	var err error
+	var resp *Response
+	var res CreateApplicationResult
+
+	req := NewRequest().CreateApplication(opts...)
+	if resp, err = svc.ADPClient.Send(req); err != nil {
+		return res, err
+	}
+
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
+
+	if err = json.Unmarshal(resp.ExecutionMetaData, &res); err != nil {
+		return res, err
+	}
+
+	return res, nil
+}
