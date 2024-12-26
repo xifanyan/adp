@@ -307,3 +307,27 @@ func (svc *Service) CreateOrUpdateCategory(application string, taxonomyName stri
 
 	return res, err
 }
+
+// StartApplicationAsync starts an application asynchronously using the provided
+// application identifier. It sends the request to the ADP client and returns
+// the execution ID of the task.
+//
+// Parameters:
+//   - appID: Identifier of the application to start.
+//
+// Returns:
+//   - string: The execution ID of the asynchronous task.
+//   - error: An error, if any occurs during the request or task execution.
+
+func (svc *Service) StartApplicationAsync(appID string) (string, error) {
+	req := NewRequest().StartApplication(
+		WithStartApplicationApplicationIdentifier(appID),
+	)
+
+	executionID, err := svc.ADPClient.SendAsync(req)
+	if err != nil {
+		return "", err
+	}
+
+	return executionID, nil
+}
