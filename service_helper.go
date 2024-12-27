@@ -331,3 +331,37 @@ func (svc *Service) StartApplicationAsync(appID string) (string, error) {
 
 	return executionID, nil
 }
+
+// GetAllUsersAndGroups retrieves all users and groups from the ADP system.
+//
+// Parameters:
+//
+//   - None
+//
+// Returns:
+//
+//   - map[string]User: A map of user identifiers to User objects.
+//   - map[string]Group: A map of group identifiers to Group objects.
+//   - error: An error, if any occurs during the request or task execution.
+func (svc *Service) GetAllUsersAndGroups() (map[string]User, map[string]Group, error) {
+
+	res, err := svc.ManageUsersAndGroups(
+		WithManageUsersAndGroupsReturnAllUsersUnderGroup("true"),
+	)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	users := make(map[string]User)
+	groups := make(map[string]Group)
+
+	for k, v := range res.UsersAndGroups.Users {
+		users[k] = v
+	}
+
+	for k, v := range res.UsersAndGroups.Groups {
+		groups[k] = v
+	}
+
+	return users, groups, nil
+}
