@@ -193,7 +193,7 @@ func (req *Request) QueryEngine(opts ...func(*QueryEngineConfiguration)) *Reques
 
 func (req *Request) StartApplication(opts ...func(*StartApplicationConfiguration)) *Request {
 	defaults := &StartApplicationConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 
@@ -214,7 +214,7 @@ func (req *Request) StartApplication(opts ...func(*StartApplicationConfiguration
 //	          specified task type and updated configuration.
 func (req *Request) StopProcesses(opts ...func(*StopProcessesConfiguration)) *Request {
 	defaults := &StopProcessesConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 
@@ -235,7 +235,7 @@ func (req *Request) StopProcesses(opts ...func(*StopProcessesConfiguration)) *Re
 //	          specified task type and updated configuration.
 func (req *Request) QueryPostgresqlDB(opts ...func(*QueryPostgresqlDBConfiguration)) *Request {
 	defaults := &QueryPostgresqlDBConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 
@@ -256,7 +256,7 @@ func (req *Request) QueryPostgresqlDB(opts ...func(*QueryPostgresqlDBConfigurati
 //	          specified task type and updated configuration.
 func (req *Request) ManageTaxonomy(opts ...func(*ManageTaxonomyConfiguration)) *Request {
 	defaults := &ManageTaxonomyConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 
@@ -292,7 +292,7 @@ func (req *Request) ReadServiceAlerts(opts ...func(*ReadServiceAlertsConfigurati
 //	*Request: A request object configured to configure a data source.
 func (req *Request) ConfigureDataSource(opts ...func(*ConfigureDataSourceConfiguration)) *Request {
 	defaults := &ConfigureDataSourceConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 
@@ -310,7 +310,7 @@ func (req *Request) ConfigureDataSource(opts ...func(*ConfigureDataSourceConfigu
 
 func (req *Request) StartDataSource(opts ...func(*StartDataSourceConfiguration)) *Request {
 	defaults := &StartDataSourceConfiguration{
-		AdpLoggingEnabled:             false,
+		AdpLoggingEnabled:             true,
 		AdpExecutionPersistent:        false,
 		AdpStartDataSourceSynchronous: false,
 	}
@@ -330,7 +330,7 @@ func (req *Request) StartDataSource(opts ...func(*StartDataSourceConfiguration))
 //	*Request: A pointer to the Request object configured to export documents.
 func (req *Request) ExportDocuments(opts ...func(*ExportDocumentsConfiguration)) *Request {
 	defaults := &ExportDocumentsConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 
@@ -349,7 +349,7 @@ func (req *Request) ExportDocuments(opts ...func(*ExportDocumentsConfiguration))
 //	*Request: A pointer to the Request object configured to run a CLI.
 func (req *Request) CLI(opts ...func(*CLIConfiguration)) *Request {
 	defaults := &CLIConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 
@@ -386,7 +386,7 @@ func (req *Request) CreateCustodian(opts ...func(*CreateCustodianConfiguration))
 //	*Request: A pointer to the Request object configured to merge CSV files.
 func (req *Request) CSVMerge(opts ...func(*CSVMergeConfiguration)) *Request {
 	defaults := &CSVMergeConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 	return newTaskRequest("CSV Merge", defaults, opts...)
@@ -404,7 +404,7 @@ func (req *Request) CSVMerge(opts ...func(*CSVMergeConfiguration)) *Request {
 //	*Request: A pointer to the Request object configured to create a data source.
 func (req *Request) CreateDataSource(opts ...func(*CreateDataSourceConfiguration)) *Request {
 	defaults := &CreateDataSourceConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 	return newTaskRequest("Create Data Source", defaults, opts...)
@@ -422,7 +422,7 @@ func (req *Request) CreateDataSource(opts ...func(*CreateDataSourceConfiguration
 //	*Request: A pointer to the Request object configured to manage users and groups.
 func (req *Request) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfiguration)) *Request {
 	defaults := &ManageUsersAndGruopsConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 	return newTaskRequest("Manage Users and Groups", defaults, opts...)
@@ -440,7 +440,7 @@ func (req *Request) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfi
 //	*Request: A pointer to the Request object configured to read configuration data.
 func (req *Request) ReadConfiguration(opts ...func(*ReadConfigurationConfiguration)) *Request {
 	defaults := &ReadConfigurationConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 	return newTaskRequest("Read Configuration", defaults, opts...)
@@ -458,7 +458,7 @@ func (req *Request) ReadConfiguration(opts ...func(*ReadConfigurationConfigurati
 //	*Request: A pointer to the Request object configured to configure an entity.
 func (req *Request) ConfigureEntity(opts ...func(*ConfigureEntityConfiguration)) *Request {
 	defaults := &ConfigureEntityConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 	return newTaskRequest("Configure Entity", defaults, opts...)
@@ -476,7 +476,7 @@ func (req *Request) ConfigureEntity(opts ...func(*ConfigureEntityConfiguration))
 //	*Request: A pointer to the Request object configured to add a subengine.
 func (req *Request) AddSubengine(opts ...func(*AddSubengineConfiguration)) *Request {
 	defaults := &AddSubengineConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 	return newTaskRequest("Add Subengine", defaults, opts...)
@@ -546,7 +546,7 @@ func (req *Request) CsvDetection(opts ...func(*CsvDetectionConfiguration)) *Requ
 //	*Request: A pointer to the Request object configured to add fields to an engine.
 func (req *Request) AddFields(opts ...func(*AddFieldsConfiguration)) *Request {
 	defaults := &AddFieldsConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 		AdpAddFieldsCloneTemplates: []FieldCloneTemplate{
 			{
@@ -585,7 +585,7 @@ func (req *Request) AddFields(opts ...func(*AddFieldsConfiguration)) *Request {
 //	          properties.
 func (req *Request) ConfigureServiceProperties(opts ...func(*ConfigureServicePropertiesConfiguration)) *Request {
 	defaults := &ConfigureServicePropertiesConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 	return newTaskRequest("Configure Service Properties", defaults, opts...)
@@ -606,7 +606,7 @@ func (req *Request) ConfigureServiceProperties(opts ...func(*ConfigureServicePro
 //	          searches on an engine.
 func (req *Request) GlobalSearches(opts ...func(*GlobalSearchesConfiguration)) *Request {
 	defaults := &GlobalSearchesConfiguration{
-		AdpLoggingEnabled:                              false,
+		AdpLoggingEnabled:                              true,
 		AdpExecutionPersistent:                         false,
 		AdpGlobalSearchesUpdateCollisionResolutionMode: "error",
 	}
@@ -628,7 +628,7 @@ func (req *Request) GlobalSearches(opts ...func(*GlobalSearchesConfiguration)) *
 //	          for an application.
 func (req *Request) ManageTaggers(opts ...func(*ManageTaggersConfiguration)) *Request {
 	defaults := &ManageTaggersConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 	return newTaskRequest("Manage Taggers", defaults, opts...)
@@ -647,7 +647,7 @@ func (req *Request) ManageTaggers(opts ...func(*ManageTaggersConfiguration)) *Re
 //	*Request: A pointer to the Request object configured to create an application.
 func (req *Request) CreateApplication(opts ...func(*CreateApplicationConfiguration)) *Request {
 	defaults := &CreateApplicationConfiguration{
-		AdpLoggingEnabled:      false,
+		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
 	return newTaskRequest("Create Application", defaults, opts...)
