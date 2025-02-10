@@ -51,21 +51,48 @@ func (svc *Service) ListApplicationsByUser(user string) ([]Entity, error) {
 	return append(documentHolds, axcelerates...), nil
 }
 
-func (svc *Service) ListGlobalTemplates(entityType string) ([]Entity, error) {
-	var globalTemplates []Entity
+func (svc *Service) ListAvailableTemplates(entityType string, user string) ([]Entity, error) {
+	var availableTemplates []Entity
 
-	entities, err := svc.ListEntities(WithListEntitiesType(entityType))
+	// list entities with specific type that user has access to
+	entities, err := svc.ListEntities(
+		WithListEntitiesType(entityType),
+		WithListEntitiesUserHasAccess(user),
+	)
 	if err != nil {
 		return nil, err
 	}
 
+	// keep track of unique Entity IDs to prevent the situation that the entity user has access
+	// to is also a global template.
+	var uniqueIDs map[string]struct{} = make(map[string]struct{})
+
 	for _, entity := range entities {
-		if entity.GlobalTemplateFlag {
-			globalTemplates = append(globalTemplates, entity)
+		if _, ok := uniqueIDs[entity.ID]; !ok {
+			uniqueIDs[entity.ID] = struct{}{}
+			availableTemplates = append(availableTemplates, entity)
 		}
 	}
 
-	return globalTemplates, nil
+	// list all entities with specific type
+	entities, err = svc.ListEntities(
+		WithListEntitiesType(entityType),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	// filter the entities to find the global templates
+	for _, entity := range entities {
+		if entity.GlobalTemplateFlag {
+			if _, ok := uniqueIDs[entity.ID]; !ok {
+				uniqueIDs[entity.ID] = struct{}{}
+				availableTemplates = append(availableTemplates, entity)
+			}
+		}
+	}
+
+	return availableTemplates, nil
 }
 
 func (svc *Service) ListDatasources() ([]Entity, error) {
