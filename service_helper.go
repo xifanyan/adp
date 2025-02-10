@@ -51,6 +51,23 @@ func (svc *Service) ListApplicationsByUser(user string) ([]Entity, error) {
 	return append(documentHolds, axcelerates...), nil
 }
 
+func (svc *Service) ListGlobalTemplates(entityType string) ([]Entity, error) {
+	var globalTemplates []Entity
+
+	entities, err := svc.ListEntities(WithListEntitiesType(entityType))
+	if err != nil {
+		return nil, err
+	}
+
+	for _, entity := range entities {
+		if entity.GlobalTemplateFlag {
+			globalTemplates = append(globalTemplates, entity)
+		}
+	}
+
+	return globalTemplates, nil
+}
+
 func (svc *Service) ListDatasources() ([]Entity, error) {
 	return svc.ListEntities(WithListEntitiesType("dataSource"))
 }

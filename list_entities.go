@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	DefaultListEntitiesWhitelist = "id,displayName,processStatus,hostId,hostName"
+	DefaultListEntitiesWhitelist = "id,displayName,processStatus,hostId,hostName,sourceForCreateFromExisting"
 )
 
 type ListEntitiesConfiguration struct {
@@ -121,9 +121,10 @@ type ListEntitiesExecutionMetaData struct {
 type ListEntitiesResult []Entity
 
 type Entity struct {
-	ID            string `json:"id"`
-	DisplayName   string `json:"displayName,omitempty"`
-	ProcessStatus string `json:"processStatus,omitempty"`
-	HostName      string `json:"hostName,omitempty"`
-	HostID        string `json:"hostId,omitempty"`
+	ID                 string `json:"id"`
+	DisplayName        string `json:"displayName,omitempty"`
+	ProcessStatus      string `json:"processStatus,omitempty"`
+	HostName           string `json:"hostName,omitempty"`
+	HostID             string `json:"hostId,omitempty"`
+	GlobalTemplateFlag bool   `json:"sourceForCreateFromExisting"`
 }
