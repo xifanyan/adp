@@ -23,7 +23,7 @@ type UserToGroup struct {
 	UserName  string `json:"User name,omitempty"`
 }
 
-type ManageUsersAndGruopsConfiguration struct {
+type ManageUsersAndGroupsConfiguration struct {
 	AdpProgressTaskTimeout                          int                `json:"adp_progressTaskTimeout,omitempty"`
 	AdpManageUsersAndGroupsUserDefinition           []UserDefinition   `json:"adp_manageUsersAndGroups_userDefinition,omitempty"`
 	AdpTaskActive                                   bool               `json:"adp_taskActive,omitempty"`
@@ -43,53 +43,53 @@ type ManageUsersAndGruopsConfiguration struct {
 	AdpManageUsersAndGroupsReturnAllUsersUnderGroup string             `json:"adp_manageUsersAndGroups_ReturnAllUsersUnderGroup,omitempty"`
 }
 
-func (cfg *ManageUsersAndGruopsConfiguration) enforcePersistentExecution() {
+func (cfg *ManageUsersAndGroupsConfiguration) enforcePersistentExecution() {
 	cfg.AdpExecutionPersistent = true
 }
 
-func WithManageUsersAndGroupsLoggingEnabled(enabled bool) func(*ManageUsersAndGruopsConfiguration) {
-	return func(c *ManageUsersAndGruopsConfiguration) {
+func WithManageUsersAndGroupsLoggingEnabled(enabled bool) func(*ManageUsersAndGroupsConfiguration) {
+	return func(c *ManageUsersAndGroupsConfiguration) {
 		c.AdpLoggingEnabled = enabled
 	}
 }
-func WithManageUsersAndGroupsAppIdsToFilterFor(appIds string) func(*ManageUsersAndGruopsConfiguration) {
-	return func(c *ManageUsersAndGruopsConfiguration) {
+func WithManageUsersAndGroupsAppIdsToFilterFor(appIds string) func(*ManageUsersAndGroupsConfiguration) {
+	return func(c *ManageUsersAndGroupsConfiguration) {
 		c.AdpManageUsersAndGroupsAppIdsToFilterFor = appIds
 	}
 }
 
-func WithManageUsersAndGroupsUserDefinition(users []UserDefinition) func(*ManageUsersAndGruopsConfiguration) {
-	return func(c *ManageUsersAndGruopsConfiguration) {
+func WithManageUsersAndGroupsUserDefinition(users []UserDefinition) func(*ManageUsersAndGroupsConfiguration) {
+	return func(c *ManageUsersAndGroupsConfiguration) {
 		c.AdpManageUsersAndGroupsUserDefinition = users
 	}
 }
 
-func WithManageUsersAndGroupsGroupDefinition(groups []GroupDefinition) func(*ManageUsersAndGruopsConfiguration) {
-	return func(c *ManageUsersAndGruopsConfiguration) {
+func WithManageUsersAndGroupsGroupDefinition(groups []GroupDefinition) func(*ManageUsersAndGroupsConfiguration) {
+	return func(c *ManageUsersAndGroupsConfiguration) {
 		c.AdpManageUsersAndGroupsGroupDefinition = groups
 	}
 }
 
-func WithManageUsersAndGroupsAssignmentUserToGroup(userToGroup []UserToGroup) func(*ManageUsersAndGruopsConfiguration) {
-	return func(cfg *ManageUsersAndGruopsConfiguration) {
+func WithManageUsersAndGroupsAssignmentUserToGroup(userToGroup []UserToGroup) func(*ManageUsersAndGroupsConfiguration) {
+	return func(cfg *ManageUsersAndGroupsConfiguration) {
 		cfg.AdpManageUsersAndGroupsAssignmentUserToGroup = userToGroup
 	}
 }
 
-func WithManageUsersAndGroupsAddApplicationRoles(applicationRoles []ApplicationRoles) func(*ManageUsersAndGruopsConfiguration) {
-	return func(cfg *ManageUsersAndGruopsConfiguration) {
+func WithManageUsersAndGroupsAddApplicationRoles(applicationRoles []ApplicationRoles) func(*ManageUsersAndGroupsConfiguration) {
+	return func(cfg *ManageUsersAndGroupsConfiguration) {
 		cfg.AdpManageUsersAndGroupsAddApplicationRoles = applicationRoles
 	}
 }
 
-func WithManageUsersAndGroupsReturnAllUsersUnderGroup(returnAllUsersUnderGroup string) func(*ManageUsersAndGruopsConfiguration) {
-	return func(c *ManageUsersAndGruopsConfiguration) {
+func WithManageUsersAndGroupsReturnAllUsersUnderGroup(returnAllUsersUnderGroup string) func(*ManageUsersAndGroupsConfiguration) {
+	return func(c *ManageUsersAndGroupsConfiguration) {
 		c.AdpManageUsersAndGroupsReturnAllUsersUnderGroup = returnAllUsersUnderGroup
 	}
 }
 
-func WithManageUsersAndGroupsGroupUserIdsToFilterFor(groupUserIds string) func(*ManageUsersAndGruopsConfiguration) {
-	return func(c *ManageUsersAndGruopsConfiguration) {
+func WithManageUsersAndGroupsGroupUserIdsToFilterFor(groupUserIds string) func(*ManageUsersAndGroupsConfiguration) {
+	return func(c *ManageUsersAndGroupsConfiguration) {
 		c.AdpManageUsersAndGroupsGroupUserIdsToFilterFor = groupUserIds
 	}
 }

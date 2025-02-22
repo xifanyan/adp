@@ -121,7 +121,7 @@ func (svc *Service) StartDataSource(opts ...func(*StartDataSourceConfiguration))
 	return err
 }
 
-func (svc *Service) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfiguration)) (ManageUsersAndGroupsResult, error) {
+func (svc *Service) ManageUsersAndGroups(opts ...func(*ManageUsersAndGroupsConfiguration)) (ManageUsersAndGroupsResult, error) {
 	var err error
 	var res ManageUsersAndGroupsResult
 

@@ -414,14 +414,14 @@ func (req *Request) CreateDataSource(opts ...func(*CreateDataSourceConfiguration
 //
 // Parameters:
 //
-//	opts: A variadic list of functions that modify the ManageUsersAndGruopsConfiguration.
+//	opts: A variadic list of functions that modify the ManageUsersAndGroupsConfiguration.
 //	      These can be used to customize the behavior of the manage users and groups process.
 //
 // Returns:
 //
 //	*Request: A pointer to the Request object configured to manage users and groups.
-func (req *Request) ManageUsersAndGroups(opts ...func(*ManageUsersAndGruopsConfiguration)) *Request {
-	defaults := &ManageUsersAndGruopsConfiguration{
+func (req *Request) ManageUsersAndGroups(opts ...func(*ManageUsersAndGroupsConfiguration)) *Request {
+	defaults := &ManageUsersAndGroupsConfiguration{
 		AdpLoggingEnabled:      true,
 		AdpExecutionPersistent: false,
 	}
