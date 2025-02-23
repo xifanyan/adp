@@ -409,3 +409,53 @@ func (svc *Service) GetAllUsersAndGroups() (map[string]User, map[string]Group, e
 
 	return users, groups, nil
 }
+
+// GetUsersByID retrieves all users with the specified ID from the ADP system.
+//
+// Parameters:
+//
+//   - id string: The identifier of the user to retrieve.
+//
+// Returns:
+//
+//   - map[string]User: A map of user identifiers to User objects with the specified ID.
+//   - error: An error, if any occurs during the request or task execution.
+func (svc *Service) GetUsersByID(id string) (map[string]User, error) {
+	res, err := svc.ManageUsersAndGroups(
+		WithManageUsersAndGroupsGroupUserIdsToFilterFor(id),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	users := make(map[string]User)
+	for k, v := range res.UsersAndGroups.Users {
+		users[k] = v
+	}
+	return users, nil
+}
+
+// GetGroupsByID retrieves all groups with the specified ID from the ADP system.
+//
+// Parameters:
+//
+//   - id string: The identifier of the group to retrieve.
+//
+// Returns:
+//
+//   - map[string]Group: A map of group identifiers to Group objects with the specified ID.
+//   - error: An error, if any occurs during the request or task execution.
+func (svc *Service) GetGroupsByID(id string) (map[string]Group, error) {
+	res, err := svc.ManageUsersAndGroups(
+		WithManageUsersAndGroupsGroupUserIdsToFilterFor(id),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	groups := make(map[string]Group)
+	for k, v := range res.UsersAndGroups.Groups {
+		groups[k] = v
+	}
+	return groups, nil
+}

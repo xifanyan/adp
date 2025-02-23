@@ -34,11 +34,21 @@ func main() {
 		ADPClient: client,
 	}
 
-	documentHolds, err := svc.ListDocumentHoldsByUser("user1")
-
+	/*
+		Examples:
+		#1: List all applications by user
+			documentHolds, err := svc.ListDocumentHoldsByUser("user1")
+	*/
+	users, err := svc.GetUsersByID("demouser1")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%+v", documentHolds)
+	fmt.Printf("%+v\n", users)
+
+	groups, err := svc.GetGroupsByID("demogroup1")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%+v\n", groups)
 
 }
