@@ -39,13 +39,19 @@ func main() {
 		#1: List all applications by user
 			documentHolds, err := svc.ListDocumentHoldsByUser("user1")
 	*/
-	users, err := svc.GetUsersByID("demouser1")
+	users, groups, err := svc.GetAllUsersAndGroups()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%+v\n%+v\n", users, groups)
+
+	users, err = svc.GetUsersByID("demouser1")
 	if err != nil {
 		panic(err)
 	}
 	fmt.Printf("%+v\n", users)
 
-	groups, err := svc.GetGroupsByID("demogroup1")
+	groups, err = svc.GetGroupsByID("demogroup1")
 	if err != nil {
 		panic(err)
 	}

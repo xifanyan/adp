@@ -389,9 +389,7 @@ func (svc *Service) StartApplicationAsync(appID string) (string, error) {
 //   - error: An error, if any occurs during the request or task execution.
 func (svc *Service) GetAllUsersAndGroups() (map[string]User, map[string]Group, error) {
 
-	res, err := svc.ManageUsersAndGroups(
-		WithManageUsersAndGroupsReturnAllUsersUnderGroup("true"),
-	)
+	res, err := svc.ManageUsersAndGroups()
 	if err != nil {
 		return nil, nil, err
 	}
