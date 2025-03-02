@@ -57,10 +57,16 @@ func main() {
 		fmt.Printf("%+v\n", groups)
 
 	*/
-	u, err := svc.GetUsersByGroupID("demogroup1")
+	u, err := svc.GetUserByID("demouser1")
 	if err != nil {
 		panic(err)
 	}
 	fmt.Printf("%+v\n", u)
+
+	g, err := svc.GetGroupByID("demogroup1")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%+v\n", g)
 
 }
