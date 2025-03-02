@@ -69,4 +69,10 @@ func main() {
 	}
 	fmt.Printf("%+v\n", g)
 
+	groups, err := svc.GetGroupsByUserID("demouser2")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%+v\n", groups)
+
 }

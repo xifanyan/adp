@@ -409,51 +409,41 @@ func (svc *Service) GetAllUsersAndGroups() (map[string]User, map[string]Group, e
 	return users, groups, nil
 }
 
-func (svc *Service) GetUserByID(id string) (User, error) {
+func (svc *Service) GetUserByID(userID string) (User, error) {
 	res, err := svc.ManageUsersAndGroups(
-		WithManageUsersAndGroupsGroupUserIdsToFilterFor(id),
+		WithManageUsersAndGroupsGroupUserIdsToFilterFor(userID),
 	)
 	if err != nil {
 		return User{}, err
 	}
 
-	user, ok := res.UsersAndGroups.Users[id]
+	user, ok := res.UsersAndGroups.Users[userID]
 	if !ok {
-		return User{}, fmt.Errorf("group %s not found", id)
+		return User{}, fmt.Errorf("group %s not found", userID)
 	}
 
 	return user, nil
 }
 
-func (svc *Service) GetGroupByID(id string) (Group, error) {
+func (svc *Service) GetGroupByID(groupID string) (Group, error) {
 	res, err := svc.ManageUsersAndGroups(
-		WithManageUsersAndGroupsGroupUserIdsToFilterFor(id),
+		WithManageUsersAndGroupsGroupUserIdsToFilterFor(groupID),
 	)
 	if err != nil {
 		return Group{}, err
 	}
 
-	group, ok := res.UsersAndGroups.Groups[id]
+	group, ok := res.UsersAndGroups.Groups[groupID]
 	if !ok {
-		return Group{}, fmt.Errorf("group %s not found", id)
+		return Group{}, fmt.Errorf("group %s not found", groupID)
 	}
 
 	return group, nil
 }
 
-// GetUsersByGroupID retrieves all users which are members of the specified group from the ADP system.
-//
-// Parameters:
-//
-//   - id string: The identifier of the group to retrieve the users from.
-//
-// Returns:
-//
-//   - []string: A slice of user identifiers which are members of the specified group.
-//   - error: An error, if any occurs during the request or task execution.
-func (svc *Service) GetUsersByGroupID(id string) ([]string, error) {
+func (svc *Service) GetUsersByGroupID(groupID string) ([]string, error) {
 	res, err := svc.ManageUsersAndGroups(
-		WithManageUsersAndGroupsGroupUserIdsToFilterFor(id),
+		WithManageUsersAndGroupsGroupUserIdsToFilterFor(groupID),
 		WithManageUsersAndGroupsReturnAllUsersUnderGroup("true"),
 	)
 
@@ -461,10 +451,38 @@ func (svc *Service) GetUsersByGroupID(id string) ([]string, error) {
 		return nil, err
 	}
 
-	group, ok := res.UsersAndGroups.Groups[id]
+	group, ok := res.UsersAndGroups.Groups[groupID]
 	if !ok {
-		return nil, fmt.Errorf("group %s not found", id)
+		return nil, fmt.Errorf("group %s not found", groupID)
 	}
 
 	return group.Users, nil
+}
+
+func (svc *Service) GetGroupsByUserID(userID string) ([]string, error) {
+	res, err := svc.ManageUsersAndGroups(
+		WithManageUsersAndGroupsReturnAllUsersUnderGroup("true"),
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	groupMap := make(map[string]struct{})
+	for _, group := range res.UsersAndGroups.Groups {
+		for _, user := range group.Users {
+			if user == userID {
+				if _, ok := groupMap[group.Name]; !ok {
+					groupMap[group.Name] = struct{}{}
+				}
+			}
+		}
+	}
+
+	keys := make([]string, 0, len(groupMap))
+	for k := range groupMap {
+		keys = append(keys, k)
+	}
+
+	return keys, nil
 }
