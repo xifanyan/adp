@@ -2,6 +2,7 @@ package adp
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 func (svc *Service) ListWorkspaces() ([]Entity, error) {
@@ -426,11 +427,7 @@ func (svc *Service) GetUsersByID(id string) (map[string]User, error) {
 		return nil, err
 	}
 
-	users := make(map[string]User)
-	for k, v := range res.UsersAndGroups.Users {
-		users[k] = v
-	}
-	return users, nil
+	return res.UsersAndGroups.Users, nil
 }
 
 // GetGroupsByID retrieves all groups with the specified ID from the ADP system.
@@ -451,9 +448,33 @@ func (svc *Service) GetGroupsByID(id string) (map[string]Group, error) {
 		return nil, err
 	}
 
-	groups := make(map[string]Group)
-	for k, v := range res.UsersAndGroups.Groups {
-		groups[k] = v
+	return res.UsersAndGroups.Groups, nil
+}
+
+// GetUsersByGroupID retrieves all users which are members of the specified group from the ADP system.
+//
+// Parameters:
+//
+//   - id string: The identifier of the group to retrieve the users from.
+//
+// Returns:
+//
+//   - []string: A slice of user identifiers which are members of the specified group.
+//   - error: An error, if any occurs during the request or task execution.
+func (svc *Service) GetUsersByGroupID(id string) ([]string, error) {
+	res, err := svc.ManageUsersAndGroups(
+		WithManageUsersAndGroupsGroupUserIdsToFilterFor(id),
+		WithManageUsersAndGroupsReturnAllUsersUnderGroup("true"),
+	)
+
+	if err != nil {
+		return nil, err
 	}
-	return groups, nil
+
+	group, ok := res.UsersAndGroups.Groups[id]
+	if !ok {
+		return nil, fmt.Errorf("group %s not found", id)
+	}
+
+	return group.Users, nil
 }

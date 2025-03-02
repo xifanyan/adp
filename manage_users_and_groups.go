@@ -107,6 +107,7 @@ type UserGroupCommon struct {
 
 type Group struct {
 	UserGroupCommon
+	Users []string `json:"users"`
 }
 
 type User struct {

@@ -37,24 +37,30 @@ func main() {
 	/*
 		Examples:
 		#1: List all applications by user
-			documentHolds, err := svc.ListDocumentHoldsByUser("user1")
+		documentHolds, err := svc.ListDocumentHoldsByUser("user1")
+		users, groups, err := svc.GetAllUsersAndGroups()
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n%+v\n", users, groups)
+
+		users, err = svc.GetUsersByID("demouser1")
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", users)
+
+		groups, err = svc.GetGroupsByID("demogroup1")
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", groups)
+
 	*/
-	users, groups, err := svc.GetAllUsersAndGroups()
+	u, err := svc.GetUsersByGroupID("demogroup1")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%+v\n%+v\n", users, groups)
-
-	users, err = svc.GetUsersByID("demouser1")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("%+v\n", users)
-
-	groups, err = svc.GetGroupsByID("demogroup1")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("%+v\n", groups)
+	fmt.Printf("%+v\n", u)
 
 }
