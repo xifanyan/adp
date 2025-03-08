@@ -75,4 +75,24 @@ func main() {
 	}
 	fmt.Printf("%+v\n", groups)
 
+	/*
+		user3 := adp.UserDefinition{
+			UserName: "demouser3",
+			Password: "demous3r3",
+		}
+		err = svc.AddUser([]adp.UserDefinition{user3})
+		if err != nil {
+			panic(err)
+		}
+	*/
+
+	group3 := adp.GroupDefinition{
+		GroupName: "demogroup3",
+	}
+
+	err = svc.AddGroup([]adp.GroupDefinition{group3})
+	if err != nil {
+		panic(err)
+	}
+
 }

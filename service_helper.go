@@ -409,6 +409,15 @@ func (svc *Service) GetAllUsersAndGroups() (map[string]User, map[string]Group, e
 	return users, groups, nil
 }
 
+// GetUserByID retrieves a user by their unique identifier from the ADP system.
+//
+// Parameters:
+//   - userID: A string representing the unique identifier of the user.
+//
+// Returns:
+//   - User: The user object corresponding to the provided userID.
+//   - error: An error if the user is not found or if any issue occurs during the request.
+
 func (svc *Service) GetUserByID(userID string) (User, error) {
 	res, err := svc.ManageUsersAndGroups(
 		WithManageUsersAndGroupsGroupUserIdsToFilterFor(userID),
@@ -425,6 +434,14 @@ func (svc *Service) GetUserByID(userID string) (User, error) {
 	return user, nil
 }
 
+// GetGroupByID retrieves a group by their unique identifier from the ADP system.
+//
+// Parameters:
+//   - groupID: A string representing the unique identifier of the group.
+//
+// Returns:
+//   - Group: The group object corresponding to the provided groupID.
+//   - error: An error if the group is not found or if any issue occurs during the request.
 func (svc *Service) GetGroupByID(groupID string) (Group, error) {
 	res, err := svc.ManageUsersAndGroups(
 		WithManageUsersAndGroupsGroupUserIdsToFilterFor(groupID),
@@ -441,6 +458,14 @@ func (svc *Service) GetGroupByID(groupID string) (Group, error) {
 	return group, nil
 }
 
+// GetUsersByGroupID retrieves the users of a given group from the ADP system.
+//
+// Parameters:
+//   - groupID: A string representing the unique identifier of the group.
+//
+// Returns:
+//   - []string: A slice of strings representing the unique identifiers of the users associated with the group.
+//   - error: An error if the group is not found or if any issue occurs during the request.
 func (svc *Service) GetUsersByGroupID(groupID string) ([]string, error) {
 	res, err := svc.ManageUsersAndGroups(
 		WithManageUsersAndGroupsGroupUserIdsToFilterFor(groupID),
@@ -459,6 +484,14 @@ func (svc *Service) GetUsersByGroupID(groupID string) ([]string, error) {
 	return group.Users, nil
 }
 
+// GetGroupsByUserID retrieves the groups of a given user from the ADP system.
+//
+// Parameters:
+//   - userID: A string representing the unique identifier of the user.
+//
+// Returns:
+//   - []string: A slice of strings representing the unique identifiers of the groups associated with the user.
+//   - error: An error if the user is not found or if any issue occurs during the request.
 func (svc *Service) GetGroupsByUserID(userID string) ([]string, error) {
 	res, err := svc.ManageUsersAndGroups(
 		WithManageUsersAndGroupsReturnAllUsersUnderGroup("true"),
@@ -485,4 +518,20 @@ func (svc *Service) GetGroupsByUserID(userID string) ([]string, error) {
 	}
 
 	return keys, nil
+}
+
+func (svc *Service) AddUser(users []UserDefinition) error {
+	_, err := svc.ManageUsersAndGroups(
+		WithManageUsersAndGroupsUserDefinition(users),
+	)
+
+	return err
+}
+
+func (svc *Service) AddGroup(groups []GroupDefinition) error {
+	_, err := svc.ManageUsersAndGroups(
+		WithManageUsersAndGroupsGroupDefinition(groups),
+	)
+
+	return err
 }
