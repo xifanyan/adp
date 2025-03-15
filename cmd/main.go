@@ -98,7 +98,7 @@ func main() {
 			}
 	*/
 
-	res, err := svc.GetUsersAndGroupsUnderApplications([]string{"documentHold.demo00001"})
+	res, err := svc.GetUsersAndGroupsByApplicationID("documentHold.demo00001")
 	if err != nil {
 		panic(err)
 	}
