@@ -554,7 +554,7 @@ func (svc *Service) AddUsersToGroup(userIDs []string, groupID string) error {
 	return err
 }
 
-func (svc *Service) AssignUserOrGroupToApplication(userOrGroupIDs []string, appID string) error {
+func (svc *Service) AssignUsersOrGroupsToApplication(userOrGroupIDs []string, appID string) error {
 	var roles []ApplicationRoles
 
 	for _, id := range userOrGroupIDs {
