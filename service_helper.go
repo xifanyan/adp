@@ -3,7 +3,6 @@ package adp
 import (
 	"encoding/json"
 	"fmt"
-	"strings"
 )
 
 func (svc *Service) ListWorkspaces() ([]Entity, error) {
@@ -574,13 +573,12 @@ func (svc *Service) AssignUsersOrGroupsToApplication(userOrGroupIDs []string, ap
 	return err
 }
 
-func (svc *Service) GetUsersAndGroupsUnderApplications(appIDs []string) (map[string]struct{ UsersAndGroups }, error) {
+func (svc *Service) GetUsersAndGroupsByApplicationID(appID string) (map[string]struct{ UsersAndGroups }, error) {
 	var err error
 	var res ManageUsersAndGroupsResult
 
-	applicationIDs := strings.Join(appIDs, ",")
 	res, err = svc.ManageUsersAndGroups(
-		WithManageUsersAndGroupsAppIdsToFilterFor(applicationIDs),
+		WithManageUsersAndGroupsAppIdsToFilterFor(appID),
 		WithManageUsersAndGroupsReturnAllUsersUnderGroup("true"),
 	)
 	if err != nil {
