@@ -573,7 +573,7 @@ func (svc *Service) AssignUsersOrGroupsToApplication(userOrGroupIDs []string, ap
 	return err
 }
 
-func (svc *Service) GetUsersAndGroupsByApplicationID(appID string) (map[string]struct{ UsersAndGroups }, error) {
+func (svc *Service) GetUsersAndGroupsByApplicationID(appID string) (map[string]User, map[string]Group, error) {
 	var err error
 	var res ManageUsersAndGroupsResult
 
@@ -582,8 +582,19 @@ func (svc *Service) GetUsersAndGroupsByApplicationID(appID string) (map[string]s
 		WithManageUsersAndGroupsReturnAllUsersUnderGroup("true"),
 	)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return res.Applications, err
+	users := make(map[string]User)
+	groups := make(map[string]Group)
+
+	for k, v := range res.Applications[appID].UsersAndGroups.Users {
+		users[k] = v
+	}
+
+	for k, v := range res.Applications[appID].UsersAndGroups.Groups {
+		groups[k] = v
+	}
+
+	return users, groups, nil
 }

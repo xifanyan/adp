@@ -98,10 +98,10 @@ func main() {
 			}
 	*/
 
-	res, err := svc.GetUsersAndGroupsByApplicationID("documentHold.demo00001")
+	users, groups, err := svc.GetUsersAndGroupsByApplicationID("documentHold.demo00001")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%+v\n", res)
+	fmt.Printf("%+v\n---\n%+v\n", users, groups)
 
 }
