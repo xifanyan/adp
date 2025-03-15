@@ -520,7 +520,7 @@ func (svc *Service) GetGroupsByUserID(userID string) ([]string, error) {
 	return keys, nil
 }
 
-func (svc *Service) AddUser(users []UserDefinition) error {
+func (svc *Service) AddUsers(users []UserDefinition) error {
 	_, err := svc.ManageUsersAndGroups(
 		WithManageUsersAndGroupsUserDefinition(users),
 	)
@@ -528,7 +528,7 @@ func (svc *Service) AddUser(users []UserDefinition) error {
 	return err
 }
 
-func (svc *Service) AddGroup(groups []GroupDefinition) error {
+func (svc *Service) AddGroups(groups []GroupDefinition) error {
 	_, err := svc.ManageUsersAndGroups(
 		WithManageUsersAndGroupsGroupDefinition(groups),
 	)
