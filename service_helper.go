@@ -535,3 +535,18 @@ func (svc *Service) AddGroup(groups []GroupDefinition) error {
 
 	return err
 }
+
+func (svc *Service) AddUserToGroup(userID string, groupID string) error {
+	userToGroup := UserToGroup{
+		GroupName: groupID,
+		UserName:  userID,
+		Enabled:   true,
+		Remove:    false,
+	}
+
+	_, err := svc.ManageUsersAndGroups(
+		WithManageUsersAndGroupsAssignmentUserToGroup([]UserToGroup{userToGroup}),
+	)
+
+	return err
+}
