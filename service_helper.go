@@ -536,16 +536,38 @@ func (svc *Service) AddGroup(groups []GroupDefinition) error {
 	return err
 }
 
-func (svc *Service) AddUserToGroup(userID string, groupID string) error {
-	userToGroup := UserToGroup{
-		GroupName: groupID,
-		UserName:  userID,
-		Enabled:   true,
-		Remove:    false,
+func (svc *Service) AddUsersToGroup(userIDs []string, groupID string) error {
+	var userToGroup []UserToGroup
+	for _, id := range userIDs {
+		userToGroup = append(userToGroup, UserToGroup{
+			GroupName: groupID,
+			UserName:  id,
+			Enabled:   true,
+			Remove:    false,
+		})
 	}
 
 	_, err := svc.ManageUsersAndGroups(
-		WithManageUsersAndGroupsAssignmentUserToGroup([]UserToGroup{userToGroup}),
+		WithManageUsersAndGroupsAssignmentUserToGroup(userToGroup),
+	)
+
+	return err
+}
+
+func (svc *Service) AssignUserOrGroupToApplication(userOrGroupIDs []string, appID string) error {
+	var roles []ApplicationRoles
+
+	for _, id := range userOrGroupIDs {
+		roles = append(roles, ApplicationRoles{
+			Enabled:               true,
+			GroupOrUserName:       id,
+			ApplicationIdentifier: appID,
+			Roles:                 "Standard User",
+		})
+	}
+
+	_, err := svc.ManageUsersAndGroups(
+		WithManageUsersAndGroupsAddApplicationRoles(roles),
 	)
 
 	return err

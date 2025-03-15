@@ -84,13 +84,18 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
+		group3 := adp.GroupDefinition{
+			GroupName: "demogroup3",
+		}
+
+		err = svc.AddGroup([]adp.GroupDefinition{group3})
+		if err != nil {
+			panic(err)
+		}
 	*/
 
-	group3 := adp.GroupDefinition{
-		GroupName: "demogroup3",
-	}
-
-	err = svc.AddGroup([]adp.GroupDefinition{group3})
+	err = svc.AddUsersToGroup([]string{"demouser3"}, "demogroup3")
 	if err != nil {
 		panic(err)
 	}
