@@ -75,7 +75,7 @@ func WithCreateApplicationApplicationType(applicationType string) func(*CreateAp
 	}
 }
 
-func WithCreateApplicationAppliationWorkspace(workspace string) func(*CreateApplicationConfiguration) {
+func WithCreateApplicationApplicationWorkspace(workspace string) func(*CreateApplicationConfiguration) {
 	return func(c *CreateApplicationConfiguration) {
 		c.AdpCreateApplicationApplicationWorkspace = workspace
 	}

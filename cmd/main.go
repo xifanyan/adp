@@ -35,73 +35,86 @@ func main() {
 	}
 
 	/*
-			Examples:
-			#1: List all applications by user
-			documentHolds, err := svc.ListDocumentHoldsByUser("user1")
-			users, groups, err := svc.GetAllUsersAndGroups()
+				Examples:
+				#1: List all applications by user
+				documentHolds, err := svc.ListDocumentHoldsByUser("user1")
+				users, groups, err := svc.GetAllUsersAndGroups()
+				if err != nil {
+					panic(err)
+				}
+				fmt.Printf("%+v\n%+v\n", users, groups)
+
+				users, err = svc.GetUsersByID("demouser1")
+				if err != nil {
+					panic(err)
+				}
+				fmt.Printf("%+v\n", users)
+
+				groups, err = svc.GetGroupsByID("demogroup1")
+				if err != nil {
+					panic(err)
+				}
+				fmt.Printf("%+v\n", groups)
+
+			u, err := svc.GetUserByID("demouser1")
 			if err != nil {
 				panic(err)
 			}
-			fmt.Printf("%+v\n%+v\n", users, groups)
+			fmt.Printf("%+v\n", u)
 
-			users, err = svc.GetUsersByID("demouser1")
+			g, err := svc.GetGroupByID("demogroup1")
 			if err != nil {
 				panic(err)
 			}
-			fmt.Printf("%+v\n", users)
+			fmt.Printf("%+v\n", g)
 
-			groups, err = svc.GetGroupsByID("demogroup1")
+			groups, err := svc.GetGroupsByUserID("demouser2")
 			if err != nil {
 				panic(err)
 			}
 			fmt.Printf("%+v\n", groups)
 
-		u, err := svc.GetUserByID("demouser1")
+				user3 := adp.UserDefinition{
+					UserName: "demouser3",
+					Password: "demous3r3",
+				}
+				err = svc.AddUser([]adp.UserDefinition{user3})
+				if err != nil {
+					panic(err)
+				}
+
+				group3 := adp.GroupDefinition{
+					GroupName: "demogroup3",
+				}
+
+				err = svc.AddGroup([]adp.GroupDefinition{group3})
+				if err != nil {
+					panic(err)
+				}
+
+				err = svc.AddUsersToGroup([]string{"demouser3"}, "demogroup3")
+				if err != nil {
+					panic(err)
+				}
+
+		users, groups, err := svc.GetUsersAndGroupsByApplicationID("documentHold.demo00001")
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("%+v\n", u)
-
-		g, err := svc.GetGroupByID("demogroup1")
-		if err != nil {
-			panic(err)
-		}
-		fmt.Printf("%+v\n", g)
-
-		groups, err := svc.GetGroupsByUserID("demouser2")
-		if err != nil {
-			panic(err)
-		}
-		fmt.Printf("%+v\n", groups)
-
-			user3 := adp.UserDefinition{
-				UserName: "demouser3",
-				Password: "demous3r3",
-			}
-			err = svc.AddUser([]adp.UserDefinition{user3})
-			if err != nil {
-				panic(err)
-			}
-
-			group3 := adp.GroupDefinition{
-				GroupName: "demogroup3",
-			}
-
-			err = svc.AddGroup([]adp.GroupDefinition{group3})
-			if err != nil {
-				panic(err)
-			}
-
-			err = svc.AddUsersToGroup([]string{"demouser3"}, "demogroup3")
-			if err != nil {
-				panic(err)
-			}
+		fmt.Printf("%+v\n---\n%+v\n", users, groups)
 	*/
 
-	users, groups, err := svc.GetUsersAndGroupsByApplicationID("documentHold.demo00001")
+	res, err := svc.CreateApplication(
+		// adp.WithCreateApplicationApplicationType("Axcelerate"),
+		adp.WithCreateApplicationApplicationName("DEMO1Review"),
+		adp.WithCreateApplicationApplicationTemplate("axcelerate._DEMO_Review_Template"),
+		adp.WithCreateApplicationApplicationWorkspace("Workspace1"),
+		adp.WithCreateApplicationApplicationHost("vm-rhauswirth2.otxlab.net"),
+	)
+
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%+v\n---\n%+v\n", users, groups)
+	fmt.Printf("%+v\n", res)
 
 }
