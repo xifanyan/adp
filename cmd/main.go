@@ -105,7 +105,7 @@ func main() {
 	*/
 
 	res, err := svc.CreateApplication(
-		// adp.WithCreateApplicationApplicationType("Axcelerate"),
+		adp.WithCreateApplicationApplicationType("axcelerateStandalone"),
 		adp.WithCreateApplicationApplicationName("DEMO1Review"),
 		adp.WithCreateApplicationApplicationTemplate("axcelerate._DEMO_Review_Template"),
 		adp.WithCreateApplicationApplicationWorkspace("Workspace1"),

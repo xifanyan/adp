@@ -94,6 +94,12 @@ func WithCreateApplicationApplicationTemplate(template string) func(*CreateAppli
 	}
 }
 
+func WithCreateApplicationApplicationNamespacePrefix(prefix string) func(*CreateApplicationConfiguration) {
+	return func(c *CreateApplicationConfiguration) {
+		c.AdpCreateApplicationNamespacePrefix = prefix
+	}
+}
+
 type CreateApplicationResult struct {
 	ApplicationDisplayName  string `json:"adp_create_application_application_displayname"`
 	ApplicationIdentifier   string `json:"adp_create_application_application_identifier"`
