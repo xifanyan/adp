@@ -35,86 +35,98 @@ func main() {
 	}
 
 	/*
-				Examples:
-				#1: List all applications by user
-				documentHolds, err := svc.ListDocumentHoldsByUser("user1")
-				users, groups, err := svc.GetAllUsersAndGroups()
-				if err != nil {
-					panic(err)
-				}
-				fmt.Printf("%+v\n%+v\n", users, groups)
+		Examples:
+		#1: List all applications by user
+		documentHolds, err := svc.ListDocumentHoldsByUser("user1")
+		users, groups, err := svc.GetAllUsersAndGroups()
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n%+v\n", users, groups)
 
-				users, err = svc.GetUsersByID("demouser1")
-				if err != nil {
-					panic(err)
-				}
-				fmt.Printf("%+v\n", users)
+		users, err = svc.GetUsersByID("demouser1")
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", users)
 
-				groups, err = svc.GetGroupsByID("demogroup1")
-				if err != nil {
-					panic(err)
-				}
-				fmt.Printf("%+v\n", groups)
+		groups, err = svc.GetGroupsByID("demogroup1")
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", groups)
 
-			u, err := svc.GetUserByID("demouser1")
-			if err != nil {
-				panic(err)
-			}
-			fmt.Printf("%+v\n", u)
+		u, err := svc.GetUserByID("demouser1")
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", u)
 
-			g, err := svc.GetGroupByID("demogroup1")
-			if err != nil {
-				panic(err)
-			}
-			fmt.Printf("%+v\n", g)
+		g, err := svc.GetGroupByID("demogroup1")
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", g)
 
-			groups, err := svc.GetGroupsByUserID("demouser2")
-			if err != nil {
-				panic(err)
-			}
-			fmt.Printf("%+v\n", groups)
+		groups, err := svc.GetGroupsByUserID("demouser2")
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", groups)
 
-				user3 := adp.UserDefinition{
-					UserName: "demouser3",
-					Password: "demous3r3",
-				}
-				err = svc.AddUser([]adp.UserDefinition{user3})
-				if err != nil {
-					panic(err)
-				}
+		user3 := adp.UserDefinition{
+			UserName: "demouser3",
+			Password: "demous3r3",
+		}
+		err = svc.AddUser([]adp.UserDefinition{user3})
+		if err != nil {
+			panic(err)
+		}
 
-				group3 := adp.GroupDefinition{
-					GroupName: "demogroup3",
-				}
+		group3 := adp.GroupDefinition{
+			GroupName: "demogroup3",
+		}
 
-				err = svc.AddGroup([]adp.GroupDefinition{group3})
-				if err != nil {
-					panic(err)
-				}
+		err = svc.AddGroup([]adp.GroupDefinition{group3})
+		if err != nil {
+			panic(err)
+		}
 
-				err = svc.AddUsersToGroup([]string{"demouser3"}, "demogroup3")
-				if err != nil {
-					panic(err)
-				}
+		err = svc.AddUsersToGroup([]string{"demouser3"}, "demogroup3")
+		if err != nil {
+			panic(err)
+		}
 
 		users, groups, err := svc.GetUsersAndGroupsByApplicationID("documentHold.demo00001")
 		if err != nil {
 			panic(err)
 		}
 		fmt.Printf("%+v\n---\n%+v\n", users, groups)
+
+		res, err := svc.CreateApplication(
+			adp.WithCreateApplicationApplicationType("axcelerateStandalone"),
+			adp.WithCreateApplicationApplicationName("DEMO1Review"),
+			adp.WithCreateApplicationApplicationTemplate("axcelerate._DEMO_Review_Template"),
+			adp.WithCreateApplicationApplicationWorkspace("Workspace1"),
+			adp.WithCreateApplicationApplicationHost("vm-rhauswirth2.otxlab.net"),
+		)
+
+		res, err := svc.CreateApplication(
+			adp.WithCreateApplicationApplicationType("documentHold"),
+			adp.WithCreateApplicationApplicationName("newDocumentHold"),
+			adp.WithCreateApplicationApplicationTemplate("documentHold._Disney_Template_v1"),
+			adp.WithCreateApplicationApplicationWorkspace("Workspace1"),
+			adp.WithCreateApplicationApplicationHost("vm-rhauswirth2.otxlab.net"),
+		)
 	*/
 
-	res, err := svc.CreateApplication(
-		adp.WithCreateApplicationApplicationType("axcelerateStandalone"),
-		adp.WithCreateApplicationApplicationName("DEMO1Review"),
-		adp.WithCreateApplicationApplicationTemplate("axcelerate._DEMO_Review_Template"),
-		adp.WithCreateApplicationApplicationWorkspace("Workspace1"),
-		adp.WithCreateApplicationApplicationHost("vm-rhauswirth2.otxlab.net"),
-	)
+	gs, _ := svc.ListGlobalSearches()
+	fmt.Printf("List %+v\n", gs)
 
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("%+v\n", res)
+	gs, _ = svc.DeleteGlobalSearch([]string{"savedSearch.xyz"})
+	fmt.Printf("Delete %+v\n", gs)
+
+	gs, _ = svc.CreateGlobalSearch("xyz", []string{"1234", "hahah"})
+	fmt.Printf("Create %+v\n", gs)
 
 }

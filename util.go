@@ -26,3 +26,18 @@ func StructToString(i interface{}) (string, error) {
 	b, err := json.Marshal(i)
 	return string(b), err
 }
+
+func NormalizeEntityName(name string) string {
+	var result string
+
+	for _, c := range name {
+		if (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') {
+			result += string(c)
+		} else {
+			if result == "" || result[len(result)-1] != '_' {
+				result += "_"
+			}
+		}
+	}
+	return result
+}

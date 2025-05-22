@@ -598,3 +598,72 @@ func (svc *Service) GetUsersAndGroupsByApplicationID(appID string) (map[string]U
 
 	return users, groups, nil
 }
+
+func (svc *Service) ListGlobalSearches() ([]GlobalSearch, error) {
+	return svc.GlobalSearches()
+}
+
+func (svc *Service) CreateGlobalSearch(name string, query []string) ([]GlobalSearch, error) {
+	var activQueryParts []ActiveQueryPart
+	for _, v := range query {
+		activQueryParts = append(activQueryParts, ActiveQueryPart{
+			Query: v,
+			Valid: true,
+		})
+	}
+
+	id := fmt.Sprintf("savedSearch.%s", NormalizeEntityName(name))
+	gs := GlobalSearch{
+		ID:          id,
+		DisplayName: name,
+		QueryBundle: QueryBundle{
+			SearchTypeName:   "exact match search",
+			ActiveQueryParts: activQueryParts,
+		},
+		SearchParameters: map[string][]string{
+			"rm_main": {"*", "false", "false", "true"},
+		},
+	}
+
+	s, _ := StructToString([]GlobalSearch{gs})
+	fmt.Printf("%s\n", s)
+
+	return svc.GlobalSearches(
+		WithGlobalSearchesCreateUpdateGlobalSearches(s),
+		WithGlobalSearchesUpdateCollisionResolutionMode("error"),
+	)
+}
+
+func (svc *Service) UpdateGlobalSearch(id string, query []string) ([]GlobalSearch, error) {
+	var activQueryParts []ActiveQueryPart
+	for _, v := range query {
+		activQueryParts = append(activQueryParts, ActiveQueryPart{
+			Query: v,
+			Valid: true,
+		})
+	}
+
+	gs := GlobalSearch{
+		ID: id,
+		QueryBundle: QueryBundle{
+			SearchTypeName:   "exact match search",
+			ActiveQueryParts: activQueryParts,
+		},
+		SearchParameters: map[string][]string{
+			"rm_main": {"*", "false", "false", "true"},
+		},
+	}
+
+	s, _ := StructToString([]GlobalSearch{gs})
+	return svc.GlobalSearches(
+		WithGlobalSearchesCreateUpdateGlobalSearches(s),
+		WithGlobalSearchesUpdateCollisionResolutionMode("override"),
+	)
+}
+
+func (svc *Service) DeleteGlobalSearch(globalSearches []string) ([]GlobalSearch, error) {
+	s, _ := json.Marshal(globalSearches)
+	return svc.GlobalSearches(
+		WithGlobalSearchesGlobalSearchesToDelete(string(s)),
+	)
+}
