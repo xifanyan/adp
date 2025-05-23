@@ -81,3 +81,9 @@ type GlobalSearch struct {
 	SearchParameters map[string][]string `json:"searchParameters,omitempty"`
 	Description      string              `json:"description,omitempty"`
 }
+
+type GlobalSearchDefinition struct {
+	ID          string   `json:"id"`
+	DisplayName string   `json:"displayName,omitempty"`
+	Queries     []string `json:"queries,omitempty"`
+}
