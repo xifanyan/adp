@@ -123,16 +123,28 @@ func main() {
 	gs, _ := svc.ListGlobalSearches()
 	fmt.Printf("List %+v\n", gs)
 
-	svc.DeleteGlobalSearches([]string{"savedSearch.xyz"})
+	svc.DeleteGlobalSearches([]string{"savedSearch.xyz", "savedSearch.abc"})
+	// gs, _ = svc.ListGlobalSearches()
+	// fmt.Printf("List %+v\n", gs)
+	/*
+		data := []adp.GlobalSearchDefinition{
+			{
+				DisplayName: "xyz",
+				Queries:     []string{"1234", "hahah"},
+			},
+		}
+	*/
 
-	data := []adp.GlobalSearchDefinition{
+	// gs, _ = svc.CreateGlobalSearches(data)
+	// fmt.Printf("Create %+v\n", gs)
+
+	data1 := []adp.GlobalSearchDefinition{
 		{
-			DisplayName: "xyz",
-			Queries:     []string{"1234", "hahah"},
+			ID:      "savedSearch.xyz",
+			Queries: []string{"hello", "world"},
 		},
 	}
-
-	gs, _ = svc.CreateGlobalSearches(data)
+	gs, _ = svc.UpdateGlobalSearches(data1)
 	fmt.Printf("Create %+v\n", gs)
 
 }

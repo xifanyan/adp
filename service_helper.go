@@ -633,7 +633,9 @@ func (svc *Service) CreateGlobalSearches(gsdefs []GlobalSearchDefinition) ([]Glo
 				"rm_main": {"*", "false", "false", "true"},
 			},
 		}
+		fmt.Printf("======================  %+v\n", gs)
 		globalSearches = append(globalSearches, gs)
+
 	}
 
 	s, _ := StructToString(globalSearches)
