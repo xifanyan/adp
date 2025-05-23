@@ -603,30 +603,40 @@ func (svc *Service) ListGlobalSearches() ([]GlobalSearch, error) {
 	return svc.GlobalSearches()
 }
 
-func (svc *Service) CreateGlobalSearch(name string, query []string) ([]GlobalSearch, error) {
-	var activQueryParts []ActiveQueryPart
-	for _, v := range query {
-		activQueryParts = append(activQueryParts, ActiveQueryPart{
-			Query: v,
-			Valid: true,
-		})
+func (svc *Service) DeleteGlobalSearches(gsIDs []string) ([]GlobalSearch, error) {
+	gs, _ := StructToString(gsIDs)
+	return svc.GlobalSearches(
+		WithGlobalSearchesGlobalSearchesToDelete(gs),
+	)
+}
+
+func (svc *Service) CreateGlobalSearches(gsdefs []GlobalSearchDefinition) ([]GlobalSearch, error) {
+	var globalSearches []GlobalSearch
+	for _, gsdef := range gsdefs {
+		var activQueryParts []ActiveQueryPart
+		for _, v := range gsdef.Queries {
+			activQueryParts = append(activQueryParts, ActiveQueryPart{
+				Query: v,
+				Valid: true,
+			})
+		}
+
+		id := fmt.Sprintf("savedSearch.%s", NormalizeEntityName(gsdef.DisplayName))
+		gs := GlobalSearch{
+			ID:          id,
+			DisplayName: gsdef.DisplayName,
+			QueryBundle: QueryBundle{
+				SearchTypeName:   "exact match search",
+				ActiveQueryParts: activQueryParts,
+			},
+			SearchParameters: map[string][]string{
+				"rm_main": {"*", "false", "false", "true"},
+			},
+		}
+		globalSearches = append(globalSearches, gs)
 	}
 
-	id := fmt.Sprintf("savedSearch.%s", NormalizeEntityName(name))
-	gs := GlobalSearch{
-		ID:          id,
-		DisplayName: name,
-		QueryBundle: QueryBundle{
-			SearchTypeName:   "exact match search",
-			ActiveQueryParts: activQueryParts,
-		},
-		SearchParameters: map[string][]string{
-			"rm_main": {"*", "false", "false", "true"},
-		},
-	}
-
-	s, _ := StructToString([]GlobalSearch{gs})
-	fmt.Printf("%s\n", s)
+	s, _ := StructToString(globalSearches)
 
 	return svc.GlobalSearches(
 		WithGlobalSearchesCreateUpdateGlobalSearches(s),
@@ -634,36 +644,31 @@ func (svc *Service) CreateGlobalSearch(name string, query []string) ([]GlobalSea
 	)
 }
 
-func (svc *Service) UpdateGlobalSearch(id string, query []string) ([]GlobalSearch, error) {
-	var activQueryParts []ActiveQueryPart
-	for _, v := range query {
-		activQueryParts = append(activQueryParts, ActiveQueryPart{
-			Query: v,
-			Valid: true,
-		})
+func (svc *Service) UpdateGlobalSearches(gsdefs []GlobalSearchDefinition) ([]GlobalSearch, error) {
+	var globalSearches []GlobalSearch
+	for _, gsdef := range gsdefs {
+		var activQueryParts []ActiveQueryPart
+		for _, v := range gsdef.Queries {
+			activQueryParts = append(activQueryParts, ActiveQueryPart{
+				Query: v,
+				Valid: true,
+			})
+		}
+
+		gs := GlobalSearch{
+			ID: gsdef.ID,
+			QueryBundle: QueryBundle{
+				SearchTypeName:   "exact match search",
+				ActiveQueryParts: activQueryParts,
+			},
+		}
+		globalSearches = append(globalSearches, gs)
 	}
 
-	gs := GlobalSearch{
-		ID: id,
-		QueryBundle: QueryBundle{
-			SearchTypeName:   "exact match search",
-			ActiveQueryParts: activQueryParts,
-		},
-		SearchParameters: map[string][]string{
-			"rm_main": {"*", "false", "false", "true"},
-		},
-	}
+	s, _ := StructToString(globalSearches)
 
-	s, _ := StructToString([]GlobalSearch{gs})
 	return svc.GlobalSearches(
 		WithGlobalSearchesCreateUpdateGlobalSearches(s),
 		WithGlobalSearchesUpdateCollisionResolutionMode("override"),
-	)
-}
-
-func (svc *Service) DeleteGlobalSearch(globalSearches []string) ([]GlobalSearch, error) {
-	s, _ := json.Marshal(globalSearches)
-	return svc.GlobalSearches(
-		WithGlobalSearchesGlobalSearchesToDelete(string(s)),
 	)
 }
