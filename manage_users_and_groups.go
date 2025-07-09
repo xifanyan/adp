@@ -23,6 +23,11 @@ type UserToGroup struct {
 	UserName  string `json:"User name,omitempty"`
 }
 
+type UserOrGroupToRoles struct {
+	Name  string
+	Roles string
+}
+
 type ManageUsersAndGroupsConfiguration struct {
 	AdpProgressTaskTimeout                          int                `json:"adp_progressTaskTimeout,omitempty"`
 	AdpManageUsersAndGroupsUserDefinition           []UserDefinition   `json:"adp_manageUsersAndGroups_userDefinition,omitempty"`
