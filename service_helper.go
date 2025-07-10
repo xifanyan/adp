@@ -554,18 +554,7 @@ func (svc *Service) AddUsersToGroup(userIDs []string, groupID string) error {
 	return err
 }
 
-func (svc *Service) AssignUsersOrGroupsToApplication(userOrGroupIDs []string, appID string) error {
-	var roles []ApplicationRoles
-
-	for _, id := range userOrGroupIDs {
-		roles = append(roles, ApplicationRoles{
-			Enabled:               true,
-			GroupOrUserName:       id,
-			ApplicationIdentifier: appID,
-			Roles:                 "Standard User",
-		})
-	}
-
+func (svc *Service) AssignUsersOrGroupsToApplication(roles []ApplicationRoles) error {
 	_, err := svc.ManageUsersAndGroups(
 		WithManageUsersAndGroupsAddApplicationRoles(roles),
 	)

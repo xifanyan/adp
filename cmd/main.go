@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 
 	"github.com/rs/zerolog"
 	"github.com/xifanyan/adp"
@@ -120,10 +119,12 @@ func main() {
 		)
 	*/
 
-	gs, _ := svc.ListGlobalSearches()
-	fmt.Printf("List %+v\n", gs)
+	/*
+		gs, _ := svc.ListGlobalSearches()
+		fmt.Printf("List %+v\n", gs)
 
-	svc.DeleteGlobalSearches([]string{"savedSearch.xyz", "savedSearch.abc"})
+		svc.DeleteGlobalSearches([]string{"savedSearch.xyz", "savedSearch.abc"})
+	*/
 	// gs, _ = svc.ListGlobalSearches()
 	// fmt.Printf("List %+v\n", gs)
 	/*
@@ -138,13 +139,25 @@ func main() {
 	// gs, _ = svc.CreateGlobalSearches(data)
 	// fmt.Printf("Create %+v\n", gs)
 
-	data1 := []adp.GlobalSearchDefinition{
+	/*
+		data1 := []adp.GlobalSearchDefinition{
+			{
+				ID:      "savedSearch.xyz",
+				Queries: []string{"hello", "world"},
+			},
+		}
+		gs, _ = svc.UpdateGlobalSearches(data1)
+		fmt.Printf("Create %+v\n", gs)
+	*/
+
+	roles := []adp.ApplicationRoles{
 		{
-			ID:      "savedSearch.xyz",
-			Queries: []string{"hello", "world"},
+			Enabled:               false,
+			GroupOrUserName:       "demouser1",
+			ApplicationIdentifier: "documentHold.demo00001",
+			Roles:                 "Standard User",
 		},
 	}
-	gs, _ = svc.UpdateGlobalSearches(data1)
-	fmt.Printf("Create %+v\n", gs)
+	svc.AssignUsersOrGroupsToApplication(roles)
 
 }
