@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"strconv"
+	"strings"
 )
 
 // unquoteJSONOutput unquotes a JSON output string.
@@ -40,4 +41,21 @@ func NormalizeEntityName(name string) string {
 		}
 	}
 	return result
+}
+
+// KeysToCSV converts a map of strings to a comma-separated string of its keys.
+func KeysToCSV[V any](m map[string]V) string {
+	if len(m) == 0 {
+		return ""
+	}
+	var sb strings.Builder
+	first := true
+	for k := range m {
+		if !first {
+			sb.WriteString(",")
+		}
+		sb.WriteString(k)
+		first = false
+	}
+	return sb.String()
 }

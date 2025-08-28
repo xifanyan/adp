@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 
 	"github.com/rs/zerolog"
 	"github.com/xifanyan/adp"
@@ -140,24 +141,33 @@ func main() {
 	// fmt.Printf("Create %+v\n", gs)
 
 	/*
-		data1 := []adp.GlobalSearchDefinition{
+			data1 := []adp.GlobalSearchDefinition{
+				{
+					ID:      "savedSearch.xyz",
+					Queries: []string{"hello", "world"},
+				},
+			}
+			gs, _ = svc.UpdateGlobalSearches(data1)
+			fmt.Printf("Create %+v\n", gs)
+
+		roles := []adp.ApplicationRoles{
 			{
-				ID:      "savedSearch.xyz",
-				Queries: []string{"hello", "world"},
+				Enabled:               false,
+				GroupOrUserName:       "demouser1",
+				ApplicationIdentifier: "documentHold.demo00001",
+				Roles:                 "Standard User",
 			},
 		}
-		gs, _ = svc.UpdateGlobalSearches(data1)
-		fmt.Printf("Create %+v\n", gs)
+		svc.AssignUsersOrGroupsToApplication(roles)
+
 	*/
 
-	roles := []adp.ApplicationRoles{
-		{
-			Enabled:               false,
-			GroupOrUserName:       "demouser1",
-			ApplicationIdentifier: "documentHold.demo00001",
-			Roles:                 "Standard User",
-		},
+	documentHolds, err := svc.ListDocumentHolds()
+	if err != nil {
+		panic(err)
 	}
-	svc.AssignUsersOrGroupsToApplication(roles)
+
+	hasAccess, _ := svc.FindApplicationsUserHasAccess(documentHolds, "pyan")
+	fmt.Printf("%+v\n", hasAccess)
 
 }

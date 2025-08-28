@@ -3,6 +3,9 @@ package adp
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
+
+	"github.com/rs/zerolog/log"
 )
 
 func (svc *Service) ListWorkspaces() ([]Entity, error) {
@@ -662,4 +665,50 @@ func (svc *Service) UpdateGlobalSearches(gsdefs []GlobalSearchDefinition) ([]Glo
 		WithGlobalSearchesCreateUpdateGlobalSearches(s),
 		WithGlobalSearchesUpdateCollisionResolutionMode("override"),
 	)
+}
+
+func (svc *Service) FindApplicationsUserHasAccess(apps []Entity, userID string) ([]Entity, error) {
+	var err error
+	var res ManageUsersAndGroupsResult
+
+	// get comma seperated list of application IDs
+	ids := make([]string, len(apps))
+	for i, e := range apps {
+		ids[i] = e.ID
+	}
+	appIDs := strings.Join(ids, ",")
+
+	// get groups the user belongs to
+	groups, err := svc.GetGroupsByUserID(userID)
+	if err != nil {
+		return nil, err
+	}
+	groups = append(groups, userID)
+	groupAndUserIDs := strings.Join(groups, ",")
+
+	// pull users and groups information from all applications
+	// filter for user and the group the user belongs to
+	res, err = svc.ManageUsersAndGroups(
+		WithManageUsersAndGroupsGroupUserIdsToFilterFor(groupAndUserIDs),
+		WithManageUsersAndGroupsAppIdsToFilterFor(appIDs),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	found := []Entity{}
+	for _, app := range apps {
+		if _, ok := res.Applications[app.ID]; !ok {
+			continue
+		}
+
+		users := res.Applications[app.ID].UsersAndGroups.Users
+		groups := res.Applications[app.ID].UsersAndGroups.Groups
+
+		if len(users) > 0 || len(groups) > 0 {
+			log.Debug().Msgf("%s has access to %s", userID, app.ID)
+			found = append(found, app)
+		}
+	}
+	return found, err
 }
