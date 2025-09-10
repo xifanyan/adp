@@ -3,6 +3,7 @@ package adp
 import (
 	"crypto/tls"
 	"fmt"
+	"sync"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/rs/zerolog/log"
@@ -29,6 +30,7 @@ type Client struct {
 	password      string
 	taskAccessKey string
 	restyClient   *resty.Client
+	mu            sync.Mutex
 }
 
 func NewClientBuilder() *ClientBuilder {
@@ -189,6 +191,8 @@ ResetCredentials updates the username and password for the client and refreshes 
 	- password: new password
 */
 func (c *Client) ResetCredentials(user, password string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
 
 	if c.user == user && c.password == password {
 		return
