@@ -191,12 +191,12 @@ ResetCredentials updates the username and password for the client and refreshes 
 	- password: new password
 */
 func (c *Client) ResetCredentials(user, password string) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-
 	if c.user == user && c.password == password {
 		return
 	}
+
+	c.mu.Lock()
+	defer c.mu.Unlock()
 
 	log.Debug().Msgf("reset credentials: %s", user)
 
