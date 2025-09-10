@@ -180,3 +180,27 @@ func (c *Client) StatusAndProgress(executionID string) (*Response, error) {
 
 	return nil, fmt.Errorf("status and Progress: Task %s failure: %s", taskResp.TaskType, taskResp.ExecutionID)
 }
+
+/*
+ResetCredentials updates the username and password for the client and refreshes the resty client headers.
+
+	Parameters:
+	- user: new username
+	- password: new password
+*/
+func (c *Client) ResetCredentials(user, password string) {
+	c.user = user
+	c.password = password
+
+	// Update the resty client headers with new credentials
+	c.restyClient.SetHeaders(map[string]string{
+		"Content-Type":  "application/json",
+		"Auth-Username": c.user,
+		"Auth-Password": c.password,
+	})
+
+	// If task access key was previously set, preserve it
+	if len(c.taskAccessKey) > 0 {
+		c.restyClient.SetHeader("Task-Access-Key", c.taskAccessKey)
+	}
+}
