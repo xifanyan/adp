@@ -190,11 +190,11 @@ ResetCredentials updates the username and password for the client and refreshes 
 */
 func (c *Client) ResetCredentials(user, password string) {
 
-	log.Debug().Msgf("ResetCredentials: %s", user)
-
 	if c.user == user && c.password == password {
 		return
 	}
+
+	log.Debug().Msgf("reset credentials: %s", user)
 
 	c.user = user
 	c.password = password
