@@ -271,3 +271,22 @@ func (svc *Service) CreateApplication(opts ...func(*CreateApplicationConfigurati
 
 	return res, nil
 }
+
+// PublishToReview publishes content to review with the specified configurations.
+//
+// Parameters:
+//
+//	opts: A variadic list of functions that modify the PublishToReviewConfiguration.
+//	      These can be used to customize the behavior of the publish to review process.
+//
+// Returns:
+//
+//	error: An error if the publish to review operation fails.
+func (svc *Service) PublishToReview(opts ...func(*PublishToReviewConfiguration)) error {
+	req := NewRequest().PublishToReview(opts...)
+	resp, err := svc.ADPClient.Send(req)
+
+	log.Debug().Msgf("ExecutionMetaData: %s", string(resp.ExecutionMetaData))
+
+	return err
+}

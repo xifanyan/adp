@@ -652,3 +652,22 @@ func (req *Request) CreateApplication(opts ...func(*CreateApplicationConfigurati
 	}
 	return newTaskRequest("Create Application", defaults, opts...)
 }
+
+// PublishToReview initializes a request to publish content to review with the specified
+// configurations.
+//
+// Parameters:
+//
+//	opts: A variadic list of functions that modify the PublishToReviewConfiguration.
+//	      These can be used to customize the behavior of the publish to review process.
+//
+// Returns:
+//
+//	*Request: A pointer to the Request object configured to publish content to review.
+func (req *Request) PublishToReview(opts ...func(*PublishToReviewConfiguration)) *Request {
+	defaults := &PublishToReviewConfiguration{
+		AdpLoggingEnabled:      true,
+		AdpExecutionPersistent: false,
+	}
+	return newTaskRequest("Publish To Review", defaults, opts...)
+}
